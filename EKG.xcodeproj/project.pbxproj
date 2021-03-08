@@ -1,0 +1,354 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2CC6167325F657BA0082FC63 /* EKGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6167225F657BA0082FC63 /* EKGApp.swift */; };
+		2CC6167525F657BA0082FC63 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6167425F657BA0082FC63 /* ContentView.swift */; };
+		2CC6167725F657BC0082FC63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CC6167625F657BC0082FC63 /* Assets.xcassets */; };
+		2CC6167A25F657BC0082FC63 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CC6167925F657BC0082FC63 /* Preview Assets.xcassets */; };
+		2CC6167C25F657BC0082FC63 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6167B25F657BC0082FC63 /* Persistence.swift */; };
+		2CC6167F25F657BC0082FC63 /* EKG.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6167D25F657BC0082FC63 /* EKG.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2CC6166F25F657BA0082FC63 /* EKG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EKG.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CC6167225F657BA0082FC63 /* EKGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EKGApp.swift; sourceTree = "<group>"; };
+		2CC6167425F657BA0082FC63 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2CC6167625F657BC0082FC63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2CC6167925F657BC0082FC63 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2CC6167B25F657BC0082FC63 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		2CC6167E25F657BC0082FC63 /* EKG.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EKG.xcdatamodel; sourceTree = "<group>"; };
+		2CC6168025F657BC0082FC63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2CC6166C25F657BA0082FC63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2CC6166625F657BA0082FC63 = {
+			isa = PBXGroup;
+			children = (
+				2CC6167125F657BA0082FC63 /* EKG */,
+				2CC6167025F657BA0082FC63 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2CC6167025F657BA0082FC63 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2CC6166F25F657BA0082FC63 /* EKG.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2CC6167125F657BA0082FC63 /* EKG */ = {
+			isa = PBXGroup;
+			children = (
+				2CC6167225F657BA0082FC63 /* EKGApp.swift */,
+				2CC6167425F657BA0082FC63 /* ContentView.swift */,
+				2CC6167625F657BC0082FC63 /* Assets.xcassets */,
+				2CC6167B25F657BC0082FC63 /* Persistence.swift */,
+				2CC6168025F657BC0082FC63 /* Info.plist */,
+				2CC6167D25F657BC0082FC63 /* EKG.xcdatamodeld */,
+				2CC6167825F657BC0082FC63 /* Preview Content */,
+			);
+			path = EKG;
+			sourceTree = "<group>";
+		};
+		2CC6167825F657BC0082FC63 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				2CC6167925F657BC0082FC63 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2CC6166E25F657BA0082FC63 /* EKG */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CC6168325F657BC0082FC63 /* Build configuration list for PBXNativeTarget "EKG" */;
+			buildPhases = (
+				2CC6166B25F657BA0082FC63 /* Sources */,
+				2CC6166C25F657BA0082FC63 /* Frameworks */,
+				2CC6166D25F657BA0082FC63 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EKG;
+			productName = EKG;
+			productReference = 2CC6166F25F657BA0082FC63 /* EKG.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2CC6166725F657BA0082FC63 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					2CC6166E25F657BA0082FC63 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+				};
+			};
+			buildConfigurationList = 2CC6166A25F657BA0082FC63 /* Build configuration list for PBXProject "EKG" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2CC6166625F657BA0082FC63;
+			productRefGroup = 2CC6167025F657BA0082FC63 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2CC6166E25F657BA0082FC63 /* EKG */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2CC6166D25F657BA0082FC63 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CC6167A25F657BC0082FC63 /* Preview Assets.xcassets in Resources */,
+				2CC6167725F657BC0082FC63 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2CC6166B25F657BA0082FC63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CC6167C25F657BC0082FC63 /* Persistence.swift in Sources */,
+				2CC6167525F657BA0082FC63 /* ContentView.swift in Sources */,
+				2CC6167325F657BA0082FC63 /* EKGApp.swift in Sources */,
+				2CC6167F25F657BC0082FC63 /* EKG.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2CC6168125F657BC0082FC63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2CC6168225F657BC0082FC63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2CC6168425F657BC0082FC63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"EKG/Preview Content\"";
+				DEVELOPMENT_TEAM = HZT5R8K49P;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = EKG/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chodkiewicz-kwiatkowski-pietryja.EKG";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2CC6168525F657BC0082FC63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"EKG/Preview Content\"";
+				DEVELOPMENT_TEAM = HZT5R8K49P;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = EKG/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chodkiewicz-kwiatkowski-pietryja.EKG";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2CC6166A25F657BA0082FC63 /* Build configuration list for PBXProject "EKG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CC6168125F657BC0082FC63 /* Debug */,
+				2CC6168225F657BC0082FC63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CC6168325F657BC0082FC63 /* Build configuration list for PBXNativeTarget "EKG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CC6168425F657BC0082FC63 /* Debug */,
+				2CC6168525F657BC0082FC63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2CC6167D25F657BC0082FC63 /* EKG.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2CC6167E25F657BC0082FC63 /* EKG.xcdatamodel */,
+			);
+			currentVersion = 2CC6167E25F657BC0082FC63 /* EKG.xcdatamodel */;
+			path = EKG.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 2CC6166725F657BA0082FC63 /* Project object */;
+}
