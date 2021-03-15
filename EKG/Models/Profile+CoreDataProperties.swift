@@ -29,11 +29,11 @@ extension Profile {
     }
     
     public var wrappedFirstName: String {
-        firstName ?? "-"
+        firstName ?? "Unknown"
     }
     
     public var wrappedLastName: String {
-        lastName ?? "-"
+        lastName ?? "Unknown"
     }
     
     public var wrappedUsername: String {

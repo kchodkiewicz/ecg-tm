@@ -79,10 +79,8 @@ struct HistoryRow: View {
 
 struct HistoryItemView_Previews: PreviewProvider {
     static var previews: some View {
-        let point = Sample()
         let exam = Exam()
         
-        let point2 = Sample()
         let exam2 = Exam()
         
         Group {
