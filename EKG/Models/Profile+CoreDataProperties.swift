@@ -47,6 +47,11 @@ extension Profile {
             $0.wrappedDate > $1.wrappedDate
         }
     }
+    
+//    override public func validateForUpdate() throws {
+//        try super.validateForUpdate()
+//
+//    }
 }
 
 // MARK: Generated accessors for exam
@@ -63,9 +68,9 @@ extension Profile {
 
     @objc(removeExam:)
     @NSManaged public func removeFromExam(_ values: NSSet)
-
+    
 }
 
 extension Profile : Identifiable {
-
+    
 }

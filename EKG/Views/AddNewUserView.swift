@@ -15,9 +15,9 @@ struct AddNewUserView: View {
     @State private var firstName = ""
     @State private var lastName = ""
     @State private var age = ""
-    @State private var examDuration = ""
+    @State private var examDuration = 5
     
-    private var validateInput: Bool {
+    private var invalidInput: Bool {
         
         username.isEmpty || firstName.isEmpty || lastName.isEmpty || username.count < 3 || Int64(age) == nil || Int64(examDuration) == nil
     }
@@ -35,8 +35,7 @@ struct AddNewUserView: View {
                         .keyboardType(.decimalPad)
                 }
                 Section {
-                    TextField("Exam Duration", text: $examDuration)
-                        .keyboardType(.decimalPad)
+                    Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
                 }
                 Section {
                     Button("Add") {
@@ -49,14 +48,14 @@ struct AddNewUserView: View {
                             profile.lastName = self.lastName
                             // TODO verify if numbers
                             profile.age = Int64(self.age) ?? 0
-                            profile.examDuration = Float(self.examDuration) ?? 5
+                            profile.examDuration = Float(self.examDuration)
                             
                             try? self.viewContext.save()
                             
                             self.showingSheet?.wrappedValue = false
                         }
                     }
-                }.disabled(validateInput)
+                }.disabled(invalidInput)
             }.navigationBarTitle("New User")
         }
     }
