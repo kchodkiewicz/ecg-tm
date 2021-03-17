@@ -19,7 +19,7 @@ struct AddNewUserView: View {
     
     private var invalidInput: Bool {
         
-        username.isEmpty || firstName.isEmpty || lastName.isEmpty || username.count < 3 || Int64(age) == nil || Int64(examDuration) == nil
+        username.isEmpty || firstName.isEmpty || lastName.isEmpty || username.count < 3 || Int64(age) == nil || Int64(examDuration) == 0
     }
     
     var body: some View {

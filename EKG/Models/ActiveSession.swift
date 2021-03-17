@@ -9,5 +9,7 @@ import Foundation
 
 class ActiveSession: ObservableObject {
     @Published var username: String = ""
+    @Published var id: UUID?
+    @Published var profile: Profile?
     
 }

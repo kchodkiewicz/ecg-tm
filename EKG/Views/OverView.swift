@@ -11,11 +11,13 @@ struct OverView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject private var activeSession: ActiveSession
     
-    @FetchRequest(
-        entity: Profile.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Profile.id, ascending: true)],
-        animation: .default)
-    private var profile: FetchedResults<Profile>
+//    @FetchRequest(
+//        entity: Profile.entity(),
+//        sortDescriptors: [NSSortDescriptor(keyPath: \Profile.id, ascending: true)],
+//        animation: .default)
+//    private var profile: FetchedResults<Profile>
+    
+    var profile: Profile
     
     @State private var showingNewExam: Bool = false
     @State private var showingProfile: Bool = false
@@ -51,6 +53,8 @@ struct OverView: View {
                             sample.xValue = Int64(i)
                             sample.yValue = Int64(Int.random(in: 0...200))
                             samples.append(sample)
+                            
+                            try? self.viewContext.save()
                         }
                         
                         
@@ -76,15 +80,15 @@ struct OverView: View {
 //            }
             .sheet(isPresented: $showingProfile) {
                 ProfileView()
+                    .environmentObject(self.activeSession)
+                
             }
-        
         }
-       
     }
 }
 
-struct OverView_Previews: PreviewProvider {
-    static var previews: some View {
-        OverView()
-    }
-}
+//struct OverView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OverView()
+//    }
+//}

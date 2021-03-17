@@ -4,22 +4,31 @@
 //
 //  Created by Krzysztof Chodkiewicz on 11/03/2021.
 //
-
+import CoreData
 import SwiftUI
 
 struct ProfileEditView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.showingSheet) var showingSheet
+    
     @State private var username = ""
     @State private var firstName = ""
     @State private var lastName = ""
     @State private var age = ""
     @State private var examDuration = 5
     
+    @Binding var draftProfile: Profile
+    
+    var fetchRequest: FetchRequest<Profile>
+    var profile: FetchedResults<Profile> {
+        fetchRequest.wrappedValue
+    }
+    
     private var invalidInput: Bool {
         
         username.isEmpty || firstName.isEmpty || lastName.isEmpty || username.count < 3 || Int64(age) == nil
+        
     }
     
     private var usernameIsTaken: Bool {
@@ -79,10 +88,23 @@ struct ProfileEditView: View {
             }.navigationBarTitle("New User")
         }
     }
+    
+    init(filter: String) {
+        fetchRequest = FetchRequest<Profile>(entity: Profile.entity(), sortDescriptors: [], predicate: NSPredicate(format: "username == %@", filter), animation: .default)
+        
+        
+        
+        self.username = self.profile[0].wrappedUsername
+        self.firstName = self.profile[0].wrappedFirstName
+        self.lastName = self.profile[0].wrappedLastName
+        self.age = String(self.profile[0].age)
+        self.examDuration = Int(self.profile[0].examDuration)
+    }
+    
 }
 
-struct ProfileEditView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileEditView()
-    }
-}
+//struct ProfileEditView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ProfileEditView()
+//    }
+//}

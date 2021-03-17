@@ -42,7 +42,12 @@ struct ContentView: View {
         
         NavigationView {
             if !activeSession.username.isEmpty {
-                OverView()
+                
+                let profile = profiles.filter { (Profile) -> Bool in
+                    Profile.username == activeSession.username
+                }
+                OverView(profile: profile[0])
+                    .environmentObject(activeSession)
             } else {
                 VStack {
                     Spacer()
@@ -57,6 +62,8 @@ struct ContentView: View {
                                 VStack {
                                     Button(action: {
                                         activeSession.username = profile.username ?? ""
+                                        
+                                        activeSession.profile = profile
                                     }, label: {
                                         Image(systemName: "person.circle")
                                             .resizable()

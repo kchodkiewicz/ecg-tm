@@ -9,30 +9,22 @@ import SwiftUI
 
 struct ProfileSummaryView: View {
     
-    var fetchRequest: FetchRequest<Profile>
-    var profile: FetchedResults<Profile> {
-        fetchRequest.wrappedValue
-    }
+    var profile: Profile
     
     var body: some View {
         List {
-            Text("\(self.profile[0].wrappedFirstName) \(self.profile[0].wrappedLastName)")
+            Text("\(self.profile.wrappedFirstName) \(self.profile.wrappedLastName)")
                 .bold()
                 .font(.title)
             // TODO add notification toggle
             
-            Text("First Name: \(self.profile[0].wrappedFirstName)")
-            Text("Last Name: \(self.profile[0].wrappedLastName)")
-            Text("Age: \(self.profile[0].age)")
-            Text("Exam Duration: \(self.profile[0].examDuration)")
+            Text("First Name: \(self.profile.wrappedFirstName)")
+            Text("Last Name: \(self.profile.wrappedLastName)")
+            Text("Age: \(self.profile.age)")
+            Text("Exam Duration: \(self.profile.examDuration)")
             
         }
     }
-    
-    init(filter: String) {
-        fetchRequest = FetchRequest<Profile>(entity: Profile.entity(), sortDescriptors: [], predicate: NSPredicate(format: "username == %@", filter), animation: .default)
-    }
-    
 }
 
 //struct ProfileSummaryView_Previews: PreviewProvider {
