@@ -18,7 +18,7 @@ struct ProfileEditView: View {
     @State private var age = ""
     @State private var examDuration = 5
     
-    @Binding var draftProfile: Profile
+    //@Binding var draftProfile: Profile
     
     var fetchRequest: FetchRequest<Profile>
     var profile: FetchedResults<Profile> {
