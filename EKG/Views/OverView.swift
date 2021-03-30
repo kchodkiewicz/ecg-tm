@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OverView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject private var activeSession: ActiveSession
+    @EnvironmentObject var activeSession: ActiveSession
     
 //    @FetchRequest(
 //        entity: Profile.entity(),
@@ -81,7 +81,6 @@ struct OverView: View {
             .sheet(isPresented: $showingProfile) {
                 ProfileView()
                     .environmentObject(self.activeSession)
-                
             }
         }
     }

@@ -16,6 +16,7 @@
 		2C03151F25FD3E6C008FD459 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03151E25FD3E6C008FD459 /* OverView.swift */; };
 		2C03152325FD6CDF008FD459 /* ActiveSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03152225FD6CDF008FD459 /* ActiveSession.swift */; };
 		2C03152625FD6FA3008FD459 /* AddNewUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03152525FD6FA3008FD459 /* AddNewUserView.swift */; };
+		2C3246EB261227AC000F4CA3 /* ProfileTmp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3246EA261227AC000F4CA3 /* ProfileTmp.swift */; };
 		2C40294C25FAD7B600268220 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C40294B25FAD7B600268220 /* ProfileEditView.swift */; };
 		2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E226D25F7B83D002E8306 /* GraphExamView.swift */; };
 		2C5E227125F7B85F002E8306 /* GraphSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */; };
@@ -42,6 +43,7 @@
 		2C03151E25FD3E6C008FD459 /* OverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverView.swift; sourceTree = "<group>"; };
 		2C03152225FD6CDF008FD459 /* ActiveSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSession.swift; sourceTree = "<group>"; };
 		2C03152525FD6FA3008FD459 /* AddNewUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewUserView.swift; sourceTree = "<group>"; };
+		2C3246EA261227AC000F4CA3 /* ProfileTmp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTmp.swift; sourceTree = "<group>"; };
 		2C40294B25FAD7B600268220 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		2C5E226D25F7B83D002E8306 /* GraphExamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphExamView.swift; sourceTree = "<group>"; };
 		2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSummaryView.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				2C03151225FC2865008FD459 /* Sample+CoreDataClass.swift */,
 				2C03151325FC2865008FD459 /* Sample+CoreDataProperties.swift */,
 				2C03152225FD6CDF008FD459 /* ActiveSession.swift */,
+				2C3246EA261227AC000F4CA3 /* ProfileTmp.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				2C03151825FC2865008FD459 /* Sample+CoreDataClass.swift in Sources */,
 				2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */,
 				2CC6167325F657BA0082FC63 /* EKGApp.swift in Sources */,
+				2C3246EB261227AC000F4CA3 /* ProfileTmp.swift in Sources */,
 				2CC6167F25F657BC0082FC63 /* EKG.xcdatamodeld in Sources */,
 				2C03152325FD6CDF008FD459 /* ActiveSession.swift in Sources */,
 				2C5E227125F7B85F002E8306 /* GraphSummaryView.swift in Sources */,

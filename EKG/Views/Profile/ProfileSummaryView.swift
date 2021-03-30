@@ -4,7 +4,7 @@
 //
 //  Created by Krzysztof Chodkiewicz on 15/03/2021.
 //
-import CoreData
+
 import SwiftUI
 
 struct ProfileSummaryView: View {
@@ -16,8 +16,8 @@ struct ProfileSummaryView: View {
             Text("\(self.profile.wrappedFirstName) \(self.profile.wrappedLastName)")
                 .bold()
                 .font(.title)
-            // TODO add notification toggle
             
+            // TODO add notification toggle
             Text("First Name: \(self.profile.wrappedFirstName)")
             Text("Last Name: \(self.profile.wrappedLastName)")
             Text("Age: \(self.profile.age)")

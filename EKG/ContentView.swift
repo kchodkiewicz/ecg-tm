@@ -41,7 +41,7 @@ struct ContentView: View {
     var body: some View {
         
         NavigationView {
-            if !activeSession.username.isEmpty {
+            if !activeSession.username.isEmpty && activeSession.profile != nil {
                 
                 let profile = profiles.filter { (Profile) -> Bool in
                     Profile.username == activeSession.username
