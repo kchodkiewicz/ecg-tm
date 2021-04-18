@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import CoreBluetooth
 
 struct ShowingSheetKey: EnvironmentKey {
     static let defaultValue: Binding<Bool>? = nil
@@ -22,6 +23,8 @@ extension EnvironmentValues {
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var activeSession: ActiveSession
+
+    
     
     @FetchRequest(
         entity: Profile.entity(),

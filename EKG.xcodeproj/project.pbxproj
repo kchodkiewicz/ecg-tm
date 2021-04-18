@@ -21,6 +21,8 @@
 		2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E226D25F7B83D002E8306 /* GraphExamView.swift */; };
 		2C5E227125F7B85F002E8306 /* GraphSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */; };
 		2C613C6D25FFB9C800C4516E /* ProfileSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C613C6C25FFB9C800C4516E /* ProfileSummaryView.swift */; };
+		2C9540962621CD9200D115FE /* BTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540952621CD9200D115FE /* BTView.swift */; };
+		2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540982621D34F00D115FE /* BLEConnection.swift */; };
 		2CC6167325F657BA0082FC63 /* EKGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6167225F657BA0082FC63 /* EKGApp.swift */; };
 		2CC6167525F657BA0082FC63 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6167425F657BA0082FC63 /* ContentView.swift */; };
 		2CC6167725F657BC0082FC63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CC6167625F657BC0082FC63 /* Assets.xcassets */; };
@@ -48,6 +50,8 @@
 		2C5E226D25F7B83D002E8306 /* GraphExamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphExamView.swift; sourceTree = "<group>"; };
 		2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSummaryView.swift; sourceTree = "<group>"; };
 		2C613C6C25FFB9C800C4516E /* ProfileSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSummaryView.swift; sourceTree = "<group>"; };
+		2C9540952621CD9200D115FE /* BTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTView.swift; sourceTree = "<group>"; };
+		2C9540982621D34F00D115FE /* BLEConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConnection.swift; sourceTree = "<group>"; };
 		2CC6166F25F657BA0082FC63 /* EKG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EKG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC6167225F657BA0082FC63 /* EKGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EKGApp.swift; sourceTree = "<group>"; };
 		2CC6167425F657BA0082FC63 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 				2CC6169D25F6D51B0082FC63 /* History */,
 				2C03151E25FD3E6C008FD459 /* OverView.swift */,
 				2C03152525FD6FA3008FD459 /* AddNewUserView.swift */,
+				2C9540952621CD9200D115FE /* BTView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 				2C03151325FC2865008FD459 /* Sample+CoreDataProperties.swift */,
 				2C03152225FD6CDF008FD459 /* ActiveSession.swift */,
 				2C3246EA261227AC000F4CA3 /* ProfileTmp.swift */,
+				2C9540982621D34F00D115FE /* BLEConnection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -245,7 +251,9 @@
 				2C03151525FC2865008FD459 /* Exam+CoreDataProperties.swift in Sources */,
 				2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */,
 				2CC6168F25F6603D0082FC63 /* HistoryView.swift in Sources */,
+				2C9540962621CD9200D115FE /* BTView.swift in Sources */,
 				2CC6167C25F657BC0082FC63 /* Persistence.swift in Sources */,
+				2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */,
 				2C03151725FC2865008FD459 /* Profile+CoreDataProperties.swift in Sources */,
 				2C03151425FC2865008FD459 /* Exam+CoreDataClass.swift in Sources */,
 				2CC6167525F657BA0082FC63 /* ContentView.swift in Sources */,

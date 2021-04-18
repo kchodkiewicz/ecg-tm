@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import CoreBluetooth
 
 struct OverView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var activeSession: ActiveSession
+    
+    @ObservedObject var bleConnection = BLEConnection()
     
 //    @FetchRequest(
 //        entity: Profile.entity(),
@@ -21,6 +24,21 @@ struct OverView: View {
     
     @State private var showingNewExam: Bool = false
     @State private var showingProfile: Bool = false
+    @State private var showingBTScan: Bool = false
+    
+    
+    private func connectBLEDevice(){
+//            let ble = BLEConnection()
+            // Start Scanning for BLE Devices
+        
+        bleConnection.startCentralManager()
+                
+        //bleConnection.scanBLEDevices()
+        }
+    
+//    private func connect() {
+//        bleConnection.
+//    }
     
     var body: some View {
         NavigationView {
@@ -32,14 +50,22 @@ struct OverView: View {
             .toolbar {
                 // Top Toolbar
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: {self.showingProfile.toggle()}) {
+                    HStack {Button(action: {self.showingProfile.toggle()}) {
                         Image(systemName: "person.crop.circle")
                             .imageScale(.large)
                             .accessibility(label: Text("User Profile"))
                             .padding()
                     }
+                    Spacer()
+                    Button(action: {self.showingBTScan.toggle()}) {
+                        Image(systemName: "antenna.radiowaves.left.and.right")
+                            .imageScale(.large)
+                            .accessibility(label: Text("Bluetooth connection"))
+                            .padding()
+                    }
+                    }
                 }
-
+                
                 ToolbarItem(placement: .bottomBar) {
 
                     Button(action: {
@@ -80,8 +106,13 @@ struct OverView: View {
 //            }
             .sheet(isPresented: $showingProfile) {
                 ProfileView()
-                    .environmentObject(self.activeSession)
+//                    .environmentObject(self.activeSession)
             }
+                .sheet(isPresented: $showingBTScan) {
+                    BTView(bleConnection: bleConnection)
+                    
+                }
+            .onAppear(perform: connectBLEDevice)
         }
     }
 }
