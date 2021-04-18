@@ -10,17 +10,28 @@ import CoreBluetooth
 
 struct BTView: View {
     var bleConnection: BLEConnection
-    //@State var selection: [CBPeripheral]?
     var body: some View {
         NavigationView {
+            
+            Text("Bluetooth devices")
+                .bold()
+                .font(.title)
+            
             List(bleConnection.scannedBLEDevices, id: \.self) { device in
+            
                 Button(action: {
+                    
                     print("IM CONNECTED TO " + device.name!)
                     bleConnection.connect(peripheral: device)
-                }, label: {
+                    
+                },
+                label: {
+                    
                     Text(verbatim: device.name!)
+                    
                 })
             }
+            
             
         }.navigationTitle("Bluetooth")
     }

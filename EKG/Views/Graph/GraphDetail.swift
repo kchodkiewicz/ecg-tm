@@ -10,7 +10,7 @@ import SwiftUI
 struct GraphDetail: View {
     
     let frontBackPadding = 10
-    var points: Sample
+    var points: [Sample]
     
     var body: some View {
 //        VStack {
@@ -39,11 +39,11 @@ struct GraphDetail: View {
         
 }
 
-struct GraphDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        let point = Sample()
-                
-        GraphDetail(points: point)
-            .previewLayout(.fixed(width: 500, height: 300))
-    }
-}
+//struct GraphDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let point = Sample()
+//                
+//        GraphDetail(points: point)
+//            .previewLayout(.fixed(width: 500, height: 300))
+//    }
+//}

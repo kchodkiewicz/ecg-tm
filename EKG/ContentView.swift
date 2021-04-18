@@ -28,7 +28,7 @@ struct ContentView: View {
     
     @FetchRequest(
         entity: Profile.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Profile.id, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Profile.username, ascending: true)],
         animation: .default)
     private var profiles: FetchedResults<Profile>
     
@@ -47,7 +47,7 @@ struct ContentView: View {
             if !activeSession.username.isEmpty && activeSession.profile != nil {
                 
                 let profile = profiles.filter { (Profile) -> Bool in
-                    Profile.username == activeSession.username
+                    Profile.id == activeSession.profile?.wrappedId
                 }
                 OverView(profile: profile[0])
                     .environmentObject(activeSession)
@@ -92,6 +92,9 @@ struct ContentView: View {
                     
                     Button {
                         activeSession.username = username
+                        activeSession.profile = self.profiles.filter({ (Profile) -> Bool in
+                            Profile.username == username
+                        })[0]
                     } label: {
                         Text("Login")
                             .foregroundColor(.white)

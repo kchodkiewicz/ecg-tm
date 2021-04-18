@@ -33,47 +33,47 @@ struct HistoryRow: View {
     }()
     
     var body: some View {
-//        VStack {
-//            HStack {
-//
-//                GraphDetail(points: exam.dataPoints)
-//                    .frame(width: 50, height: 30)
-//
-//
-//                VStack(alignment: .leading) {
-//                    Text(exam.date, formatter: HistoryRow.dateFormat)
-//                        .font(.headline)
-//                }
-//
-//                Spacer()
-//
-//
-//                Button(action: {
-//                    withAnimation {
-//                        self.showDetail.toggle()
-//                    }
-//                }) {
-//                    Image(systemName: "chevron.right.circle")
-//                        .imageScale(.large)
-//                        .rotationEffect(.degrees(showDetail ? 90 : 0))
-//                        .scaleEffect(showDetail ? 1.5 : 1)
-//                        .padding()
-//                }
-//
-//            }
-//
-//            if isShowingDetail() {
-//                NavigationLink(
-//                    destination: GraphSummaryView(points: exam.dataPoints),
-//                    label: {
-//                        GraphDetail(points: exam.dataPoints)
-//                            .padding(.top, 40)
-//                            .transition(transition)
-//                    })
-//
-//            }
-//        }
-        Text("History")
+        VStack {
+            HStack {
+
+                GraphDetail(points: exam.sampleArray)
+                    .frame(width: 50, height: 30)
+
+
+                VStack(alignment: .leading) {
+                    Text(exam.date ?? Date(), formatter: HistoryRow.dateFormat)
+                        .font(.headline)
+                }
+
+                Spacer()
+
+
+                Button(action: {
+                    withAnimation {
+                        self.showDetail.toggle()
+                    }
+                }) {
+                    Image(systemName: "chevron.right.circle")
+                        .imageScale(.large)
+                        .rotationEffect(.degrees(showDetail ? 90 : 0))
+                        .scaleEffect(showDetail ? 1.5 : 1)
+                        .padding()
+                }
+
+            }
+
+            if isShowingDetail() {
+                NavigationLink (
+                    destination: GraphSummaryView(points: exam.sampleArray),
+                    label: {
+                        GraphDetail(points: exam.sampleArray)
+                            .padding(.top, 40)
+                            .transition(transition)
+                    })
+
+            }
+        }
+
     }
 }
 

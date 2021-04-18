@@ -18,7 +18,7 @@ struct ProfileEditView: View {
             Section {
                 TextField("First Name", text: $profile.firstName)
                 TextField("Last Name", text: $profile.lastName)
-                TextField("Age", text: $profile.age)
+                TextField("Age", value: $profile.age, formatter: NumberFormatter())
                     .keyboardType(.decimalPad)
             }
             Section {
