@@ -23,9 +23,9 @@ struct GraphSummaryView: View {
                 Spacer()
                 
             }
-            
+            .navigationBarTitle("Examination")
         }
-        .navigationTitle("Examination")
+        
     }
 }
 

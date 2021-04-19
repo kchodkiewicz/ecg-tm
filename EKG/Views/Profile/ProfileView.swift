@@ -10,11 +10,6 @@ import SwiftUI
 struct ProfileView: View {
     
     @Environment(\.managedObjectContext) var viewContext
-//    @FetchRequest(
-//        entity: Profile.entity(),
-//        sortDescriptors: [NSSortDescriptor(keyPath: \Profile.username, ascending: true)],
-//        animation: .default)
-//    private var profile: FetchedResults<Profile>
     
     var profile: Profile
 
@@ -47,33 +42,25 @@ struct ProfileView: View {
             } else {
                 ProfileEditView(profile: $draftProfile)
                 .onAppear {
-//                    self.draftProfile = ProfileTmp(username: profile.wrappedUsername, firstName: profile.wrappedFirstName, lastName: profile.lastName, age: profile.age, examDuration: profile.examDuration)
+                    
+                    self.draftProfile = ProfileTmp(username: self.profile.wrappedUsername, firstName: self.profile.wrappedFirstName, lastName: self.profile.wrappedLastName, age: self.profile.age, examDuration: self.profile.examDuration)
+                    
                 }
                 .onDisappear {
+                    
                     let profile = self.profile
                     profile.username = draftProfile.username
                     profile.firstName = draftProfile.firstName
                     profile.lastName = draftProfile.lastName
-                    // TODO verify if numbers
-                    profile.age = Int64(draftProfile.age)
-                    profile.examDuration = Float(draftProfile.examDuration)
+                    profile.age = draftProfile.age
+                    profile.examDuration = draftProfile.examDuration
 
                     try? self.viewContext.save()
+                    self.activeSession.profile = self.profile
 
                 }
             }
         }.padding()
     }
-
-//    init() {
-//        self.draftProfile = ProfileTmp(
-//            username: self.activeSession.profile?.wrappedUsername ?? ProfileTmp.default.username,
-//            firstName: self.activeSession.profile?.wrappedFirstName ?? ProfileTmp.default.firstName,
-//            lastName: self.activeSession.profile?.wrappedLastName ?? ProfileTmp.default.lastName,
-//            age: String(self.activeSession.profile?.age ?? 0),
-//            examDuration: Float(self.activeSession.profile?.examDuration ?? 5)
-//        )
-//    }
-    
 }
 

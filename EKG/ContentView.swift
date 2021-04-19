@@ -76,8 +76,8 @@ struct ContentView: View {
                                     Text(profile.username ?? "-")
                                 }
                             }
-                        }.frame(alignment: .center)
-                    }
+                        }
+                    }.frame(alignment: .center)
                     
                     
                     Spacer()
