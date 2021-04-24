@@ -55,6 +55,8 @@
 		2C9540952621CD9200D115FE /* BTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTView.swift; sourceTree = "<group>"; };
 		2C9540982621D34F00D115FE /* BLEConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConnection.swift; sourceTree = "<group>"; };
 		2CC31579263456D4007ABCF8 /* Bar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
+		2CC3158226345DE3007ABCF8 /* COMMShiftByte.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COMMShiftByte.swift; sourceTree = "<group>"; };
+		2CC3158326345DE3007ABCF8 /* COMMFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COMMFrame.swift; sourceTree = "<group>"; };
 		2CC6166F25F657BA0082FC63 /* EKG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EKG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC6167225F657BA0082FC63 /* EKGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EKGApp.swift; sourceTree = "<group>"; };
 		2CC6167425F657BA0082FC63 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -90,6 +92,15 @@
 				C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2CC3158126345DD6007ABCF8 /* COMM */ = {
+			isa = PBXGroup;
+			children = (
+				2CC3158326345DE3007ABCF8 /* COMMFrame.swift */,
+				2CC3158226345DE3007ABCF8 /* COMMShiftByte.swift */,
+			);
+			path = COMM;
 			sourceTree = "<group>";
 		};
 		2CC6166625F657BA0082FC63 = {
@@ -150,6 +161,7 @@
 		2CC6168925F65FF40082FC63 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2CC3158126345DD6007ABCF8 /* COMM */,
 				2C03150E25FC2865008FD459 /* Exam+CoreDataClass.swift */,
 				2C03150F25FC2865008FD459 /* Exam+CoreDataProperties.swift */,
 				2C03151025FC2865008FD459 /* Profile+CoreDataClass.swift */,

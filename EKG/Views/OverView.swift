@@ -74,37 +74,20 @@ struct OverView: View {
                     }
                     
                     ToolbarItem(placement: .bottomBar) {
+                        
+                       
                         // Bottom Toolbar
                         Button(action: {
-                            //self.showingNewExam.toggle()
-                            
-                            // FOR TESTING ONLY -----------
-                            var samples: [Sample] = []
-                            for i in 0...10 {
-                                let sample = Sample(context: viewContext)
-                                sample.id = UUID()
-                                sample.xValue = Int64(i)
-                                sample.yValue = Int64(Int.random(in: 0...200))
-                                samples.append(sample)
-                            }
-                            
-                            
-                            let exam = Exam(context: viewContext)
-                            exam.id = UUID()
-                            exam.date = Date()
-                            exam.addToSample(NSSet(array: samples))
-                            
-                            let profile = self.profile
-                            profile.addToExam(exam)
-                            
-                            try? self.viewContext.save()
-                            // ---------------------------
-                            
+                            self.showingNewExam.toggle()
                         }) {
                             Image(systemName: "waveform.path.ecg.rectangle.fill")
                                 .imageScale(.large)
                                 .accessibility(label: Text("New Examination"))
                                 .padding()
+                        }.sheet(isPresented: $showingNewExam) {
+                            
+                            GraphExamView(profile: self.profile, points: profile.examArray[0].sampleArray)
+                            
                         }
 
                     }
