@@ -48,15 +48,15 @@ struct ProfileView: View {
                 }
                 .onDisappear {
                     
-                    let profile = self.profile
-                    profile.username = draftProfile.username
-                    profile.firstName = draftProfile.firstName
-                    profile.lastName = draftProfile.lastName
-                    profile.age = draftProfile.age
-                    profile.examDuration = draftProfile.examDuration
-
-                    try? self.viewContext.save()
-                    self.activeSession.profile = self.profile
+//                    let profile = self.profile
+//                    profile.username = draftProfile.username
+//                    profile.firstName = draftProfile.firstName
+//                    profile.lastName = draftProfile.lastName
+//                    profile.age = draftProfile.age
+//                    profile.examDuration = draftProfile.examDuration
+//
+//                    try? self.viewContext.save()
+//                    self.activeSession.profile = self.profile
 
                 }
             }

@@ -13,9 +13,9 @@ struct BTView: View {
     var body: some View {
         NavigationView {
             
-            Text("Bluetooth devices")
-                .bold()
-                .font(.title)
+//            Text("Bluetooth devices")
+//                .bold()
+//                .font(.title)
             
             List(bleConnection.scannedBLEDevices, id: \.self) { device in
             
