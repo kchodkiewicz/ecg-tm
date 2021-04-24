@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,7 @@
 		2C613C6D25FFB9C800C4516E /* ProfileSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C613C6C25FFB9C800C4516E /* ProfileSummaryView.swift */; };
 		2C9540962621CD9200D115FE /* BTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540952621CD9200D115FE /* BTView.swift */; };
 		2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540982621D34F00D115FE /* BLEConnection.swift */; };
+		2CC3157A263456D4007ABCF8 /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC31579263456D4007ABCF8 /* Bar.swift */; };
 		2CC6167325F657BA0082FC63 /* EKGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6167225F657BA0082FC63 /* EKGApp.swift */; };
 		2CC6167525F657BA0082FC63 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6167425F657BA0082FC63 /* ContentView.swift */; };
 		2CC6167725F657BC0082FC63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CC6167625F657BC0082FC63 /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 		2CC6168F25F6603D0082FC63 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6168E25F6603D0082FC63 /* HistoryView.swift */; };
 		2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */; };
 		2CE9071D25F96E700060CBD1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9071C25F96E700060CBD1 /* ProfileView.swift */; };
+		8087124F376F23F61EABD8C9 /* Pods_EKG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,7 @@
 		2C613C6C25FFB9C800C4516E /* ProfileSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSummaryView.swift; sourceTree = "<group>"; };
 		2C9540952621CD9200D115FE /* BTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTView.swift; sourceTree = "<group>"; };
 		2C9540982621D34F00D115FE /* BLEConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConnection.swift; sourceTree = "<group>"; };
+		2CC31579263456D4007ABCF8 /* Bar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
 		2CC6166F25F657BA0082FC63 /* EKG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EKG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC6167225F657BA0082FC63 /* EKGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EKGApp.swift; sourceTree = "<group>"; };
 		2CC6167425F657BA0082FC63 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -64,6 +67,9 @@
 		2CC6168E25F6603D0082FC63 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
 		2CE9071C25F96E700060CBD1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		5BDFF963D48E3A75DD4E5DE7 /* Pods-EKG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EKG.release.xcconfig"; path = "Target Support Files/Pods-EKG/Pods-EKG.release.xcconfig"; sourceTree = "<group>"; };
+		7E88409701BA03AA391BFBC6 /* Pods-EKG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EKG.debug.xcconfig"; path = "Target Support Files/Pods-EKG/Pods-EKG.debug.xcconfig"; sourceTree = "<group>"; };
+		C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EKG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,17 +77,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8087124F376F23F61EABD8C9 /* Pods_EKG.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B2C043EACB41030C584A09E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2CC6166625F657BA0082FC63 = {
 			isa = PBXGroup;
 			children = (
 				2CC6167125F657BA0082FC63 /* EKG */,
 				2CC6167025F657BA0082FC63 /* Products */,
+				FBAB18F9FD5141B11C7687C0 /* Pods */,
+				0B2C043EACB41030C584A09E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,6 +178,7 @@
 				2CC6168A25F660270082FC63 /* GraphDetail.swift */,
 				2C5E226D25F7B83D002E8306 /* GraphExamView.swift */,
 				2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */,
+				2CC31579263456D4007ABCF8 /* Bar.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -175,6 +193,15 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		FBAB18F9FD5141B11C7687C0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7E88409701BA03AA391BFBC6 /* Pods-EKG.debug.xcconfig */,
+				5BDFF963D48E3A75DD4E5DE7 /* Pods-EKG.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -182,9 +209,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2CC6168325F657BC0082FC63 /* Build configuration list for PBXNativeTarget "EKG" */;
 			buildPhases = (
+				72D9842C0BBD51CFB37EEE7B /* [CP] Check Pods Manifest.lock */,
 				2CC6166B25F657BA0082FC63 /* Sources */,
 				2CC6166C25F657BA0082FC63 /* Frameworks */,
 				2CC6166D25F657BA0082FC63 /* Resources */,
+				4CF254A6B4CEEEC8AF745BC0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -239,6 +268,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4CF254A6B4CEEEC8AF745BC0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EKG/Pods-EKG-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EKG/Pods-EKG-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EKG/Pods-EKG-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		72D9842C0BBD51CFB37EEE7B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EKG-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2CC6166B25F657BA0082FC63 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -259,6 +330,7 @@
 				2CC6167525F657BA0082FC63 /* ContentView.swift in Sources */,
 				2C03151625FC2865008FD459 /* Profile+CoreDataClass.swift in Sources */,
 				2C03152625FD6FA3008FD459 /* AddNewUserView.swift in Sources */,
+				2CC3157A263456D4007ABCF8 /* Bar.swift in Sources */,
 				2C03151F25FD3E6C008FD459 /* OverView.swift in Sources */,
 				2C03151825FC2865008FD459 /* Sample+CoreDataClass.swift in Sources */,
 				2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */,
@@ -392,6 +464,7 @@
 		};
 		2CC6168425F657BC0082FC63 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E88409701BA03AA391BFBC6 /* Pods-EKG.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -414,6 +487,7 @@
 		};
 		2CC6168525F657BC0082FC63 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5BDFF963D48E3A75DD4E5DE7 /* Pods-EKG.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

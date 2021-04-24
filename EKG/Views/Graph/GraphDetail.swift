@@ -6,35 +6,27 @@
 //
 
 import SwiftUI
+import Charts
 
 struct GraphDetail: View {
     
     let frontBackPadding = 10
     var points: [Sample]
+    var entries = [ChartDataEntry]()
     
     var body: some View {
-//        VStack {
-//            Spacer()
-//
-//            Path { path in
-//                path.move(to: CGPoint(x: frontBackPadding, y: 100))
-//                var i = 0
-//                for point in points.xValue {
-//                    path.addLine(to: CGPoint(x: 100 + i * 50, y: point))
-//                    i += 1
-//                }
-//            }
-//            .stroke(Color.red, lineWidth: 2)
-//
-//            Spacer()
-//        }
-//        .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.25), radius: 8, x: 0.0, y: 4.0)
-//        .frame(minWidth: 0, idealWidth: 100, maxWidth: .infinity, minHeight: 200, idealHeight: 200, maxHeight: 200, alignment: .center)
-//        .cornerRadius(10.0)
-//        .padding()
-//
-//
-        Text("Graph")
+        
+        Bar(entries: entries)
+    }
+    
+    init(points: [Sample]) {
+        self.entries = []
+        self.points = points
+        for point in self.points {
+            let entry = ChartDataEntry(x: Double(Int(point.xValue)), y: Double(point.yValue))
+            self.entries.append(entry)
+        }
+        
     }
         
 }
