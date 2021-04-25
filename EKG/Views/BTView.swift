@@ -32,8 +32,8 @@ struct BTView: View {
                 })
             }
             
-            
-        }.navigationTitle("Bluetooth")
+            .navigationBarTitle("Bluetooth")
+        }
     }
 }
 

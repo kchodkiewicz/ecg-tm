@@ -35,70 +35,110 @@ struct OverView: View {
     }
     
     var body: some View {
-        
-        NavigationView {
+//
+//        NavigationView {
             
-            
-            HistoryView(filter: activeSession.username)
-            .layoutPriority(1)
-            .padding(.leading)
-            .navigationBarTitle("Overview")
-            
-                .toolbar {
-                    // Top Toolbar
-                    ToolbarItem(placement: .primaryAction) {
-                        HStack {
-                            Button(action: {self.showingProfile.toggle()}) {
-                            Image(systemName: "person.crop.circle")
+            TabView {
+                HistoryView(filter: profile.username!)
+                    .tabItem{
+                    Image(systemName: "house.circle")
+                        .imageScale(.large)
+                        .accessibility(label: Text("History"))
+                        
+                    Text("History")
+                    }
+                
+                ProfileView(profile: self.profile)
+                    .environmentObject(self.activeSession)
+                    .tabItem{
+                        Image(systemName: "person.crop.circle")
                                 .imageScale(.large)
                                 .accessibility(label: Text("User Profile"))
                                 .padding()
-                            }.sheet(isPresented: $showingProfile) {
-                                
-                                ProfileView(profile: profile)
-                                    .environmentObject(self.activeSession)
-                                
-                            }
-                            Spacer()
-                            Button(action: {self.showingBTScan.toggle()}) {
-                                Image(systemName: "antenna.radiowaves.left.and.right")
-                                .imageScale(.large)
-                                .accessibility(label: Text("Bluetooth connection"))
-                                .padding()
-                            }.sheet(isPresented: $showingBTScan) {
-                                
-                                BTView(bleConnection: bleConnection)
-                                
-                            }
-                        }
+                        Text("Profile")
                     }
-                    
-                    ToolbarItem(placement: .bottomBar) {
-                        
-                       
-                        // Bottom Toolbar
-                        Button(action: {
-                            self.showingNewExam.toggle()
-                        }) {
-                            Image(systemName: "waveform.path.ecg.rectangle.fill")
-                                .imageScale(.large)
-                                .accessibility(label: Text("New Examination"))
-                                .padding()
-                        }.sheet(isPresented: $showingNewExam) {
-                            
-                            GraphExamView(profile: self.profile, points: profile.examArray[0].sampleArray)
-                            
-                        }
-
+                
+                GraphExamView(profile: self.profile)
+                    .tabItem {
+                        Image(systemName: "waveform.path.ecg.rectangle.fill")
+                            .imageScale(.large)
+                            .accessibility(label: Text("New Examination"))
+                        Text("Exam")
                     }
-                }
+                
+                
+            }
+            .onAppear(perform: connectBLEDevice)
+            
+            
+//                .toolbar {
+//                    // Top Toolbar
+//
+//
+//                    ToolbarItem(placement: .primaryAction) {
+//
+//                        NavigationLink(
+//                            destination: ProfileView(profile: self.profile).environmentObject(self.activeSession)) {
+//                            Image(systemName: "person.crop.circle")
+//                                .imageScale(.large)
+//                                .accessibility(label: Text("User Profile"))
+//                                .padding()
+//                        }
+//
+////                            Button(action: {self.showingProfile.toggle()}) {
+////                            Image(systemName: "person.crop.circle")
+////                                .imageScale(.large)
+////                                .accessibility(label: Text("User Profile"))
+////                                .padding()
+////                            }.sheet(isPresented: $showingProfile) {
+////
+////                                ProfileView()
+////                                    .environmentObject(self.activeSession)
+////
+////                            }
+//
+//                    }
+//
+//                    ToolbarItem(placement: .primaryAction) {
+//
+//                        Button(action: {self.showingBTScan.toggle()}) {
+//                            Image(systemName: "antenna.radiowaves.left.and.right")
+//                            .imageScale(.large)
+//                            .accessibility(label: Text("Bluetooth connection"))
+//                            .padding()
+//                        }.sheet(isPresented: $showingBTScan) {
+//
+//                            BTView(bleConnection: bleConnection)
+//
+//                        }
+//
+//                    }
+//
+//                    ToolbarItem(placement: .bottomBar) {
+//
+//                        // Bottom Toolbar
+//                        Button(action: {
+//                            self.showingNewExam.toggle()
+//                        }) {
+//                            Image(systemName: "waveform.path.ecg.rectangle.fill")
+//                                .imageScale(.large)
+//                                .accessibility(label: Text("New Examination"))
+//                                .padding()
+//                        }.sheet(isPresented: $showingNewExam) {
+//
+//                            GraphExamView(profile: self.profile)
+//
+//                        }
+//
+//                    }
+//                }
 //            .sheet(isPresented: $showingNewExam) {
 //                GraphExamView()
 //            }
             
                 
-            .onAppear(perform: connectBLEDevice)
-        }
+            
+//        }
         
         
     }

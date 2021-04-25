@@ -5,6 +5,24 @@
 //  Created by Krzysztof Chodkiewicz on 08/03/2021.
 //
 
+/* *** TODO ***
+ 
+    * Title spacing
+    * Exam rebuild - not requiring samples
+    * Profile age
+    * Profile looks
+    * History previews
+ 
+ 
+    --- OPTIONAL ---
+    * Profile as sheet in Overview
+    * Tabs: Overview, New Exam
+    *
+ 
+ 
+ */
+
+
 import SwiftUI
 import CoreData
 import CoreBluetooth
@@ -36,7 +54,7 @@ struct ContentView: View {
     @State private var showingNewUser: Bool = false
     
     private func getRandomColor() -> Color {
-        let colorList = [Color.red, Color.blue, Color.green, Color.yellow]
+        let colorList = [Color.red, Color.blue, Color.green, Color.yellow, Color.orange, Color.pink, Color.purple]
         
         return colorList.randomElement()!
     }
@@ -44,14 +62,15 @@ struct ContentView: View {
     var body: some View {
         
         NavigationView {
-            if !activeSession.username.isEmpty && activeSession.profile != nil {
-                
-                let profile = profiles.filter { (Profile) -> Bool in
-                    Profile.id == activeSession.profile?.wrappedId
-                }
-                OverView(profile: profile[0])
-                    .environmentObject(activeSession)
-            } else {
+//            if !activeSession.username.isEmpty && activeSession.profile != nil {
+//
+//                let profile = profiles.filter { (Profile) -> Bool in
+//                    Profile.id == activeSession.profile?.wrappedId
+//                }
+//                OverView(profile: profile[0])
+//                    .environmentObject(activeSession)
+//                    .navigationBarHidden(true)
+//            } else {
                 VStack {
                     Spacer()
                     Text("ECG")
@@ -63,47 +82,60 @@ struct ContentView: View {
                         HStack {
                             ForEach(self.profiles) { profile in
                                 VStack {
-                                    Button(action: {
-                                        activeSession.username = profile.username ?? ""
-                                        
-                                        activeSession.profile = profile
-                                    }, label: {
+                                    NavigationLink(
+                                        destination: OverView(profile: profile)
+                                                    .environmentObject(activeSession)
+                                                    .navigationBarHidden(true))
+                                    {
+                                        VStack {
                                         Image(systemName: "person.circle")
                                             .resizable()
                                             .frame(width: 100, height: 100, alignment: .center)
-                                    })
-                                    .foregroundColor(getRandomColor())
-                                    Text(profile.username ?? "-")
+                                            .foregroundColor(getRandomColor())
+                                        Text(profile.username ?? "-")
+                                        }
+                                    }
+//                                    Button(action: {
+//                                        activeSession.username = profile.username ?? ""
+//
+//                                        activeSession.profile = profile
+//                                    }, label: {
+//                                        Image(systemName: "person.circle")
+//                                            .resizable()
+//                                            .frame(width: 100, height: 100, alignment: .center)
+//                                    })
+//                                    .foregroundColor(getRandomColor())
+//                                    Text(profile.username ?? "-")
                                 }
                             }
-                        }
+                        }.padding()
                     }.frame(alignment: .center)
                     
-                    
                     Spacer()
-                    
-                    TextField("Username", text: $username)
-                        .frame(maxWidth: 200, alignment: .center)
-                        .multilineTextAlignment(.center)
-                        .padding(.all)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(color: Color.black.opacity(0.25), radius: 3, y: 2)
-                    
-                    Button {
-                        activeSession.username = username
-                        activeSession.profile = self.profiles.filter({ (Profile) -> Bool in
-                            Profile.username == username
-                        })[0]
-                    } label: {
-                        Text("Login")
-                            .foregroundColor(.white)
-                    }
-                    .frame(maxWidth: 200)
-                    .padding(.all)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .shadow(color: Color.black.opacity(0.25), radius: 3, y: 2)
+//                    Spacer()
+//
+//                    TextField("Username", text: $username)
+//                        .frame(maxWidth: 200, alignment: .center)
+//                        .multilineTextAlignment(.center)
+//                        .padding(.all)
+//                        .background(Color.white)
+//                        .cornerRadius(10)
+//                        .shadow(color: Color.black.opacity(0.25), radius: 3, y: 2)
+//
+//                    Button {
+//                        activeSession.username = username
+//                        activeSession.profile = self.profiles.filter({ (Profile) -> Bool in
+//                            Profile.username == username
+//                        })[0]
+//                    } label: {
+//                        Text("Login")
+//                            .foregroundColor(.white)
+//                    }
+//                    .frame(maxWidth: 200)
+//                    .padding(.all)
+//                    .background(Color.blue)
+//                    .cornerRadius(10)
+//                    .shadow(color: Color.black.opacity(0.25), radius: 3, y: 2)
                     
                     
                     Button(action: {
@@ -112,7 +144,7 @@ struct ContentView: View {
                         Text("New user")
                     })
                     .padding()
-                    .font(.caption)
+                    .font(.headline)
                     
                     Spacer()
                     
@@ -120,7 +152,7 @@ struct ContentView: View {
                     .sheet(isPresented: $showingNewUser, content: {
                         AddNewUserView().environment(\.showingSheet, self.$showingNewUser)
                     })
-                }
+//                }
             }
         }
     }

@@ -15,17 +15,19 @@ struct HistoryView: View {
     }
     
     var body: some View {
-        
-        VStack(alignment: .leading) {
+        NavigationView {
+            VStack(alignment: .leading) {
 
-            ScrollView(.vertical, showsIndicators: false) {
+                ScrollView(.vertical, showsIndicators: false) {
 
-                VStack(alignment: .leading) {
-                    ForEach(profile[0].examArray) { exam in
-                        HistoryRow(exam: exam)
+                    VStack(alignment: .leading) {
+                        ForEach(profile[0].examArray) { exam in
+                            HistoryRow(exam: exam)
+                        }
                     }
                 }
             }
+            .navigationBarTitle("Overview")
         }
     }
     

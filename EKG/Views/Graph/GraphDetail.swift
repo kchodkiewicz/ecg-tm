@@ -16,7 +16,7 @@ struct GraphDetail: View {
     
     var body: some View {
         
-        Bar(entries: entries)
+        Chart(entries: entries)
     }
     
     init(points: [Sample]) {

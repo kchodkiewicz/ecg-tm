@@ -8,7 +8,7 @@
 import Charts
 import SwiftUI
 
-struct Bar : UIViewRepresentable {
+struct Chart : UIViewRepresentable {
     //Bar chart accepts data as array of BarChartDataEntry objects
     var entries : [ChartDataEntry]
     // this func is required to conform to UIViewRepresentable protocol
@@ -16,7 +16,7 @@ struct Bar : UIViewRepresentable {
         //crate new chart
         let chart = LineChartView()
         chart.borderColor = .red
-        chart.animate(xAxisDuration: 3.0)
+        chart.animate(xAxisDuration: 0.5)
         //it is convenient to form chart data in a separate func
         chart.data = addData()
         return chart
@@ -46,9 +46,9 @@ struct Bar : UIViewRepresentable {
 
 
 
-struct Bar_Previews: PreviewProvider {
+struct Chart_Previews: PreviewProvider {
     static var previews: some View {
-        Bar(entries: [
+        Chart(entries: [
             //x - position of a bar, y - height of a bar
             ChartDataEntry(x: 1, y: 1),
             ChartDataEntry(x: 2, y: 2),

@@ -23,7 +23,7 @@
 		2C613C6D25FFB9C800C4516E /* ProfileSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C613C6C25FFB9C800C4516E /* ProfileSummaryView.swift */; };
 		2C9540962621CD9200D115FE /* BTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540952621CD9200D115FE /* BTView.swift */; };
 		2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540982621D34F00D115FE /* BLEConnection.swift */; };
-		2CC3157A263456D4007ABCF8 /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC31579263456D4007ABCF8 /* Bar.swift */; };
+		2CC3157A263456D4007ABCF8 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC31579263456D4007ABCF8 /* Chart.swift */; };
 		2CC6167325F657BA0082FC63 /* EKGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6167225F657BA0082FC63 /* EKGApp.swift */; };
 		2CC6167525F657BA0082FC63 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6167425F657BA0082FC63 /* ContentView.swift */; };
 		2CC6167725F657BC0082FC63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CC6167625F657BC0082FC63 /* Assets.xcassets */; };
@@ -54,7 +54,7 @@
 		2C613C6C25FFB9C800C4516E /* ProfileSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSummaryView.swift; sourceTree = "<group>"; };
 		2C9540952621CD9200D115FE /* BTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTView.swift; sourceTree = "<group>"; };
 		2C9540982621D34F00D115FE /* BLEConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConnection.swift; sourceTree = "<group>"; };
-		2CC31579263456D4007ABCF8 /* Bar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
+		2CC31579263456D4007ABCF8 /* Chart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		2CC3158226345DE3007ABCF8 /* COMMShiftByte.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COMMShiftByte.swift; sourceTree = "<group>"; };
 		2CC3158326345DE3007ABCF8 /* COMMFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COMMFrame.swift; sourceTree = "<group>"; };
 		2CC6166F25F657BA0082FC63 /* EKG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EKG.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,7 +190,7 @@
 				2CC6168A25F660270082FC63 /* GraphDetail.swift */,
 				2C5E226D25F7B83D002E8306 /* GraphExamView.swift */,
 				2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */,
-				2CC31579263456D4007ABCF8 /* Bar.swift */,
+				2CC31579263456D4007ABCF8 /* Chart.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -342,7 +342,7 @@
 				2CC6167525F657BA0082FC63 /* ContentView.swift in Sources */,
 				2C03151625FC2865008FD459 /* Profile+CoreDataClass.swift in Sources */,
 				2C03152625FD6FA3008FD459 /* AddNewUserView.swift in Sources */,
-				2CC3157A263456D4007ABCF8 /* Bar.swift in Sources */,
+				2CC3157A263456D4007ABCF8 /* Chart.swift in Sources */,
 				2C03151F25FD3E6C008FD459 /* OverView.swift in Sources */,
 				2C03151825FC2865008FD459 /* Sample+CoreDataClass.swift in Sources */,
 				2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */,

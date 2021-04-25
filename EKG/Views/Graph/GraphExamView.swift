@@ -14,16 +14,16 @@ struct RoundButtonStyle: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         ZStack {
             Circle()
-                .stroke(foregroundColor, lineWidth: 4.0)
+                .stroke(foregroundColor, lineWidth: 3.0)
                 .frame(width: 60, height: 60)
             Circle()
-                .stroke(foregroundColor, lineWidth: 2.0)
+                .stroke(foregroundColor, lineWidth: 3.0)
                 .frame(width: 68, height: 68)
             
             configuration.label
             .frame(width: 60, height: 60)
-            .foregroundColor(configuration.isPressed ? .white : foregroundColor)
-            .background(configuration.isPressed ? foregroundColor : Color.white)
+            .foregroundColor(configuration.isPressed ? Color.white : foregroundColor)
+            .background(configuration.isPressed ? foregroundColor : Color.clear)
             .clipShape(configuration.isPressed ? Circle() : Circle()
             )
         }
@@ -36,14 +36,15 @@ struct GraphExamView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     let profile: Profile
-    let points: [Sample]
+    
     
     var body: some View {
+        NavigationView {
         VStack {
 
             Spacer()
 
-            GraphDetail(points: points)
+            GraphDetail(points: profile.examArray.last?.sampleArray ?? [Sample()])
 
             Spacer()
 
@@ -52,7 +53,7 @@ struct GraphExamView: View {
                 Spacer()
 
                 Button(action: {
-                    // Start examination
+                    // Stop examination
                     print("Stop button")
                 }, label: {
                     Text("Stop")
@@ -65,7 +66,7 @@ struct GraphExamView: View {
                 Spacer()
 
                 Button(action: {
-                    // Stop examination
+                    // Start examination
                     print("Start button")
                     
                     // FOR TESTING ONLY -----------
@@ -102,7 +103,8 @@ struct GraphExamView: View {
             Spacer()
 
         }
-        .navigationTitle("Examination")
+        .navigationBarTitle("Examination")
+    }
     }
 
 }
