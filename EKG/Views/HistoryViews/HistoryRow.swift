@@ -12,14 +12,7 @@ struct HistoryRow: View {
     var exam: Exam
   
     @State private var showingDetail = false
-    
-    var transition: AnyTransition {
-        let insertion = AnyTransition.move(edge: .trailing)
-            .combined(with: .opacity)
-        let removal = AnyTransition.scale
-            .combined(with: .opacity)
-        return .asymmetric(insertion: insertion, removal: removal)
-    }
+
     
     func isShowingDetail() -> Bool {
         return showingDetail
@@ -62,8 +55,7 @@ struct HistoryRow: View {
                         ZStack {
                             GraphDetail(points: exam.sampleArray)
                                 .frame(height: 100)
-    //                            .padding(.top, 40)
-                                .transition(transition)
+                                .transition(Transitions.viewTransition)
                             EmptyView()
                     }
                         

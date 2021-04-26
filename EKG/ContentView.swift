@@ -11,8 +11,13 @@
  * [*] Exam rebuild - not requiring samples
  * [*] Profile age
  * [*] Profile looks
- * [ ] History previews
- * [ ] User profile color / photo
+ * [*] History previews
+ * [ ] History Row images
+ * [*] User profile color / photo
+ * [ ] UserDefaults instead of ActiveSession
+ * [ ] Id instead of Username
+ * [ ] Fix form animation or give up
+ * [ ] Remove user on long press
  
  
  --- OPTIONAL ---
@@ -50,12 +55,7 @@ struct ContentView: View {
     
     @State var username: String = ""
     @State private var showingNewUser: Bool = false
-    
-    private func getRandomColor() -> Color {
-        let colorList = [Color.red, Color.blue, Color.green, Color.yellow, Color.orange, Color.pink, Color.purple]
-        
-        return colorList.randomElement()!
-    }
+
     
     var body: some View {
         
@@ -67,7 +67,6 @@ struct ContentView: View {
             OverView(profile: profile[0])
                 .environmentObject(activeSession)
             
-            
         } else {
             VStack {
                 Spacer()
@@ -75,30 +74,34 @@ struct ContentView: View {
                     .font(.title)
                     .bold()
                 Spacer()
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(self.profiles) { profile in
-                            VStack {
-                                Button(action: {
-                                    withAnimation(.spring()) {
-                                        activeSession.username = profile.username ?? ""
+                if self.profiles.isEmpty {
+                    Image("logo")
+                        .clipShape(Circle())
+                } else {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(self.profiles) { profile in
+                                VStack {
+                                    Button(action: {
+                                        withAnimation(.spring()) {
+                                            activeSession.username = profile.username ?? ""
+                                            
+                                            activeSession.profile = profile
+                                        }
                                         
-                                        activeSession.profile = profile
-                                    }
-                                    
-                                }, label: {
-                                    Image(systemName: "person.circle")
-                                        .resizable()
-                                        .frame(width: 100, height: 100, alignment: .center)
-                                        .animation(.spring())
-                                })
-                                .foregroundColor(getRandomColor())
-                                Text(profile.username ?? "-")
+                                    }, label: {
+                                        Image(systemName: "person.circle")
+                                            .resizable()
+                                            .frame(width: 100, height: 100, alignment: .center)
+                                            .animation(.spring())
+                                    })
+                                    .foregroundColor(Color(ProfileColor.ColorName(value: profile.profileColor)))
+                                    Text(profile.username ?? "-")
+                                }
                             }
-                        }
-                    }.padding()
-                }.frame(alignment: .center)
+                        }.padding()
+                    }.frame(alignment: .center)
+                }
                 
                 Spacer()
                 
@@ -111,53 +114,14 @@ struct ContentView: View {
                 .font(.headline)
                 
                 Spacer()
-                    
-                    
                     .sheet(isPresented: $showingNewUser, content: {
                         AddNewUserView().environment(\.showingSheet, self.$showingNewUser)
                     })
             }
         }
     }
-    
-    private func addItem() {
-        withAnimation {
-            let newItem = Profile(context: viewContext)
-            newItem.firstName = ""
-            
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-    
-    //    private func deleteItems(offsets: IndexSet) {
-    //        withAnimation {
-    //            offsets.map { items[$0] }.forEach(viewContext.delete)
-    //
-    //            do {
-    //                try viewContext.save()
-    //            } catch {
-    //                // Replace this implementation with code to handle the error appropriately.
-    //                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-    //                let nsError = error as NSError
-    //                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-    //            }
-    //        }
-    //    }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

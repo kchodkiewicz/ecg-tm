@@ -19,12 +19,12 @@ var closedRange: ClosedRange<Date> {
 }
 
 public func getAge(birthdate: Date) -> String {
-
+    
     let duration = DateInterval(start: birthdate, end: Date()).duration
     let formatter = DateComponentsFormatter()
     formatter.allowedUnits = [.year]
     formatter.maximumUnitCount = 0
-
+    
     return formatter.string(from: duration)!
 }
 
@@ -45,20 +45,33 @@ struct ProfileEditView: View {
     @State var lastName: String = ""
     @State var age: Date = Date()
     @State var examDuration: Int = 5
+    @State var profileColor: ProfileColor = ProfileColor.crimson
     
     @State var showingAge: Bool = true
     
     var body: some View {
         
         Form {
+            
             Section {
-                
-            }
-            Section {
+                if .inactive == self.editMode?.wrappedValue {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 100, height: 100, alignment: .center)
+                            .foregroundColor(Color("\(profileColor.rawValue)"))
+                            .padding()
+                        Spacer()
+                    }
+                } else {
+                    UserIcon(profileColor: self.$profileColor)
+                }
                 
                 HStack {
                     Text("Username")
-
+                    
                     Spacer()
                     
                     TextField("Username", text: $username)
@@ -69,7 +82,7 @@ struct ProfileEditView: View {
                 
                 HStack {
                     Text("First Name")
-
+                    
                     Spacer()
                     TextField("First Name", text: $firstName)
                         .disabled(.inactive == self.editMode?.wrappedValue)
@@ -79,7 +92,7 @@ struct ProfileEditView: View {
                 
                 HStack {
                     Text("Last Name")
-
+                    
                     Spacer()
                     TextField("Last Name", text: $lastName)
                         .disabled(.inactive == self.editMode?.wrappedValue)
@@ -88,7 +101,7 @@ struct ProfileEditView: View {
                 }
             }
             Section {
-                if self.editMode?.wrappedValue == .inactive {
+                if .inactive == self.editMode?.wrappedValue {
                     
                     Button {
                         withAnimation(.spring()) {
@@ -107,27 +120,26 @@ struct ProfileEditView: View {
                     }.foregroundColor(Color.primary)
                     .buttonStyle(PlainButtonStyle())
                     
+                    
                     HStack {
                         Text("Exam Duration")
                         Spacer()
                         Text("\(Int(self.profile.examDuration))s")
                     }
-                    
-                    
-                    
-                    
                 } else {
                     
                     DatePicker("Birthdate", selection: $age, in: closedRange, displayedComponents: .date)
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
                         .multilineTextAlignment(.trailing)
+                        
                     
                     Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
-                    
                         .disabled(.inactive == self.editMode?.wrappedValue)
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+                        
                 }
             }
+            
             if self.editMode?.wrappedValue == .inactive {
                 Section {
                     
@@ -146,12 +158,9 @@ struct ProfileEditView: View {
                     } label: {
                         Text("Switch User")
                     }
-                    
-                    
                 }
             }
         }
-        
         .navigationBarItems(
             leading: Button(action: {
                 withAnimation(.spring()) {
@@ -162,6 +171,7 @@ struct ProfileEditView: View {
             }
             .padding(.bottom)
             .padding(.trailing),
+            
             trailing: Button(action: {
                 withAnimation(.spring()) {
                     self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
@@ -191,6 +201,7 @@ struct ProfileEditView: View {
         profile.lastName = self.lastName
         profile.age = self.age
         profile.examDuration = Float(self.examDuration)
+        profile.profileColor = self.profileColor.ColorValue
         
         try? self.viewContext.save()
         

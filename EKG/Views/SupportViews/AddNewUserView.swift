@@ -16,6 +16,7 @@ struct AddNewUserView: View {
     @State private var lastName = ""
     @State private var age = Date()
     @State private var examDuration = 5
+    @State private var profileColor = ProfileColor.crimson
     
     private var invalidInput: Bool {
         
@@ -32,15 +33,17 @@ struct AddNewUserView: View {
     var body: some View {
         NavigationView {
             Form {
+                
                 Section {
+                    
+                    UserIcon(profileColor: self.$profileColor)
+                
                     TextField("Username", text: $username)
                 }
                 Section {
                     TextField("First Name", text: $firstName)
                     TextField("Last Name", text: $lastName)
                     DatePicker("Birthdate", selection: $age, in: closedRange, displayedComponents: .date)
-//                    TextField("Age", text: $age)
-//                        .keyboardType(.decimalPad)
                 }
                 Section {
                     Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
@@ -57,6 +60,7 @@ struct AddNewUserView: View {
                             // TODO verify if numbers
                             profile.age = self.age 
                             profile.examDuration = Float(self.examDuration)
+                            profile.profileColor = self.profileColor.ColorValue
                             
                             try? self.viewContext.save()
                             

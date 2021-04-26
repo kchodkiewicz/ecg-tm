@@ -15,18 +15,18 @@ struct RoundButtonStyle: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         ZStack {
             Circle()
-                .stroke(foregroundColor, lineWidth: 3.0)
-                .frame(width: 60, height: 60)
+                .fill(configuration.isPressed ? Color.clear : foregroundColor)
+                .frame(width: 55, height: 55)
+                .padding(10)
             Circle()
                 .stroke(foregroundColor, lineWidth: 3.0)
-                .frame(width: 68, height: 68)
+                .frame(width: 63, height: 63)
             
             configuration.label
-            .frame(width: 60, height: 60)
-            .foregroundColor(configuration.isPressed ? Color.white : foregroundColor)
-            .background(configuration.isPressed ? foregroundColor : Color.clear)
-            .clipShape(configuration.isPressed ? Circle() : Circle()
-            )
+                .frame(width: 63, height: 63)
+                .foregroundColor(configuration.isPressed ? Color.secondary : Color.white)
+                //.background(configuration.isPressed ? Color.white : Color.clear)
+                .clipShape(configuration.isPressed ? Circle() : Circle())
         }
     }
 }
@@ -38,32 +38,31 @@ struct GraphExamView: View {
     
     let profile: Profile
     
-    
     var body: some View {
         VStack {
-
+            
             Spacer()
-
+            
             GraphDetail(points: profile.examArray.last?.sampleArray ?? [])
-
+            
             Spacer()
-
+            
             HStack {
-
+                
                 Spacer()
-
+                
                 Button(action: {
                     // Stop examination
                     print("Stop button")
                 }, label: {
                     Text("Stop")
-
+                    
                 })
-                .buttonStyle(RoundButtonStyle(foregroundColor: Color(red: 215/255, green: 0/255, blue: 21/255)))
-
+                .buttonStyle(RoundButtonStyle(foregroundColor: Color(red: 185/255, green: 45/255, blue: 45/255)))
+                
                 Spacer()
                 Spacer()
-
+                
                 Button(action: {
                     // Start examination
                     print("Start button")
@@ -77,34 +76,31 @@ struct GraphExamView: View {
                         sample.yValue = Int64(Int.random(in: 0...200))
                         samples.append(sample)
                     }
-
+                    
                     let exam = Exam(context: viewContext)
                     exam.id = UUID()
                     exam.date = Date()
                     exam.addToSample(NSSet(array: samples))
-
+                    
                     let profile = self.profile
                     profile.addToExam(exam)
-
+                    
                     try? self.viewContext.save()
                     // ---------------------------
                     
                 }, label: {
                     Text("Start")
                 })
-                .buttonStyle(RoundButtonStyle(foregroundColor: Color(red: 36/255, green: 138/255, blue: 61/255)))
-
+                .buttonStyle(RoundButtonStyle(foregroundColor: Color(red: 45/255, green: 185/255, blue: 185/255)))
+                
                 Spacer()
-
             }
-
+            
             Spacer()
             Spacer()
-
         }
         .navigationTitle("Examination")
     }
-
 }
 
 
