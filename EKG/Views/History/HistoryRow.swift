@@ -11,7 +11,7 @@ struct HistoryRow: View {
     
     var exam: Exam
   
-    @State private var showDetail = false
+    @State private var showingDetail = false
     
     var transition: AnyTransition {
         let insertion = AnyTransition.move(edge: .trailing)
@@ -22,7 +22,7 @@ struct HistoryRow: View {
     }
     
     func isShowingDetail() -> Bool {
-        return showDetail
+        return showingDetail
     }
 
     static let dateFormat: DateFormatter = {
@@ -50,13 +50,13 @@ struct HistoryRow: View {
 
                 Button(action: {
                     withAnimation {
-                        self.showDetail.toggle()
+                        self.showingDetail.toggle()
                     }
                 }) {
                     Image(systemName: "chevron.right.circle")
                         .imageScale(.large)
-                        .rotationEffect(.degrees(showDetail ? 90 : 0))
-                        .scaleEffect(showDetail ? 1.5 : 1)
+                        .rotationEffect(.degrees(showingDetail ? 90 : 0))
+                        .scaleEffect(showingDetail ? 1.5 : 1)
                         .padding()
                 }
 
@@ -67,12 +67,16 @@ struct HistoryRow: View {
                     destination: GraphSummaryView(points: exam.sampleArray),
                     label: {
                         GraphDetail(points: exam.sampleArray)
-                            .padding(.top, 40)
+                            .frame(height: 100)
+//                            .padding(.top, 40)
                             .transition(transition)
-                    })
+                        
+                    }).buttonStyle(PlainButtonStyle())
+                    
 
             }
         }
+        .buttonStyle(PlainButtonStyle())
 
     }
 }

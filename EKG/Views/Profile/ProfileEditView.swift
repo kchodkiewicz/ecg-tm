@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import CoreData
+import CoreBluetooth
 
 //public extension Binding {
 //
@@ -26,11 +27,11 @@ import CoreData
 //}
 
 let numberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.isLenient = true
+    let formatter = NumberFormatter()
     formatter.numberStyle = .none
-        return formatter
-    }()
+    formatter.minimum = 0
+    return formatter
+}()
 
 
 struct ProfileEditView: View {
@@ -39,39 +40,128 @@ struct ProfileEditView: View {
     var viewContext: NSManagedObjectContext
     var profile: Profile
     
+    @ObservedObject var bleConnection = BLEConnection()
     
-    @Environment(\.presentationMode)
-    var presentationMode
+    @Environment(\.editMode) var editMode
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var activeSession: ActiveSession
     
     @State var username: String = ""
     @State var firstName: String = ""
     @State var lastName: String = ""
-    @State var age: Int64 = 0
-    @State var examDuration: Float = 5
+    @State var age: String = ""
+    @State var examDuration: Int = 5
     
     var body: some View {
-        NavigationView {
+        
         Form {
             Section {
-                TextField("Username", text: $username)
+                HStack {
+                    Text("Username")
+
+                    Spacer()
+                    
+                    TextField("Username", text: $username)
+                        .disabled(.inactive == self.editMode?.wrappedValue)
+                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+                        .multilineTextAlignment(.trailing)
+                }
             }
             Section {
-                TextField("First Name", text: $firstName)
-                TextField("Last Name", text: $lastName)
-                TextField("Age", value: $age, formatter: numberFormatter)
-                    .keyboardType(.decimalPad)
+                HStack {
+                    Text("First Name")
+
+                    Spacer()
+                    TextField("First Name", text: $firstName)
+                        .disabled(.inactive == self.editMode?.wrappedValue)
+                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+                        .multilineTextAlignment(.trailing)
+                }
+                
+                HStack {
+                    Text("Last Name")
+
+                    Spacer()
+                    TextField("Last Name", text: $lastName)
+                        .disabled(.inactive == self.editMode?.wrappedValue)
+                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+                        .multilineTextAlignment(.trailing)
+                }
+                
+                HStack {
+                    Text("Age")
+
+                    Spacer()
+                    TextField("Age", text: $age)
+                        .keyboardType(.decimalPad)
+                        .disabled(.inactive == self.editMode?.wrappedValue)
+                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+                        .multilineTextAlignment(.trailing)
+                }
             }
             Section {
-                Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
+                if self.editMode?.wrappedValue == .inactive {
+                    HStack {
+                        Text("Exam Duration:")
+                        Spacer()
+                        Text("\(Int(self.profile.examDuration))")
+                    }
+                } else {
+                    
+                    Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
+                    
+                        .disabled(.inactive == self.editMode?.wrappedValue)
+                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+                }
+            }
+            if self.editMode?.wrappedValue == .inactive {
+                Section {
+                    
+                    NavigationLink(destination: BTView(bleConnection: bleConnection)) {
+                        Text("Bluetooth Device")
+                        Spacer()
+                        Text(bleConnection.peripheral?.name ?? "None")
+                    }
+                }
+                Section {
+                    
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.35)) {
+                            self.activeSession.profile = nil
+                        }
+                    } label: {
+                        Text("Switch User")
+                    }
+                    
+                    
+                }
             }
         }
         
         .navigationBarItems(
-                       leading: Button(action: self.onCancelTapped) { Text("Cancel")},
-                       trailing: Button(action: self.onSaveTapped) { Text("Save")}
-                   )
-        }
-        .navigationTitle("Edit profile")
+            leading: Button(action: {
+                withAnimation(.spring()) {
+                    self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
+                }
+            }) {
+                Text(.active == self.editMode?.wrappedValue ? "Cancel" : "")
+            }
+            .padding(.bottom)
+            .padding(.trailing),
+            trailing: Button(action: {
+                withAnimation(.spring()) {
+                    self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
+                    onSaveTapped()
+                }
+            }) {
+                Text(.active == self.editMode?.wrappedValue ? "Done" : "Edit")
+            }
+            .padding(.bottom)
+            .padding(.leading)
+        )
+        
+        .navigationBarTitle(.inactive == self.editMode?.wrappedValue ? "\(self.firstName) \(self.lastName)" : "Edit your profile")
+        
     }
     
     private func onCancelTapped() {
@@ -85,12 +175,12 @@ struct ProfileEditView: View {
         profile.username = self.username
         profile.firstName = self.firstName
         profile.lastName = self.lastName
-        profile.age = self.age
-        profile.examDuration = self.examDuration
-
+        profile.age = Int64(self.age) ?? 11
+        profile.examDuration = Float(self.examDuration)
+        
         try? self.viewContext.save()
         
-        self.presentationMode.wrappedValue.dismiss()
+        //self.presentationMode.wrappedValue.dismiss()
     }
 }
 

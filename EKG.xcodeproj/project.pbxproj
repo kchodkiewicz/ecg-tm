@@ -20,7 +20,7 @@
 		2C40294C25FAD7B600268220 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C40294B25FAD7B600268220 /* ProfileEditView.swift */; };
 		2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E226D25F7B83D002E8306 /* GraphExamView.swift */; };
 		2C5E227125F7B85F002E8306 /* GraphSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */; };
-		2C613C6D25FFB9C800C4516E /* ProfileSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C613C6C25FFB9C800C4516E /* ProfileSummaryView.swift */; };
+		2C613C6D25FFB9C800C4516E /* RemovableProfileSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C613C6C25FFB9C800C4516E /* RemovableProfileSummaryView.swift */; };
 		2C9540962621CD9200D115FE /* BTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540952621CD9200D115FE /* BTView.swift */; };
 		2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540982621D34F00D115FE /* BLEConnection.swift */; };
 		2CC3157A263456D4007ABCF8 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC31579263456D4007ABCF8 /* Chart.swift */; };
@@ -33,7 +33,7 @@
 		2CC6168B25F660270082FC63 /* GraphDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6168A25F660270082FC63 /* GraphDetail.swift */; };
 		2CC6168F25F6603D0082FC63 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6168E25F6603D0082FC63 /* HistoryView.swift */; };
 		2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */; };
-		2CE9071D25F96E700060CBD1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9071C25F96E700060CBD1 /* ProfileView.swift */; };
+		2CE9071D25F96E700060CBD1 /* RemovableProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9071C25F96E700060CBD1 /* RemovableProfileView.swift */; };
 		8087124F376F23F61EABD8C9 /* Pods_EKG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,7 +51,7 @@
 		2C40294B25FAD7B600268220 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		2C5E226D25F7B83D002E8306 /* GraphExamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphExamView.swift; sourceTree = "<group>"; };
 		2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSummaryView.swift; sourceTree = "<group>"; };
-		2C613C6C25FFB9C800C4516E /* ProfileSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSummaryView.swift; sourceTree = "<group>"; };
+		2C613C6C25FFB9C800C4516E /* RemovableProfileSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovableProfileSummaryView.swift; sourceTree = "<group>"; };
 		2C9540952621CD9200D115FE /* BTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTView.swift; sourceTree = "<group>"; };
 		2C9540982621D34F00D115FE /* BLEConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConnection.swift; sourceTree = "<group>"; };
 		2CC31579263456D4007ABCF8 /* Chart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		2CC6168A25F660270082FC63 /* GraphDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDetail.swift; sourceTree = "<group>"; };
 		2CC6168E25F6603D0082FC63 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
-		2CE9071C25F96E700060CBD1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		2CE9071C25F96E700060CBD1 /* RemovableProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovableProfileView.swift; sourceTree = "<group>"; };
 		5BDFF963D48E3A75DD4E5DE7 /* Pods-EKG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EKG.release.xcconfig"; path = "Target Support Files/Pods-EKG/Pods-EKG.release.xcconfig"; sourceTree = "<group>"; };
 		7E88409701BA03AA391BFBC6 /* Pods-EKG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EKG.debug.xcconfig"; path = "Target Support Files/Pods-EKG/Pods-EKG.debug.xcconfig"; sourceTree = "<group>"; };
 		C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EKG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,9 +198,9 @@
 		2CC6169F25F6D5290082FC63 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				2CE9071C25F96E700060CBD1 /* ProfileView.swift */,
+				2CE9071C25F96E700060CBD1 /* RemovableProfileView.swift */,
 				2C40294B25FAD7B600268220 /* ProfileEditView.swift */,
-				2C613C6C25FFB9C800C4516E /* ProfileSummaryView.swift */,
+				2C613C6C25FFB9C800C4516E /* RemovableProfileSummaryView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -328,7 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CC6168B25F660270082FC63 /* GraphDetail.swift in Sources */,
-				2CE9071D25F96E700060CBD1 /* ProfileView.swift in Sources */,
+				2CE9071D25F96E700060CBD1 /* RemovableProfileView.swift in Sources */,
 				2C03151925FC2865008FD459 /* Sample+CoreDataProperties.swift in Sources */,
 				2C40294C25FAD7B600268220 /* ProfileEditView.swift in Sources */,
 				2C03151525FC2865008FD459 /* Exam+CoreDataProperties.swift in Sources */,
@@ -351,7 +351,7 @@
 				2CC6167F25F657BC0082FC63 /* EKG.xcdatamodeld in Sources */,
 				2C03152325FD6CDF008FD459 /* ActiveSession.swift in Sources */,
 				2C5E227125F7B85F002E8306 /* GraphSummaryView.swift in Sources */,
-				2C613C6D25FFB9C800C4516E /* ProfileSummaryView.swift in Sources */,
+				2C613C6D25FFB9C800C4516E /* RemovableProfileSummaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

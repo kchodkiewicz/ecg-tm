@@ -11,7 +11,6 @@ import Charts
 struct GraphDetail: View {
     
     let frontBackPadding = 10
-    var points: [Sample]
     var entries = [ChartDataEntry]()
     
     var body: some View {
@@ -20,9 +19,23 @@ struct GraphDetail: View {
     }
     
     init(points: [Sample]) {
+        
         self.entries = []
-        self.points = points
-        for point in self.points {
+        
+        guard !points.isEmpty else {
+            self.entries = [
+                ChartDataEntry(x: 1.0, y: 1.0),
+                ChartDataEntry(x: 2.0, y: 1.1),
+                ChartDataEntry(x: 3.0, y: 2.1),
+                ChartDataEntry(x: 4.0, y: 0.8),
+                ChartDataEntry(x: 5.0, y: 1.0),
+                ChartDataEntry(x: 6.0, y: 1.4),
+                ChartDataEntry(x: 7.0, y: 1.8)
+            ]
+            return
+        }
+        
+        for point in points {
             let entry = ChartDataEntry(x: Double(Int(point.xValue)), y: Double(point.yValue))
             self.entries.append(entry)
         }

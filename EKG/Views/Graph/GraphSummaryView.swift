@@ -12,7 +12,7 @@ struct GraphSummaryView: View {
     let points: [Sample]
     
     var body: some View {
-        NavigationView {
+        
             VStack {
                 
                 Spacer()
@@ -23,8 +23,8 @@ struct GraphSummaryView: View {
                 Spacer()
                 
             }
-            .navigationBarTitle("Examination")
-        }
+            .navigationTitle("Examination")
+        
         
     }
 }

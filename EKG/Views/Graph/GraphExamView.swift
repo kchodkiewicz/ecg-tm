@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct RoundButtonStyle: ButtonStyle {
     
@@ -39,12 +40,11 @@ struct GraphExamView: View {
     
     
     var body: some View {
-        NavigationView {
         VStack {
 
             Spacer()
 
-            GraphDetail(points: profile.examArray.last?.sampleArray ?? [Sample()])
+            GraphDetail(points: profile.examArray.last?.sampleArray ?? [])
 
             Spacer()
 
@@ -103,8 +103,7 @@ struct GraphExamView: View {
             Spacer()
 
         }
-        .navigationBarTitle("Examination")
-    }
+        .navigationTitle("Examination")
     }
 
 }

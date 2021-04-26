@@ -49,14 +49,16 @@ struct AddNewUserView: View {
                             // TODO verify if numbers
                             profile.age = Int64(self.age) ?? 0
                             profile.examDuration = Float(self.examDuration)
-                           
+                            
                             try? self.viewContext.save()
-                           
+                            
                             self.showingSheet?.wrappedValue = false
                         }
                     }
                 }.disabled(invalidInput)
-            }.navigationBarTitle("New User")
+                
+            }
+            .navigationBarTitle("New User")
         }
     }
 }
