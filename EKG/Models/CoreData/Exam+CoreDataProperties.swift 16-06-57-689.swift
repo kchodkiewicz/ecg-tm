@@ -1,8 +1,8 @@
 //
 //  Exam+CoreDataProperties.swift
-//  EKG
+//  
 //
-//  Created by Krzysztof Chodkiewicz on 12/03/2021.
+//  Created by Krzysztof Chodkiewicz on 26/04/2021.
 //
 //
 
@@ -18,6 +18,7 @@ extension Exam {
 
     @NSManaged public var date: Date?
     @NSManaged public var id: UUID?
+    @NSManaged public var notes: String?
     @NSManaged public var origin: Profile?
     @NSManaged public var sample: NSSet?
     
@@ -27,6 +28,10 @@ extension Exam {
     
     public var wrappedDate: Date {
         date ?? Date()
+    }
+    
+    public var wrappedNotes: String {
+        notes ?? ""
     }
     
     public var sampleArray: [Sample] {
@@ -53,9 +58,5 @@ extension Exam {
 
     @objc(removeSample:)
     @NSManaged public func removeFromSample(_ values: NSSet)
-
-}
-
-extension Exam : Identifiable {
 
 }

@@ -1,8 +1,8 @@
 //
 //  Sample+CoreDataProperties.swift
-//  EKG
+//  
 //
-//  Created by Krzysztof Chodkiewicz on 12/03/2021.
+//  Created by Krzysztof Chodkiewicz on 26/04/2021.
 //
 //
 
@@ -24,9 +24,5 @@ extension Sample {
     public var wrappedId: UUID {
         id ?? UUID()
     }
-
-}
-
-extension Sample : Identifiable {
 
 }

@@ -61,7 +61,6 @@ struct GraphExamView: View {
                 })
                 .buttonStyle(RoundButtonStyle(foregroundColor: Color(red: 215/255, green: 0/255, blue: 21/255)))
 
-
                 Spacer()
                 Spacer()
 

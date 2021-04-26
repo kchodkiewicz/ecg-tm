@@ -66,7 +66,7 @@ struct OverView: View {
                     username: self.profile.username ?? "",
                     firstName: self.profile.firstName ?? "",
                     lastName: self.profile.lastName ?? "",
-                    age: String(self.profile.age),
+                    age: self.profile.age ?? Date(),
                     examDuration: Int(self.profile.examDuration))
                     .environmentObject(self.activeSession)
                 

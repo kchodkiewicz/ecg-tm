@@ -1,8 +1,8 @@
 //
 //  Sample+CoreDataClass.swift
-//  EKG
+//  
 //
-//  Created by Krzysztof Chodkiewicz on 12/03/2021.
+//  Created by Krzysztof Chodkiewicz on 26/04/2021.
 //
 //
 

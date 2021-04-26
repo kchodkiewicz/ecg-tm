@@ -24,13 +24,6 @@ struct HistoryRow: View {
     func isShowingDetail() -> Bool {
         return showingDetail
     }
-
-    static let dateFormat: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
-        return formatter
-    }()
     
     var body: some View {
         VStack {
@@ -41,7 +34,7 @@ struct HistoryRow: View {
 
 
                 VStack(alignment: .leading) {
-                    Text(exam.date ?? Date(), formatter: HistoryRow.dateFormat)
+                    Text(exam.date ?? Date(), formatter: Formatters.dateFormat)
                         .font(.headline)
                 }
 
@@ -66,10 +59,14 @@ struct HistoryRow: View {
                 NavigationLink (
                     destination: GraphSummaryView(points: exam.sampleArray),
                     label: {
-                        GraphDetail(points: exam.sampleArray)
-                            .frame(height: 100)
-//                            .padding(.top, 40)
-                            .transition(transition)
+                        ZStack {
+                            GraphDetail(points: exam.sampleArray)
+                                .frame(height: 100)
+    //                            .padding(.top, 40)
+                                .transition(transition)
+                            EmptyView()
+                    }
+                        
                         
                     }).buttonStyle(PlainButtonStyle())
                     

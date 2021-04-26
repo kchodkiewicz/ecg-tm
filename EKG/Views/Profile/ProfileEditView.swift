@@ -8,31 +8,25 @@ import SwiftUI
 import CoreData
 import CoreBluetooth
 
-//public extension Binding {
-//
-//    init(_ source: Binding<Value?>, _ defaultValue: Value) {
-//            self.init(get: {
-//                // ensure the source doesn't contain nil
-//                if source.wrappedValue == nil {
-//                    // try to assign--this may not initially work, since it seems
-//                    // SwiftUI needs to wire things up inside Bindings before they
-//                    // become properly 'writable'.
-//                    source.wrappedValue = defaultValue
-//                }
-//                return source.wrappedValue ?? defaultValue
-//            }, set: {
-//                source.wrappedValue = $0
-//            })
-//        }
-//}
 
-let numberFormatter: NumberFormatter = {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .none
-    formatter.minimum = 0
-    return formatter
-}()
 
+
+var closedRange: ClosedRange<Date> {
+    let lower = Calendar.current.date(byAdding: .year, value: -150, to: Date())!
+    let upper = Calendar.current.date(byAdding: .day, value: 0, to: Date())!
+    
+    return lower...upper
+}
+
+public func getAge(birthdate: Date) -> String {
+
+    let duration = DateInterval(start: birthdate, end: Date()).duration
+    let formatter = DateComponentsFormatter()
+    formatter.allowedUnits = [.year]
+    formatter.maximumUnitCount = 0
+
+    return formatter.string(from: duration)!
+}
 
 struct ProfileEditView: View {
     
@@ -49,13 +43,19 @@ struct ProfileEditView: View {
     @State var username: String = ""
     @State var firstName: String = ""
     @State var lastName: String = ""
-    @State var age: String = ""
+    @State var age: Date = Date()
     @State var examDuration: Int = 5
+    
+    @State var showingAge: Bool = true
     
     var body: some View {
         
         Form {
             Section {
+                
+            }
+            Section {
+                
                 HStack {
                     Text("Username")
 
@@ -66,8 +66,7 @@ struct ProfileEditView: View {
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
                         .multilineTextAlignment(.trailing)
                 }
-            }
-            Section {
+                
                 HStack {
                     Text("First Name")
 
@@ -87,26 +86,41 @@ struct ProfileEditView: View {
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
                         .multilineTextAlignment(.trailing)
                 }
-                
-                HStack {
-                    Text("Age")
-
-                    Spacer()
-                    TextField("Age", text: $age)
-                        .keyboardType(.decimalPad)
-                        .disabled(.inactive == self.editMode?.wrappedValue)
-                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
-                        .multilineTextAlignment(.trailing)
-                }
             }
             Section {
                 if self.editMode?.wrappedValue == .inactive {
+                    
+                    Button {
+                        withAnimation(.spring()) {
+                            self.showingAge.toggle()
+                        }
+                    } label: {
+                        HStack {
+                            Text(self.showingAge ? "Age" : "Birthdate")
+                            Spacer()
+                            if self.showingAge {
+                                Text(getAge(birthdate: self.profile.age ?? Date()))
+                            } else {
+                                Text(self.profile.age ?? Date(), formatter: Formatters.birthDateFormat)
+                            }
+                        }
+                    }.foregroundColor(Color.primary)
+                    .buttonStyle(PlainButtonStyle())
+                    
                     HStack {
-                        Text("Exam Duration:")
+                        Text("Exam Duration")
                         Spacer()
-                        Text("\(Int(self.profile.examDuration))")
+                        Text("\(Int(self.profile.examDuration))s")
                     }
+                    
+                    
+                    
+                    
                 } else {
+                    
+                    DatePicker("Birthdate", selection: $age, in: closedRange, displayedComponents: .date)
+                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+                        .multilineTextAlignment(.trailing)
                     
                     Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
                     
@@ -175,7 +189,7 @@ struct ProfileEditView: View {
         profile.username = self.username
         profile.firstName = self.firstName
         profile.lastName = self.lastName
-        profile.age = Int64(self.age) ?? 11
+        profile.age = self.age
         profile.examDuration = Float(self.examDuration)
         
         try? self.viewContext.save()

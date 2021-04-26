@@ -20,7 +20,7 @@ struct ProfileSummaryView: View {
             // TODO add notification toggle
             Text("First Name: \(self.profile.wrappedFirstName)")
             Text("Last Name: \(self.profile.wrappedLastName)")
-            Text("Age: \(self.profile.age)")
+            //Text("Age: \(self.profile.age)")
             Text("Exam Duration: \(Int(self.profile.examDuration))")
             
         }

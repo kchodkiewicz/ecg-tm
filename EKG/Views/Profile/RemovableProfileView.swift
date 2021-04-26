@@ -41,7 +41,7 @@ struct ProfileView: View {
                 HStack {
                     Text("Age:")
                     Spacer()
-                    Text("\(self.profile.age)")
+                    //Text("\(self.profile.age ?? "s")")
                 }
                 HStack {
                     Text("Exam Duration:")
@@ -87,7 +87,7 @@ struct ProfileView: View {
                 username: self.profile.username ?? "",
                 firstName: self.profile.firstName ?? "",
                 lastName: self.profile.lastName ?? "",
-                age: String(self.profile.age),
+                //age: self.profile.age,
                 examDuration: Int(self.profile.examDuration))
         }
         

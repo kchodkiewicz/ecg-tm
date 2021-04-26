@@ -14,12 +14,19 @@ struct AddNewUserView: View {
     @State private var username = ""
     @State private var firstName = ""
     @State private var lastName = ""
-    @State private var age = ""
+    @State private var age = Date()
     @State private var examDuration = 5
     
     private var invalidInput: Bool {
         
-        username.isEmpty || firstName.isEmpty || lastName.isEmpty || username.count < 3 || Int64(age) == nil || Int64(examDuration) == 0
+        username.isEmpty || firstName.isEmpty || lastName.isEmpty || username.count < 3 || Int64(examDuration) == 0
+    }
+    
+    var closedRange: ClosedRange<Date> {
+        let lower = Calendar.current.date(byAdding: .year, value: -150, to: Date())!
+        let upper = Calendar.current.date(byAdding: .day, value: 0, to: Date())!
+        
+        return lower...upper
     }
     
     var body: some View {
@@ -31,8 +38,9 @@ struct AddNewUserView: View {
                 Section {
                     TextField("First Name", text: $firstName)
                     TextField("Last Name", text: $lastName)
-                    TextField("Age", text: $age)
-                        .keyboardType(.decimalPad)
+                    DatePicker("Birthdate", selection: $age, in: closedRange, displayedComponents: .date)
+//                    TextField("Age", text: $age)
+//                        .keyboardType(.decimalPad)
                 }
                 Section {
                     Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
@@ -47,7 +55,7 @@ struct AddNewUserView: View {
                             profile.firstName = self.firstName
                             profile.lastName = self.lastName
                             // TODO verify if numbers
-                            profile.age = Int64(self.age) ?? 0
+                            profile.age = self.age 
                             profile.examDuration = Float(self.examDuration)
                             
                             try? self.viewContext.save()

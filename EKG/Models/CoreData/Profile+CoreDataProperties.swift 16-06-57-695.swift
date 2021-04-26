@@ -1,8 +1,8 @@
 //
 //  Profile+CoreDataProperties.swift
-//  EKG
+//  
 //
-//  Created by Krzysztof Chodkiewicz on 12/03/2021.
+//  Created by Krzysztof Chodkiewicz on 26/04/2021.
 //
 //
 
@@ -16,12 +16,13 @@ extension Profile {
         return NSFetchRequest<Profile>(entityName: "Profile")
     }
 
-    @NSManaged public var age: Int64
+    @NSManaged public var age: Date?
     @NSManaged public var examDuration: Float
     @NSManaged public var firstName: String?
     @NSManaged public var id: UUID?
     @NSManaged public var lastName: String?
     @NSManaged public var username: String?
+    @NSManaged public var profileColor: Int64
     @NSManaged public var exam: NSSet?
     
     public var wrappedId: UUID {
@@ -40,6 +41,10 @@ extension Profile {
         username ?? "-"
     }
     
+    public var wrappedAge: Date {
+        age ?? Date()
+    }
+    
     public var examArray: [Exam] {
         let set = exam as? Set<Exam> ?? []
         
@@ -47,11 +52,7 @@ extension Profile {
             $0.wrappedDate > $1.wrappedDate
         }
     }
-    
-//    override public func validateForUpdate() throws {
-//        try super.validateForUpdate()
-//
-//    }
+
 }
 
 // MARK: Generated accessors for exam
@@ -68,9 +69,5 @@ extension Profile {
 
     @objc(removeExam:)
     @NSManaged public func removeFromExam(_ values: NSSet)
-    
-}
 
-extension Profile : Identifiable {
-    
 }
