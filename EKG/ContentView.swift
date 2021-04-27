@@ -14,10 +14,13 @@
  * [*] History previews
  * [ ] History Row images
  * [*] User profile color / photo
- * [ ] UserDefaults instead of ActiveSession
- * [ ] Id instead of Username
+ * [ ] UserDefaults instead of ActiveSession - chyba nie (UserDefaults przeżywa restart)
+ * [*] Id instead of Username
  * [ ] Fix form animation or give up
- * [ ] Remove user on long press
+ * [*] Remove user on long press
+ * [ ] Fix editmode on first new user
+ * [ ] Beautify UserRemovalOverlay
+ * [ ] Fix ScrollView hit only on text
  
  
  --- OPTIONAL ---
@@ -33,20 +36,21 @@ import CoreData
 import CoreBluetooth
 
 
-struct ShowingSheetKey: EnvironmentKey {
-    static let defaultValue: Binding<Bool>? = nil
-}
+//struct ShowingSheetKey: EnvironmentKey {
+//    static let defaultValue: Binding<Bool>? = nil
+//}
 
-extension EnvironmentValues {
-    var showingSheet: Binding<Bool>? {
-        get {self[ShowingSheetKey.self]}
-        set {self[ShowingSheetKey.self] = newValue}
-    }
-}
+//extension EnvironmentValues {
+//    var showingSheet: Binding<Bool>? {
+//        get {self[ShowingSheetKey.self]}
+//        set {self[ShowingSheetKey.self] = newValue}
+//    }
+//}
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var activeSession: ActiveSession
+    @Environment(\.editMode) var editMode
     @FetchRequest(
         entity: Profile.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Profile.username, ascending: true)],
@@ -54,8 +58,23 @@ struct ContentView: View {
     private var profiles: FetchedResults<Profile>
     
     @State var username: String = ""
-    @State private var showingNewUser: Bool = false
-
+    
+    @State private var isShowingAddUser: Bool = false
+    
+    func removeProfile(at offset: UUID) {
+        let index = profiles.firstIndex{ (Profile) -> Bool in
+            Profile.id == offset
+        }!
+        
+        let profile = profiles[index]
+        viewContext.delete(profile)
+        
+        do {
+            try viewContext.save()
+        } catch {
+            print("Some error happened to happed")
+        }
+    }
     
     var body: some View {
         
@@ -65,57 +84,108 @@ struct ContentView: View {
                 Profile.id == session
             }
             OverView(profile: profile[0])
-                //.environmentObject(activeSession)
             
         } else {
             VStack {
                 Spacer()
-                Text("ECG")
-                    .font(.title)
-                    .bold()
-                Spacer()
-                if self.profiles.isEmpty {
+                
+                ZStack {
                     Image("logo")
                         .clipShape(Circle())
-                } else {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(self.profiles) { profile in
-                                VStack {
-                                    Button(action: {
-                                        withAnimation(.spring()) {
-                                            activeSession.id = profile.wrappedId
-                                        }
-                                        
-                                    }, label: {
-                                        Image(systemName: "person.circle")
-                                            .resizable()
-                                            .frame(width: 100, height: 100, alignment: .center)
-                                            .animation(.spring())
-                                    })
-                                    .foregroundColor(Color(profile.wrappedColor))
+                        .offset(x: 0.0, y: self.profiles.isEmpty ? 100.0 : 0.0)
+                        .animation(.spring())
+                        .transition(Transitions.viewTransition)
+                    
+                    Text("ECG")
+                        .font(self.profiles.isEmpty ? .largeTitle : .title)
+                        .bold()
+                        .transition(Transitions.viewTransition)
+                    
+                }
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(self.profiles) { profile in
+                            VStack {
+                                if self.editMode?.wrappedValue == .inactive {
+                                    
+                                    Button(action: {},
+                                           label: {
+                                            Image(systemName: "person.circle")
+                                                .resizable()
+                                                .frame(width: 100, height: 100, alignment: .center)
+                                                .animation(.spring())
+                                            
+                                           })
+                                        .simultaneousGesture(LongPressGesture().onEnded { _ in
+                                            print("Secret Long Press Action!")
+                                            
+                                            withAnimation(.spring()) {
+                                                self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
+                                            }
+                                        })
+                                        .simultaneousGesture(TapGesture().onEnded {
+                                            withAnimation(.spring()) {
+                                                print("Boring regular tap")
+                                                activeSession.id = profile.wrappedId
+                                            }
+                                        })
+                                        .foregroundColor(Color(profile.wrappedColor))
+                                    Text(profile.wrappedUsername)
+                                } else {
+                                    Button(action: {},
+                                           label: {
+                                            ZStack {
+                                                Image(systemName: "person.circle")
+                                                    .resizable()
+                                                    .frame(width: 100, height: 100, alignment: .center)
+                                                    .animation(.spring())
+                                                    .onLongPressGesture {
+                                                        self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
+                                                    }
+                                                
+                                                UserRemovalOverlay()
+                                            }
+                                           })
+                                        .simultaneousGesture(TapGesture().onEnded {
+                                            withAnimation(.spring()) {
+                                                print("DeleteButton with no effect")
+                                                removeProfile(at: profile.id!)
+                                            }
+                                        })
+                                        .foregroundColor(Color(profile.wrappedColor))
                                     Text(profile.wrappedUsername)
                                 }
                             }
-                        }.padding()
-                    }.frame(alignment: .center)
-                }
+                        }
+                    }.padding()
+                }.frame(alignment: .center)
+                
                 
                 Spacer()
                 
                 Button(action: {
-                    self.showingNewUser.toggle()
+                    if !self.profiles.isEmpty {
+                        if self.editMode?.wrappedValue == .inactive {
+                            self.isShowingAddUser.toggle()
+                        } else {
+                            self.editMode?.wrappedValue = .inactive
+                        }
+                    } else {
+                        self.isShowingAddUser.toggle()
+                    }
                 }, label: {
-                    Text("New user")
+                    Text(self.profiles.isEmpty ? "New user" : self.editMode?.wrappedValue == .inactive ? "New user" : "Done")
                 })
                 .padding()
                 .font(.headline)
                 
                 Spacer()
-                    .sheet(isPresented: $showingNewUser, content: {
-                        AddNewUserView().environment(\.showingSheet, self.$showingNewUser)
+                    .sheet(isPresented: $isShowingAddUser, content: {
+                        AddNewUserView()
                     })
             }
+            .onAppear(perform: {self.editMode?.wrappedValue = .inactive})
         }
     }
 }

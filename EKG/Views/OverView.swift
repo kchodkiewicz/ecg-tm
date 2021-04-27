@@ -69,7 +69,7 @@ struct OverView: View {
                     age: self.profile.wrappedAge,
                     examDuration: Int(self.profile.examDuration),
                 profileColor: ProfileColor.ColorName(value: self.profile.wrappedColor))
-                    .environmentObject(self.activeSession)
+                    //.environmentObject(self.activeSession)
                 
             }.tabItem {
                 Image(systemName: "person.crop.circle")

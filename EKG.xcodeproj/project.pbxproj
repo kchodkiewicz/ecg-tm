@@ -22,6 +22,7 @@
 		2C48469626375C4800656C5E /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48469526375C4800656C5E /* Animations.swift */; };
 		2C48469B263819B000656C5E /* Profile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484699263819AF00656C5E /* Profile+CoreDataClass.swift */; };
 		2C48469C263819B000656C5E /* Profile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48469A263819B000656C5E /* Profile+CoreDataProperties.swift */; };
+		2C4846A526383A9A00656C5E /* UserRemovalOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4846A426383A9A00656C5E /* UserRemovalOverlay.swift */; };
 		2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E226D25F7B83D002E8306 /* GraphExamView.swift */; };
 		2C5E227125F7B85F002E8306 /* GraphSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */; };
 		2C9540962621CD9200D115FE /* BTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540952621CD9200D115FE /* BTView.swift */; };
@@ -55,6 +56,7 @@
 		2C48469526375C4800656C5E /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		2C484699263819AF00656C5E /* Profile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Profile+CoreDataClass.swift"; path = "/Users/krzysztofchodkiewicz/Documents/Biurko/studia/CHMURY/TM/EKG/EKG/Models/CoreData/Profile+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		2C48469A263819B000656C5E /* Profile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Profile+CoreDataProperties.swift"; path = "/Users/krzysztofchodkiewicz/Documents/Biurko/studia/CHMURY/TM/EKG/EKG/Models/CoreData/Profile+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		2C4846A426383A9A00656C5E /* UserRemovalOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemovalOverlay.swift; sourceTree = "<group>"; };
 		2C5E226D25F7B83D002E8306 /* GraphExamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphExamView.swift; sourceTree = "<group>"; };
 		2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSummaryView.swift; sourceTree = "<group>"; };
 		2C9540952621CD9200D115FE /* BTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTView.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				2C9540952621CD9200D115FE /* BTView.swift */,
 				2C48468B263744C000656C5E /* ColorPickerView.swift */,
 				2C48468E26375A4400656C5E /* UserIcon.swift */,
+				2C4846A426383A9A00656C5E /* UserRemovalOverlay.swift */,
 			);
 			path = SupportViews;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				2C48467F263700C700656C5E /* Exam+CoreDataProperties.swift 16-06-57-689.swift in Sources */,
 				2CC6167C25F657BC0082FC63 /* Persistence.swift in Sources */,
 				2C48469C263819B000656C5E /* Profile+CoreDataProperties.swift in Sources */,
+				2C4846A526383A9A00656C5E /* UserRemovalOverlay.swift in Sources */,
 				2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */,
 				2C48467C263700C700656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift in Sources */,
 				2CC6167525F657BA0082FC63 /* ContentView.swift in Sources */,
