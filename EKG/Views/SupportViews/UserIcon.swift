@@ -25,7 +25,7 @@ struct UserIcon: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 100, height: 100, alignment: .center)
-                    .foregroundColor(Color("\(profileColor.rawValue)"))
+                    .foregroundColor(Color(profileColor.rawValue))
                     
                 
             }.frame(width: 100, height: 100, alignment: .center)

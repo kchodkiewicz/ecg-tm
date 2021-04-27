@@ -13,7 +13,7 @@
         <attribute name="firstName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
-        <attribute name="profileColor" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="profileColor" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
         <relationship name="exam" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exam" inverseName="origin" inverseEntity="Exam"/>
         <uniquenessConstraints>

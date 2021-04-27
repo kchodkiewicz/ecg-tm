@@ -63,11 +63,12 @@ struct OverView: View {
                 ProfileEditView(
                     viewContext: viewContext,
                     profile: self.profile,
-                    username: self.profile.username ?? "",
-                    firstName: self.profile.firstName ?? "",
-                    lastName: self.profile.lastName ?? "",
-                    age: self.profile.age ?? Date(),
-                    examDuration: Int(self.profile.examDuration))
+                    username: self.profile.wrappedUsername,
+                    firstName: self.profile.wrappedFirstName,
+                    lastName: self.profile.wrappedLastName,
+                    age: self.profile.wrappedAge,
+                    examDuration: Int(self.profile.examDuration),
+                profileColor: ProfileColor.ColorName(value: self.profile.wrappedColor))
                     .environmentObject(self.activeSession)
                 
             }.tabItem {

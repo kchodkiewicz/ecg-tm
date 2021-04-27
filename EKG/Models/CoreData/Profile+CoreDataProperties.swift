@@ -2,7 +2,7 @@
 //  Profile+CoreDataProperties.swift
 //  
 //
-//  Created by Krzysztof Chodkiewicz on 26/04/2021.
+//  Created by Krzysztof Chodkiewicz on 27/04/2021.
 //
 //
 
@@ -22,11 +22,15 @@ extension Profile {
     @NSManaged public var id: UUID?
     @NSManaged public var lastName: String?
     @NSManaged public var username: String?
-    @NSManaged public var profileColor: Int64
+    @NSManaged public var profileColor: String?
     @NSManaged public var exam: NSSet?
     
     public var wrappedId: UUID {
         id ?? UUID()
+    }
+    
+    public var wrappedColor: String {
+        profileColor ?? "crimson"
     }
     
     public var wrappedFirstName: String {

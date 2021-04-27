@@ -9,23 +9,17 @@ import CoreData
 import CoreBluetooth
 
 
-
-
-var closedRange: ClosedRange<Date> {
-    let lower = Calendar.current.date(byAdding: .year, value: -150, to: Date())!
-    let upper = Calendar.current.date(byAdding: .day, value: 0, to: Date())!
-    
-    return lower...upper
-}
-
 public func getAge(birthdate: Date) -> String {
     
-    let duration = DateInterval(start: birthdate, end: Date()).duration
-    let formatter = DateComponentsFormatter()
-    formatter.allowedUnits = [.year]
-    formatter.maximumUnitCount = 0
+    let current = Calendar.current
     
-    return formatter.string(from: duration)!
+    let years = current.dateComponents(
+      [.year],
+      from: birthdate,
+      to: Date()
+    )
+    
+    return String(years.year!)
 }
 
 struct ProfileEditView: View {
@@ -61,7 +55,7 @@ struct ProfileEditView: View {
                             .resizable()
                             .scaledToFill()
                             .frame(width: 100, height: 100, alignment: .center)
-                            .foregroundColor(Color("\(profileColor.rawValue)"))
+                            .foregroundColor(Color(self.profile.wrappedColor))
                             .padding()
                         Spacer()
                     }
@@ -112,9 +106,9 @@ struct ProfileEditView: View {
                             Text(self.showingAge ? "Age" : "Birthdate")
                             Spacer()
                             if self.showingAge {
-                                Text(getAge(birthdate: self.profile.age ?? Date()))
+                                Text(getAge(birthdate: self.profile.wrappedAge))
                             } else {
-                                Text(self.profile.age ?? Date(), formatter: Formatters.birthDateFormat)
+                                Text(self.profile.wrappedAge, formatter: Formatters.birthDateFormat)
                             }
                         }
                     }.foregroundColor(Color.primary)
@@ -128,9 +122,9 @@ struct ProfileEditView: View {
                     }
                 } else {
                     
-                    DatePicker("Birthdate", selection: $age, in: closedRange, displayedComponents: .date)
-                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+                    DatePicker("Birthdate", selection: $age, in: Formatters.closeBirthDateRange, displayedComponents: .date)
                         .multilineTextAlignment(.trailing)
+                        .datePickerStyle(WheelDatePickerStyle())
                         
                     
                     Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
@@ -153,7 +147,7 @@ struct ProfileEditView: View {
                     
                     Button {
                         withAnimation(.easeInOut(duration: 0.35)) {
-                            self.activeSession.profile = nil
+                            self.activeSession.id = nil
                         }
                     } label: {
                         Text("Switch User")
@@ -201,7 +195,7 @@ struct ProfileEditView: View {
         profile.lastName = self.lastName
         profile.age = self.age
         profile.examDuration = Float(self.examDuration)
-        profile.profileColor = self.profileColor.ColorValue
+        profile.profileColor = self.profileColor.rawValue
         
         try? self.viewContext.save()
         

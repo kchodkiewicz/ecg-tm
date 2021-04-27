@@ -22,7 +22,7 @@
  
  --- OPTIONAL ---
  * [ ] Profile as sheet in Overview
- * [ ] Tabs: Overview, New Exam
+ * [ ] Tabs: Overview (pulse, etc. + part of history), History, New Exam
  *
  
  */
@@ -59,13 +59,13 @@ struct ContentView: View {
     
     var body: some View {
         
-        if !activeSession.username.isEmpty && activeSession.profile != nil {
+        if let session = activeSession.id {
             
             let profile = profiles.filter { (Profile) -> Bool in
-                Profile.id == activeSession.profile?.wrappedId
+                Profile.id == session
             }
             OverView(profile: profile[0])
-                .environmentObject(activeSession)
+                //.environmentObject(activeSession)
             
         } else {
             VStack {
@@ -84,9 +84,7 @@ struct ContentView: View {
                                 VStack {
                                     Button(action: {
                                         withAnimation(.spring()) {
-                                            activeSession.username = profile.username ?? ""
-                                            
-                                            activeSession.profile = profile
+                                            activeSession.id = profile.wrappedId
                                         }
                                         
                                     }, label: {
@@ -95,8 +93,8 @@ struct ContentView: View {
                                             .frame(width: 100, height: 100, alignment: .center)
                                             .animation(.spring())
                                     })
-                                    .foregroundColor(Color(ProfileColor.ColorName(value: profile.profileColor)))
-                                    Text(profile.username ?? "-")
+                                    .foregroundColor(Color(profile.wrappedColor))
+                                    Text(profile.wrappedUsername)
                                 }
                             }
                         }.padding()

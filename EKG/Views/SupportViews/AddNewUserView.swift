@@ -23,13 +23,6 @@ struct AddNewUserView: View {
         username.isEmpty || firstName.isEmpty || lastName.isEmpty || username.count < 3 || Int64(examDuration) == 0
     }
     
-    var closedRange: ClosedRange<Date> {
-        let lower = Calendar.current.date(byAdding: .year, value: -150, to: Date())!
-        let upper = Calendar.current.date(byAdding: .day, value: 0, to: Date())!
-        
-        return lower...upper
-    }
-    
     var body: some View {
         NavigationView {
             Form {
@@ -43,7 +36,9 @@ struct AddNewUserView: View {
                 Section {
                     TextField("First Name", text: $firstName)
                     TextField("Last Name", text: $lastName)
-                    DatePicker("Birthdate", selection: $age, in: closedRange, displayedComponents: .date)
+                    DatePicker("Birthdate", selection: $age, in: Formatters.closeBirthDateRange, displayedComponents: .date)
+                        .multilineTextAlignment(.trailing)
+                        .datePickerStyle(WheelDatePickerStyle())
                 }
                 Section {
                     Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
@@ -60,7 +55,7 @@ struct AddNewUserView: View {
                             // TODO verify if numbers
                             profile.age = self.age 
                             profile.examDuration = Float(self.examDuration)
-                            profile.profileColor = self.profileColor.ColorValue
+                            profile.profileColor = self.profileColor.rawValue
                             
                             try? self.viewContext.save()
                             

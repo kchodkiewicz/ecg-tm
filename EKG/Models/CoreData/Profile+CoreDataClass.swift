@@ -2,7 +2,7 @@
 //  Profile+CoreDataClass.swift
 //  
 //
-//  Created by Krzysztof Chodkiewicz on 26/04/2021.
+//  Created by Krzysztof Chodkiewicz on 27/04/2021.
 //
 //
 

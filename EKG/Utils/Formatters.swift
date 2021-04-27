@@ -30,4 +30,11 @@ struct Formatters {
         return formatter
     }()
     
+    static public var closeBirthDateRange: ClosedRange<Date> {
+        let lower = Calendar.current.date(byAdding: .year, value: -150, to: Date())!
+        let upper = Date()
+        
+        return lower...upper
+    }
+    
 }

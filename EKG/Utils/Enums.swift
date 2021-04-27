@@ -39,21 +39,21 @@ enum ProfileColor: String, CaseIterable {
         }
     }
     
-    static public func ColorName(value: Int64) -> String {
+    static public func ColorName(value: String) -> ProfileColor {
         
         switch value {
-        case 0: return "crimson"
-        case 1: return "violet"
-        case 2: return "coolGray"
-        case 3: return "iris"
-        case 4: return "blackGrape"
-        case 5: return "trypanBlue"
-        case 6: return "presianBlue"
-        case 7: return "ultramarine"
-        case 8: return "dodgerBlue"
-        case 9: return "vividSkyBlue"
+        case "crimson": return .crimson
+        case "violet": return .violet
+        case "coolGray": return .coolGray
+        case "iris": return .iris
+        case "blackGrape": return .blackGrape
+        case "trypanBlue": return .trypanBlue
+        case "presianBlue": return .persianBlue
+        case "ultramarine": return .ultramarine
+        case "dodgerBlue": return .dodgerBlue
+        case "vividSkyBlue": return .vividSkyBlue
         default:
-            return "crimson"
+            return .crimson
         }
         
     }

@@ -15,16 +15,15 @@
 		2C48467D263700C700656C5E /* Sample+CoreDataProperties.swift 16-06-57-693.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484677263700C600656C5E /* Sample+CoreDataProperties.swift 16-06-57-693.swift */; };
 		2C48467E263700C700656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484678263700C600656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift */; };
 		2C48467F263700C700656C5E /* Exam+CoreDataProperties.swift 16-06-57-689.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484679263700C600656C5E /* Exam+CoreDataProperties.swift 16-06-57-689.swift */; };
-		2C484680263700C700656C5E /* Profile+CoreDataClass.swift 16-06-57-632.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48467A263700C700656C5E /* Profile+CoreDataClass.swift 16-06-57-632.swift */; };
-		2C484681263700C700656C5E /* Profile+CoreDataProperties.swift 16-06-57-695.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48467B263700C700656C5E /* Profile+CoreDataProperties.swift 16-06-57-695.swift */; };
 		2C48468626370C9700656C5E /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48468526370C9700656C5E /* Formatters.swift */; };
 		2C484689263740FD00656C5E /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484688263740FD00656C5E /* Enums.swift */; };
 		2C48468C263744C000656C5E /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48468B263744C000656C5E /* ColorPickerView.swift */; };
 		2C48468F26375A4400656C5E /* UserIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48468E26375A4400656C5E /* UserIcon.swift */; };
 		2C48469626375C4800656C5E /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48469526375C4800656C5E /* Animations.swift */; };
+		2C48469B263819B000656C5E /* Profile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484699263819AF00656C5E /* Profile+CoreDataClass.swift */; };
+		2C48469C263819B000656C5E /* Profile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48469A263819B000656C5E /* Profile+CoreDataProperties.swift */; };
 		2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E226D25F7B83D002E8306 /* GraphExamView.swift */; };
 		2C5E227125F7B85F002E8306 /* GraphSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */; };
-		2C613C6D25FFB9C800C4516E /* RemovableProfileSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C613C6C25FFB9C800C4516E /* RemovableProfileSummaryView.swift */; };
 		2C9540962621CD9200D115FE /* BTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540952621CD9200D115FE /* BTView.swift */; };
 		2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540982621D34F00D115FE /* BLEConnection.swift */; };
 		2CC3157A263456D4007ABCF8 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC31579263456D4007ABCF8 /* Chart.swift */; };
@@ -37,7 +36,6 @@
 		2CC6168B25F660270082FC63 /* GraphDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6168A25F660270082FC63 /* GraphDetail.swift */; };
 		2CC6168F25F6603D0082FC63 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6168E25F6603D0082FC63 /* HistoryView.swift */; };
 		2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */; };
-		2CE9071D25F96E700060CBD1 /* RemovableProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9071C25F96E700060CBD1 /* RemovableProfileView.swift */; };
 		8087124F376F23F61EABD8C9 /* Pods_EKG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,16 +48,15 @@
 		2C484677263700C600656C5E /* Sample+CoreDataProperties.swift 16-06-57-693.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sample+CoreDataProperties.swift 16-06-57-693.swift"; sourceTree = "<group>"; };
 		2C484678263700C600656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sample+CoreDataClass.swift 16-06-57-635.swift"; sourceTree = "<group>"; };
 		2C484679263700C600656C5E /* Exam+CoreDataProperties.swift 16-06-57-689.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Exam+CoreDataProperties.swift 16-06-57-689.swift"; sourceTree = "<group>"; };
-		2C48467A263700C700656C5E /* Profile+CoreDataClass.swift 16-06-57-632.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Profile+CoreDataClass.swift 16-06-57-632.swift"; sourceTree = "<group>"; };
-		2C48467B263700C700656C5E /* Profile+CoreDataProperties.swift 16-06-57-695.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Profile+CoreDataProperties.swift 16-06-57-695.swift"; sourceTree = "<group>"; };
 		2C48468526370C9700656C5E /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		2C484688263740FD00656C5E /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		2C48468B263744C000656C5E /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		2C48468E26375A4400656C5E /* UserIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIcon.swift; sourceTree = "<group>"; };
 		2C48469526375C4800656C5E /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		2C484699263819AF00656C5E /* Profile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Profile+CoreDataClass.swift"; path = "/Users/krzysztofchodkiewicz/Documents/Biurko/studia/CHMURY/TM/EKG/EKG/Models/CoreData/Profile+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		2C48469A263819B000656C5E /* Profile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Profile+CoreDataProperties.swift"; path = "/Users/krzysztofchodkiewicz/Documents/Biurko/studia/CHMURY/TM/EKG/EKG/Models/CoreData/Profile+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		2C5E226D25F7B83D002E8306 /* GraphExamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphExamView.swift; sourceTree = "<group>"; };
 		2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSummaryView.swift; sourceTree = "<group>"; };
-		2C613C6C25FFB9C800C4516E /* RemovableProfileSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovableProfileSummaryView.swift; sourceTree = "<group>"; };
 		2C9540952621CD9200D115FE /* BTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTView.swift; sourceTree = "<group>"; };
 		2C9540982621D34F00D115FE /* BLEConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConnection.swift; sourceTree = "<group>"; };
 		2CC31579263456D4007ABCF8 /* Chart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
@@ -76,7 +73,6 @@
 		2CC6168A25F660270082FC63 /* GraphDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDetail.swift; sourceTree = "<group>"; };
 		2CC6168E25F6603D0082FC63 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
-		2CE9071C25F96E700060CBD1 /* RemovableProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovableProfileView.swift; sourceTree = "<group>"; };
 		5BDFF963D48E3A75DD4E5DE7 /* Pods-EKG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EKG.release.xcconfig"; path = "Target Support Files/Pods-EKG/Pods-EKG.release.xcconfig"; sourceTree = "<group>"; };
 		7E88409701BA03AA391BFBC6 /* Pods-EKG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EKG.debug.xcconfig"; path = "Target Support Files/Pods-EKG/Pods-EKG.debug.xcconfig"; sourceTree = "<group>"; };
 		C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EKG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,10 +101,10 @@
 		2C4846542636FA9500656C5E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				2C484699263819AF00656C5E /* Profile+CoreDataClass.swift */,
+				2C48469A263819B000656C5E /* Profile+CoreDataProperties.swift */,
 				2C484676263700C600656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift */,
 				2C484679263700C600656C5E /* Exam+CoreDataProperties.swift 16-06-57-689.swift */,
-				2C48467A263700C700656C5E /* Profile+CoreDataClass.swift 16-06-57-632.swift */,
-				2C48467B263700C700656C5E /* Profile+CoreDataProperties.swift 16-06-57-695.swift */,
 				2C484678263700C600656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift */,
 				2C484677263700C600656C5E /* Sample+CoreDataProperties.swift 16-06-57-693.swift */,
 			);
@@ -234,9 +230,7 @@
 		2CC6169F25F6D5290082FC63 /* ProfileViews */ = {
 			isa = PBXGroup;
 			children = (
-				2CE9071C25F96E700060CBD1 /* RemovableProfileView.swift */,
 				2C40294B25FAD7B600268220 /* ProfileEditView.swift */,
-				2C613C6C25FFB9C800C4516E /* RemovableProfileSummaryView.swift */,
 			);
 			path = ProfileViews;
 			sourceTree = "<group>";
@@ -365,7 +359,6 @@
 			files = (
 				2CC6168B25F660270082FC63 /* GraphDetail.swift in Sources */,
 				2C48468F26375A4400656C5E /* UserIcon.swift in Sources */,
-				2CE9071D25F96E700060CBD1 /* RemovableProfileView.swift in Sources */,
 				2C40294C25FAD7B600268220 /* ProfileEditView.swift in Sources */,
 				2C48468626370C9700656C5E /* Formatters.swift in Sources */,
 				2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */,
@@ -374,6 +367,7 @@
 				2C9540962621CD9200D115FE /* BTView.swift in Sources */,
 				2C48467F263700C700656C5E /* Exam+CoreDataProperties.swift 16-06-57-689.swift in Sources */,
 				2CC6167C25F657BC0082FC63 /* Persistence.swift in Sources */,
+				2C48469C263819B000656C5E /* Profile+CoreDataProperties.swift in Sources */,
 				2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */,
 				2C48467C263700C700656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift in Sources */,
 				2CC6167525F657BA0082FC63 /* ContentView.swift in Sources */,
@@ -381,17 +375,15 @@
 				2C48468C263744C000656C5E /* ColorPickerView.swift in Sources */,
 				2C48469626375C4800656C5E /* Animations.swift in Sources */,
 				2C03152625FD6FA3008FD459 /* AddNewUserView.swift in Sources */,
-				2C484681263700C700656C5E /* Profile+CoreDataProperties.swift 16-06-57-695.swift in Sources */,
 				2CC3157A263456D4007ABCF8 /* Chart.swift in Sources */,
 				2C03151F25FD3E6C008FD459 /* OverView.swift in Sources */,
 				2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */,
 				2CC6167325F657BA0082FC63 /* EKGApp.swift in Sources */,
 				2C484689263740FD00656C5E /* Enums.swift in Sources */,
+				2C48469B263819B000656C5E /* Profile+CoreDataClass.swift in Sources */,
 				2CC6167F25F657BC0082FC63 /* EKG.xcdatamodeld in Sources */,
-				2C484680263700C700656C5E /* Profile+CoreDataClass.swift 16-06-57-632.swift in Sources */,
 				2C03152325FD6CDF008FD459 /* ActiveSession.swift in Sources */,
 				2C5E227125F7B85F002E8306 /* GraphSummaryView.swift in Sources */,
-				2C613C6D25FFB9C800C4516E /* RemovableProfileSummaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
