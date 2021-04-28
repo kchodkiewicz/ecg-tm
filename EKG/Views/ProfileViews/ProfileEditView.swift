@@ -9,19 +9,6 @@ import CoreData
 import CoreBluetooth
 
 
-public func getAge(birthdate: Date) -> String {
-    
-    let current = Calendar.current
-    
-    let years = current.dateComponents(
-      [.year],
-      from: birthdate,
-      to: Date()
-    )
-    
-    return String(years.year!)
-}
-
 struct ProfileEditView: View {
     
     //@Binding var profile: Profile
@@ -42,21 +29,22 @@ struct ProfileEditView: View {
     @State var profileColor: ProfileColor = ProfileColor.crimson
     
     @State var showingAge: Bool = true
+
     
     var body: some View {
-        
         Form {
-            
             Section {
                 if .inactive == self.editMode?.wrappedValue {
                     HStack {
                         Spacer()
+                        
                         Image(systemName: "person.circle")
                             .resizable()
                             .scaledToFill()
                             .frame(width: 100, height: 100, alignment: .center)
                             .foregroundColor(Color(self.profile.wrappedColor))
                             .padding()
+                        
                         Spacer()
                     }
                 } else {
@@ -72,12 +60,14 @@ struct ProfileEditView: View {
                         .disabled(.inactive == self.editMode?.wrappedValue)
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
                         .multilineTextAlignment(.trailing)
+                        .disableAutocorrection(true)
                 }
                 
                 HStack {
                     Text("First Name")
                     
                     Spacer()
+                    
                     TextField("First Name", text: $firstName)
                         .disabled(.inactive == self.editMode?.wrappedValue)
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
@@ -88,6 +78,7 @@ struct ProfileEditView: View {
                     Text("Last Name")
                     
                     Spacer()
+                    
                     TextField("Last Name", text: $lastName)
                         .disabled(.inactive == self.editMode?.wrappedValue)
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
@@ -96,7 +87,6 @@ struct ProfileEditView: View {
             }
             Section {
                 if .inactive == self.editMode?.wrappedValue {
-                    
                     Button {
                         withAnimation(.spring()) {
                             self.showingAge.toggle()
@@ -104,7 +94,9 @@ struct ProfileEditView: View {
                     } label: {
                         HStack {
                             Text(self.showingAge ? "Age" : "Birthdate")
+                            
                             Spacer()
+                            
                             if self.showingAge {
                                 Text(getAge(birthdate: self.profile.wrappedAge))
                             } else {
@@ -114,23 +106,21 @@ struct ProfileEditView: View {
                     }.foregroundColor(Color.primary)
                     .buttonStyle(PlainButtonStyle())
                     
-                    
                     HStack {
                         Text("Exam Duration")
+                        
                         Spacer()
+                        
                         Text("\(Int(self.profile.examDuration))s")
                     }
                 } else {
-                    
                     DatePicker("Birthdate", selection: $age, in: Formatters.closeBirthDateRange, displayedComponents: .date)
                         .multilineTextAlignment(.trailing)
                         .datePickerStyle(WheelDatePickerStyle())
                         
-                    
                     Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
                         .disabled(.inactive == self.editMode?.wrappedValue)
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
-                        
                 }
             }
             
@@ -139,7 +129,9 @@ struct ProfileEditView: View {
                     
                     NavigationLink(destination: BTView(bleConnection: bleConnection)) {
                         Text("Bluetooth Device")
+                        
                         Spacer()
+                        
                         Text(bleConnection.peripheral?.name ?? "None")
                     }
                 }
@@ -163,13 +155,13 @@ struct ProfileEditView: View {
             }) {
                 Text(.active == self.editMode?.wrappedValue ? "Cancel" : "")
             }
-            .padding(.bottom)
+            .padding(.vertical)
             .padding(.trailing),
             
             trailing: Button(action: {
                 withAnimation(.spring()) {
                     self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
-                    onSaveTapped()
+                    updateProfile()
                 }
             }) {
                 Text(.active == self.editMode?.wrappedValue ? "Done" : "Edit")
@@ -178,15 +170,22 @@ struct ProfileEditView: View {
             .padding(.leading)
         )
         
-        .navigationBarTitle(.inactive == self.editMode?.wrappedValue ? "\(self.firstName) \(self.lastName)" : "Edit your profile")
+        .navigationTitle(.inactive == self.editMode?.wrappedValue ? "\(self.firstName) \(self.lastName)" : "Edit your profile")
         
     }
     
-    private func onCancelTapped() {
-        self.presentationMode.wrappedValue.dismiss()
+    private func getAge(birthdate: Date) -> String {
+        
+        let current = Calendar.current
+        let years = current.dateComponents(
+          [.year],
+          from: birthdate,
+          to: Date()
+        )
+        return String(years.year!)
     }
     
-    private func onSaveTapped() {
+    private func updateProfile() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         
         let profile = self.profile
@@ -198,13 +197,5 @@ struct ProfileEditView: View {
         profile.profileColor = self.profileColor.rawValue
         
         try? self.viewContext.save()
-        
-        //self.presentationMode.wrappedValue.dismiss()
     }
 }
-
-//struct ProfileEditView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProfileEditView()
-//    }
-//}

@@ -10,9 +10,8 @@ import SwiftUI
 struct AddNewUserView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    //@Environment(\.showingSheet) var showingSheet
     @Environment(\.presentationMode) var presentationMode
-    //@Environment(\.editMode) var editMode
+    
     @State private var username = ""
     @State private var firstName = ""
     @State private var lastName = ""
@@ -34,6 +33,7 @@ struct AddNewUserView: View {
                     UserIcon(profileColor: self.$profileColor)
                 
                     TextField("Username", text: $username)
+                        .disableAutocorrection(true)
                     
                     TextField("First Name", text: $firstName)
                     
@@ -80,7 +80,7 @@ struct AddNewUserView: View {
                 .padding(.leading)
             )
             
-            .navigationBarTitle("New User")
+            .navigationTitle("New User")
         }
     }
     
@@ -103,8 +103,8 @@ struct AddNewUserView: View {
     }
 }
 
-struct AddNewUserView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddNewUserView()
-    }
-}
+//struct AddNewUserView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddNewUserView()
+//    }
+//}
