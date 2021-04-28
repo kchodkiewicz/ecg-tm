@@ -61,6 +61,7 @@ struct ProfileEditView: View {
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
                         .multilineTextAlignment(.trailing)
                         .disableAutocorrection(true)
+                        .autocapitalization(.none)
                 }
                 
                 HStack {

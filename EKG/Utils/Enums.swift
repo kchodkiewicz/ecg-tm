@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - ProfileColors
 enum ProfileColor: String, CaseIterable {
     case crimson = "crimson"
     case violet = "violet"
@@ -63,4 +64,11 @@ enum ProfileColor: String, CaseIterable {
 
 extension ProfileColor: Identifiable {
     var id: ProfileColor { self }
+}
+
+//MARK: - Tabs Tags
+enum Tab: Int, CaseIterable {
+    case history = 0
+    case exam = 1
+    case profile = 2
 }

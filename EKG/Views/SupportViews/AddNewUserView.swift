@@ -34,6 +34,7 @@ struct AddNewUserView: View {
                 
                     TextField("Username", text: $username)
                         .disableAutocorrection(true)
+                        .autocapitalization(.none)
                     
                     TextField("First Name", text: $firstName)
                     

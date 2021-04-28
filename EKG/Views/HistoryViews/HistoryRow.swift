@@ -21,7 +21,7 @@ struct HistoryRow: View {
     var body: some View {
         VStack {
             HStack {
-
+                //FIXME: change to some icon or preview graph (like in Landmarks.hikeData)
                 GraphDetail(points: exam.sampleArray)
                     .frame(width: 50, height: 30)
 
@@ -29,6 +29,12 @@ struct HistoryRow: View {
                 VStack(alignment: .leading) {
                     Text(exam.date ?? Date(), formatter: Formatters.dateFormat)
                         .font(.headline)
+                    //TODO: add notes preview
+                    Text(exam.notes ?? "default text is very very very very very long. Like way too long, yeah i think now its preety obvious")
+                        .font(.caption)
+                        .lineLimit(1)
+                        .frame(maxWidth: 150.0, alignment: .leading)
+                        
                 }
 
                 Spacer()

@@ -20,6 +20,9 @@ struct GraphSummaryView: View {
                 GraphDetail(points: points)
                 
                 Spacer()
+                
+                //TODO: Show / Create / Edit Notes (TextField), pulse?, etc.
+                
                 Spacer()
                 
             }

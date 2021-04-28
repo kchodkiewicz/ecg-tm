@@ -9,16 +9,11 @@ import SwiftUI
 import CoreBluetooth
 
 struct OverView: View {
+    
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var activeSession: ActiveSession
     
     @ObservedObject var bleConnection = BLEConnection()
-    
-    //    @FetchRequest(
-    //        entity: Profile.entity(),
-    //        sortDescriptors: [NSSortDescriptor(keyPath: \Profile.id, ascending: true)],
-    //        animation: .default)
-    //    private var profile: FetchedResults<Profile>
     
     var profile: Profile
     
@@ -31,6 +26,8 @@ struct OverView: View {
         
         // Start Scanning for BLE Devices
         bleConnection.startCentralManager()
+        
+        //TODO: try connecting to saved device (CoreData: Profile.btRRSI <- add)
         
     }
     
@@ -46,7 +43,7 @@ struct OverView: View {
                     .imageScale(.large)
                     .accessibility(label: Text("History"))
                 Text("History")
-            }
+            }.tag(Tab.history)
             
             // Exam
             NavigationView {
@@ -57,7 +54,7 @@ struct OverView: View {
                     .accessibility(label: Text("New Examination"))
                 Text("Exam")
             }
-            
+            .tag(Tab.exam)
             // Profile
             NavigationView {
                 ProfileEditView(
@@ -69,7 +66,6 @@ struct OverView: View {
                     age: self.profile.wrappedAge,
                     examDuration: Int(self.profile.examDuration),
                 profileColor: ProfileColor.ColorName(value: self.profile.wrappedColor))
-                    //.environmentObject(self.activeSession)
                 
             }.tabItem {
                 Image(systemName: "person.crop.circle")
@@ -77,7 +73,7 @@ struct OverView: View {
                     .accessibility(label: Text("User Profile"))
                     .padding()
                 Text("Profile")
-            }
+            }.tag(Tab.profile)
             
             
         }

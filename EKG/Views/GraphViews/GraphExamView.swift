@@ -25,7 +25,6 @@ struct RoundButtonStyle: ButtonStyle {
             configuration.label
                 .frame(width: 63, height: 63)
                 .foregroundColor(configuration.isPressed ? Color.secondary : Color.white)
-                //.background(configuration.isPressed ? Color.white : Color.clear)
                 .clipShape(configuration.isPressed ? Circle() : Circle())
         }
     }
@@ -37,6 +36,10 @@ struct GraphExamView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     let profile: Profile
+    
+    private func queueToSummary() {
+        //TODO: Queue to GraphSummaryView if stopButton or examDuration exceeded
+    }
     
     var body: some View {
         VStack {
@@ -52,8 +55,14 @@ struct GraphExamView: View {
                 Spacer()
                 
                 Button(action: {
+                    
+                    //TODO: Send stop signal to BT
+                    
                     // Stop examination
                     print("Stop button")
+                    
+                     
+                    
                 }, label: {
                     Text("Stop")
                     
@@ -64,6 +73,10 @@ struct GraphExamView: View {
                 Spacer()
                 
                 Button(action: {
+                    
+                    //TODO: Start fetching data from BT and save to core data
+                    
+                    
                     // Start examination
                     print("Start button")
                     
@@ -87,6 +100,8 @@ struct GraphExamView: View {
                     
                     try? self.viewContext.save()
                     // ---------------------------
+                    
+                   
                     
                 }, label: {
                     Text("Start")
