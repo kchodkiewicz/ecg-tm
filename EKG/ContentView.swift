@@ -38,8 +38,12 @@ import CoreBluetooth
 
 struct LogoOverlay: View {
     
+    var isOverlaying: Bool
+    
     var body: some View {
-        Text("Hello")
+        Circle()
+            .fill(LinearGradient(gradient: Gradient(colors: [Color.black, Color.clear]), startPoint: .bottom, endPoint: .top))
+            .opacity(self.isOverlaying ? 0.7 : 0.0)
     }
 }
 
@@ -72,6 +76,25 @@ struct ContentView: View {
         }
     }
     
+    //TODO: change hardcoded padding
+    let userIconPadding: CGFloat = 10
+    
+    var gemetricalPadding: CGFloat {
+        let icons = UIScreen.main.bounds.width - userIconSize * CGFloat(self.profiles.count)
+        let paddings = (CGFloat(self.profiles.count) - 1) * userIconPadding
+        let finalPadding = (icons - paddings) / 2.0
+        guard finalPadding > 0 else {
+            return 0.0
+        }
+        return finalPadding
+    }
+    
+    var userIconSize: CGFloat {
+        let iconsOnScreen: CGFloat = 3.0
+        return (UIScreen.main.bounds.width / iconsOnScreen) - userIconPadding / 2.0
+    }
+    
+    //MARK: - Body
     var body: some View {
         
         
@@ -87,18 +110,13 @@ struct ContentView: View {
             VStack {
                 Spacer()
                 
-                //MARK: -- Logo & Name
+                //MARK:  Logo & Name
                 ZStack {
                     Image("logo")
-                        //TODO: darker bottom for title (some yt tutorial Code With Chris prolly)
-                        .overlay(
-                            Rectangle()
-                                .frame(width: .infinity, height: userIconSize / 2, alignment: .bottom)
-                                .foregroundColor(.black)
-                                .opacity(0.5)
-                        )
+                        .overlay(self.profiles.isEmpty ? LogoOverlay(isOverlaying: false) : LogoOverlay(isOverlaying: true))
                         .clipShape(Circle())
                         .offset(x: 0.0, y: self.profiles.isEmpty ? 100.0 : -30.0)
+                        .shadow(color: .black, radius: self.profiles.isEmpty ? 3.0 : 0.0, x: 0.0, y: 0.0)
                         .animation(.spring())
                         .transition(Transitions.viewTransition)
                     
@@ -106,69 +124,80 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .font(self.profiles.isEmpty ? .largeTitle : .title)
                         .bold()
-                        .shadow(color: .black, radius: self.profiles.isEmpty ? 5.0 : 0.0, x: 0.0, y: 0.0)
+                        .shadow(color: .black, radius: self.profiles.isEmpty ? 3.0 : 0.0, x: 0.0, y: 0.0)
+                        .animation(.spring())
                         .transition(Transitions.viewTransition)
                 }
                 
-                //MARK: -- Users Scroll View
-                //FIXME: fix ScrollView hitbox
-                
+                //MARK:  Users Scroll View
+                //FIXME: fix contextMenu shadow (circle indead of rectangle)
+                //FIXME: fix animations when deleting users
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(self.profiles) { profile in
                             VStack {
                                 if self.editMode?.wrappedValue == .inactive {
                                     
-                                    Button(action: {},
-                                           label: {
+                                    Button(action: {
+                                        withAnimation(.spring()) {
+                                            activeSession.id = profile.wrappedId
+                                        }
+                                    },
+                                    label: {
+                                        Image(systemName: "person.circle")
+                                            .resizable()
+                                            .frame(width: userIconSize, height: userIconSize, alignment: .center)
+                                            .animation(.spring())
+                                    })
+                                    .contextMenu {
+                                        VStack {
+                                            Button {
+                                                withAnimation(.spring()) {
+                                                    self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
+                                                }
+                                            } label: {
+                                                Text("Edit users")
+                                                
+                                            }
+                                            Button {
+                                                withAnimation(.spring()) {
+                                                    removeProfile(at: profile.id!)
+                                                }
+                                            } label: {
+                                                Text("Remove " + (profile.username ?? "user"))
+                                                    .foregroundColor(Color(.systemRed))
+                                                
+                                            }
+                                        }
+                                    }
+                                    .foregroundColor(Color(profile.wrappedColor))
+                                    Text(profile.wrappedUsername)
+                                } else {
+                                    Button(action: {
+                                        withAnimation(.spring()) {
+                                            removeProfile(at: profile.id!)
+                                        }
+                                    },
+                                    label: {
+                                        ZStack {
                                             Image(systemName: "person.circle")
                                                 .resizable()
                                                 .frame(width: userIconSize, height: userIconSize, alignment: .center)
                                                 .animation(.spring())
-                                           })
-                                        .simultaneousGesture(LongPressGesture().onEnded { _ in
-                                            withAnimation(.spring()) {
-                                                self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
-                                            }
-                                        })
-                                        .simultaneousGesture(TapGesture().onEnded {
-                                            withAnimation(.spring()) {
-                                                activeSession.id = profile.wrappedId
-                                            }
-                                        })
-                                        .foregroundColor(Color(profile.wrappedColor))
-                                    Text(profile.wrappedUsername)
-                                } else {
-                                    Button(action: {},
-                                           label: {
-                                            ZStack {
-                                                Image(systemName: "person.circle")
-                                                    .resizable()
-                                                    .frame(width: userIconSize, height: userIconSize, alignment: .center)
-                                                    .animation(.spring())
-                                                    .onLongPressGesture {
-                                                        self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
-                                                    }
-                                                
-                                                UserRemovalOverlay(size: userIconSize)
-                                            }
-                                           })
-                                        .simultaneousGesture(TapGesture().onEnded {
-                                            withAnimation(.spring()) {
-                                                removeProfile(at: profile.id!)
-                                            }
-                                        })
-                                        .foregroundColor(Color(profile.wrappedColor))
+                                            
+                                            UserRemovalOverlay(size: userIconSize)
+                                        }
+                                    })
+                                    .foregroundColor(Color(profile.wrappedColor))
                                     Text(profile.wrappedUsername)
                                 }
                             }.padding(0.0)
                         }
                     }.padding(.horizontal, gemetricalPadding)
                 }
-                
                 Spacer()
                 
-                //MARK: -- New User / Done Button
+                //MARK:  New User / Done Button
                 Button(action: {
                     
                     if !self.profiles.isEmpty {
@@ -189,29 +218,11 @@ struct ContentView: View {
                 
                 Spacer()
                     
-                    .sheet(isPresented: $isShowingAddUser, content: {
-                        AddNewUserView()
-                    })
+                .sheet(isPresented: $isShowingAddUser, content: {
+                    AddNewUserView()
+                })
             }
         }
-    }
-    
-    //TODO: change hardcoded padding
-    let userIconPadding: CGFloat = 10
-    
-    var gemetricalPadding: CGFloat {
-        let icons = UIScreen.main.bounds.width - userIconSize * CGFloat(self.profiles.count)
-        let paddings = (CGFloat(self.profiles.count) - 1) * userIconPadding
-        let finalPadding = (icons - paddings) / 2.0
-        guard finalPadding > 0 else {
-            return 0.0
-        }
-        return finalPadding
-    }
-    
-    var userIconSize: CGFloat {
-        let iconsOnScreen: CGFloat = 3.0
-        return (UIScreen.main.bounds.width / iconsOnScreen) - userIconPadding / 2.0
     }
 }
 

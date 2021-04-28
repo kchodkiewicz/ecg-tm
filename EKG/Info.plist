@@ -45,8 +45,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Konieczne w celu połączenia z urządzeniem pomiarowym.</string>
+	<string>Wykorzystanie Bluetooth jest konieczne w celu połączenia z urządzeniem pomiarowym.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Konieczne w celu połączenia z urządzeniem pomiarowym.</string>
+	<string>Wykorzystanie Bluetooth jest konieczne w celu połączenia z urządzeniem pomiarowym.</string>
 </dict>
 </plist>
