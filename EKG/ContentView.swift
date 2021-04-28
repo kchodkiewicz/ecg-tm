@@ -20,7 +20,7 @@
  * [*] Remove user on long press
  * [*] Fix editmode on first new user
  * [ ] Beautify UserRemovalOverlay
- * [ ] Fix ScrollView hit only on text
+ * [*] Fix ScrollView hit only on text
  * [#] Centered ScrollView
  
  
@@ -130,7 +130,7 @@ struct ContentView: View {
                 }
                 
                 //MARK:  Users Scroll View
-                //FIXME: fix contextMenu shadow (circle indead of rectangle)
+                
                 //FIXME: fix animations when deleting users
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
@@ -149,6 +149,7 @@ struct ContentView: View {
                                             .frame(width: userIconSize, height: userIconSize, alignment: .center)
                                             .animation(.spring())
                                     })
+                                    //FIXME: fix contextMenu shadow (circle indead of rectangle)
                                     .contextMenu {
                                         VStack {
                                             Button {
@@ -156,7 +157,7 @@ struct ContentView: View {
                                                     self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
                                                 }
                                             } label: {
-                                                Text("Edit users")
+                                                Label("Edit users", systemImage: "pencil")
                                                 
                                             }
                                             Button {
@@ -164,9 +165,7 @@ struct ContentView: View {
                                                     removeProfile(at: profile.id!)
                                                 }
                                             } label: {
-                                                Text("Remove " + (profile.username ?? "user"))
-                                                    .foregroundColor(Color(.systemRed))
-                                                
+                                                Label("Remove  \(profile.username ?? "user")", systemImage: "trash")
                                             }
                                         }
                                     }
@@ -199,16 +198,17 @@ struct ContentView: View {
                 
                 //MARK:  New User / Done Button
                 Button(action: {
-                    
-                    if !self.profiles.isEmpty {
-                        if self.editMode?.wrappedValue == .inactive {
-                            self.isShowingAddUser.toggle()
+                    withAnimation(.spring()) {
+                        if !self.profiles.isEmpty {
+                            if self.editMode?.wrappedValue == .inactive {
+                                self.isShowingAddUser.toggle()
+                            } else {
+                                self.editMode?.wrappedValue = .inactive
+                            }
                         } else {
                             self.editMode?.wrappedValue = .inactive
+                            self.isShowingAddUser.toggle()
                         }
-                    } else {
-                        self.editMode?.wrappedValue = .inactive
-                        self.isShowingAddUser.toggle()
                     }
                 }, label: {
                     Text(self.profiles.isEmpty ? "New user" : self.editMode?.wrappedValue == .inactive ? "New user" : "Done")
