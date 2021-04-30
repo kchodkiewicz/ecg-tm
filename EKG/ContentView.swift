@@ -36,6 +36,29 @@ import SwiftUI
 import CoreData
 import CoreBluetooth
 
+
+extension View {
+    func animate(using animation: Animation = Animation.linear(duration: 0.1), _ action: @escaping () -> Void) -> some View {
+        onAppear {
+            withAnimation(animation) {
+                action()
+            }
+        }
+    }
+}
+
+extension View {
+    func animateForever(using animation: Animation = Animation.linear(duration: 0.1), autoreverses: Bool = false, _ action: @escaping () -> Void) -> some View {
+        let repeated = animation.repeatForever(autoreverses: autoreverses)
+        
+        return onAppear {
+            withAnimation(repeated) {
+                action()
+            }
+        }
+    }
+}
+
 struct LogoOverlay: View {
     
     var isOverlaying: Bool
@@ -60,6 +83,12 @@ struct ContentView: View {
     @State var username: String = ""
     
     @State private var isShowingAddUser: Bool = false
+    
+    @State var shake: Double = -.pi/60
+    @State var moveOffsets: [Double] = []
+    @State var move: Double = 0.0
+    @State var animationIndex: Int = 0
+    
     
     func removeProfile(at offset: UUID) {
         let index = profiles.firstIndex{ (Profile) -> Bool in
@@ -117,7 +146,6 @@ struct ContentView: View {
                         .clipShape(Circle())
                         .offset(x: 0.0, y: self.profiles.isEmpty ? 100.0 : -30.0)
                         .shadow(color: .black, radius: self.profiles.isEmpty ? 3.0 : 0.0, x: 0.0, y: 0.0)
-                        .animation(.spring())
                         .transition(Transitions.viewTransition)
                     
                     Text("ECG")
@@ -125,7 +153,6 @@ struct ContentView: View {
                         .font(self.profiles.isEmpty ? .largeTitle : .title)
                         .bold()
                         .shadow(color: .black, radius: self.profiles.isEmpty ? 3.0 : 0.0, x: 0.0, y: 0.0)
-                        .animation(.spring())
                         .transition(Transitions.viewTransition)
                 }
                 
@@ -135,8 +162,10 @@ struct ContentView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(self.profiles) { profile in
-                            VStack {
-                                if self.editMode?.wrappedValue == .inactive {
+                            
+                            //TODO: merge if / else to one view (may result in better animations)
+                            if self.editMode?.wrappedValue == .inactive {
+                                VStack {
                                     
                                     Button(action: {
                                         withAnimation(.spring()) {
@@ -147,13 +176,15 @@ struct ContentView: View {
                                         Image(systemName: "person.circle")
                                             .resizable()
                                             .frame(width: userIconSize, height: userIconSize, alignment: .center)
-                                            .animation(.spring())
                                     })
                                     //FIXME: fix contextMenu shadow (circle indead of rectangle)
                                     .contextMenu {
                                         VStack {
                                             Button {
-                                                withAnimation(.spring()) {
+                                                withAnimation(.default) {
+                                                    
+                                                    self.shake = -.pi/60
+                                                    
                                                     self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
                                                 }
                                             } label: {
@@ -171,26 +202,35 @@ struct ContentView: View {
                                     }
                                     .foregroundColor(Color(profile.wrappedColor))
                                     Text(profile.wrappedUsername)
-                                } else {
-                                    Button(action: {
-                                        withAnimation(.spring()) {
-                                            removeProfile(at: profile.id!)
-                                        }
-                                    },
-                                    label: {
-                                        ZStack {
-                                            Image(systemName: "person.circle")
-                                                .resizable()
-                                                .frame(width: userIconSize, height: userIconSize, alignment: .center)
-                                                .animation(.spring())
-                                            
-                                            UserRemovalOverlay(size: userIconSize)
-                                        }
-                                    })
-                                    .foregroundColor(Color(profile.wrappedColor))
-                                    Text(profile.wrappedUsername)
                                 }
-                            }.padding(0.0)
+                            } else {
+                                VStack {
+                                    ZStack {
+                                        Image(systemName: "person.circle")
+                                            .resizable()
+                                            .frame(width: userIconSize, height: userIconSize, alignment: .center)
+                                            .foregroundColor(Color(profile.wrappedColor))
+                                        
+                                        Button(action: {
+                                            withAnimation(.spring()) {
+                                                removeProfile(at: profile.id!)
+                                            }
+                                        },
+                                        label: {
+                                            UserRemovalOverlay(size: userIconSize)
+                                        }).offset(x: -(userIconSize / 3), y: -(userIconSize / 3))
+                                        .foregroundColor(Color(profile.wrappedColor))
+                                    }
+                                    Text(profile.wrappedUsername)
+                                }.offset(x: CGFloat(3 * sin(move)), y: CGFloat(3 * cos(move)))
+                                .rotationEffect(.radians( shake))
+                                .animateForever(autoreverses: true) {
+                                    shake += .pi/30
+                                    move += .pi/6
+                                }
+                                
+                            }
+                            
                         }
                     }.padding(.horizontal, gemetricalPadding)
                 }
@@ -218,9 +258,9 @@ struct ContentView: View {
                 
                 Spacer()
                     
-                .sheet(isPresented: $isShowingAddUser, content: {
-                    AddNewUserView()
-                })
+                    .sheet(isPresented: $isShowingAddUser, content: {
+                        AddNewUserView()
+                    })
             }
         }
     }

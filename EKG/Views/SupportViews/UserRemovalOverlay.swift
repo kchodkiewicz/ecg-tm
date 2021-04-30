@@ -6,35 +6,44 @@
 //
 
 import SwiftUI
+import UIKit
+import Combine
+
+struct BlurView: UIViewRepresentable {
+    typealias UIViewType = UIVisualEffectView
+    
+    let style: UIBlurEffect.Style
+    
+    init(style: UIBlurEffect.Style = .systemMaterial) {
+        self.style = style
+    }
+    
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        return UIVisualEffectView(effect: UIBlurEffect(style: self.style))
+    }
+    
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        uiView.effect = UIBlurEffect(style: self.style)
+    }
+}
 
 struct UserRemovalOverlay: View {
     
     var size: CGFloat
     
     var body: some View {
-        ZStack {
-            Circle()
-                .foregroundColor(.black)
-                .opacity(0.5)
-                .frame(width: size, height: size, alignment: .center)
-                .animation(.spring())
+        Image(systemName: "minus")
+            .font(.title)
+            .padding()
+            .background(BlurView(style: .systemUltraThinMaterial))
+            .clipShape(Circle())
             
-            //TODO: Beautify userRemoval X marker
-            RoundedRectangle(cornerRadius: 5.0)
-                .foregroundColor(.white)
-                .frame(width: size * 0.1, height: size * 0.8, alignment: .center)
-                .rotationEffect(.degrees(45.0))
-            
-            RoundedRectangle(cornerRadius: 5.0)
-                .foregroundColor(.white)
-                .frame(width: size * 0.1, height: size * 0.8, alignment: .center)
-                .rotationEffect(.degrees(-45.0))
-        }
+        
     }
 }
-//
-//struct DeleteOverlay_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserRemovalOverlay()
-//    }
-//}
+
+struct DeleteOverlay_Previews: PreviewProvider {
+    static var previews: some View {
+        UserRemovalOverlay(size: 100)
+    }
+}
