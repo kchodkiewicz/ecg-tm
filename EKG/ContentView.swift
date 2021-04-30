@@ -7,21 +7,26 @@
 
 /* *** TODO ***
  
+ LEGEND:
+  - * DONE
+  - # Clumsy
+  - ~ Abandoned
+ 
  * [*] Title spacing
  * [*] Exam rebuild - not requiring samples
  * [*] Profile age
  * [*] Profile looks
  * [*] History previews
- * [ ] History Row images
  * [*] User profile color / photo
- * [ ] UserDefaults instead of ActiveSession - chyba nie (UserDefaults przeżywa restart)
  * [*] Id instead of Username
- * [ ] Fix form animation or give up
  * [*] Remove user on long press
  * [*] Fix editmode on first new user
- * [ ] Beautify UserRemovalOverlay
+ * [*] Beautify UserRemovalOverlay
  * [*] Fix ScrollView hit only on text
  * [#] Centered ScrollView
+ * [~] UserDefaults instead of ActiveSession - chyba nie (UserDefaults przeżywa restart)
+ * [ ] Fix form animation or give up
+ * [ ] History Row images
  
  
  --- OPTIONAL ---
@@ -50,7 +55,6 @@ extension View {
 extension View {
     func animateForever(using animation: Animation = Animation.linear(duration: 0.1), autoreverses: Bool = false, _ action: @escaping () -> Void) -> some View {
         let repeated = animation.repeatForever(autoreverses: autoreverses)
-        
         return onAppear {
             withAnimation(repeated) {
                 action()
@@ -58,6 +62,7 @@ extension View {
         }
     }
 }
+
 
 struct LogoOverlay: View {
     
@@ -84,10 +89,8 @@ struct ContentView: View {
     
     @State private var isShowingAddUser: Bool = false
     
-    @State var shake: Double = -.pi/60
-    @State var moveOffsets: [Double] = []
+    @State var shake: Double = 0.0
     @State var move: Double = 0.0
-    @State var animationIndex: Int = 0
     
     
     func removeProfile(at offset: UUID) {
@@ -157,19 +160,17 @@ struct ContentView: View {
                 }
                 
                 //MARK:  Users Scroll View
-                
-                //FIXME: fix animations when deleting users
+
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(self.profiles) { profile in
-                            
-                            //TODO: merge if / else to one view (may result in better animations)
-                            if self.editMode?.wrappedValue == .inactive {
-                                VStack {
-                                    
+                            VStack() {
+                                ZStack {
                                     Button(action: {
                                         withAnimation(.spring()) {
-                                            activeSession.id = profile.wrappedId
+                                            if self.editMode?.wrappedValue == .inactive {
+                                                activeSession.id = profile.wrappedId
+                                            }
                                         }
                                     },
                                     label: {
@@ -177,22 +178,25 @@ struct ContentView: View {
                                             .resizable()
                                             .frame(width: userIconSize, height: userIconSize, alignment: .center)
                                     })
-                                    //FIXME: fix contextMenu shadow (circle indead of rectangle)
                                     .contextMenu {
+                                        //FIXME: fix contextMenu shadow (circle indead of rectangle)
                                         VStack {
                                             Button {
                                                 withAnimation(.default) {
                                                     
                                                     self.shake = -.pi/60
                                                     
-                                                    self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
+                                                    self.editMode?.wrappedValue = .active
+                                                    
+                                                    print(self.shake)
+                                                    print(self.editMode?.wrappedValue == .active)
                                                 }
                                             } label: {
                                                 Label("Edit users", systemImage: "pencil")
                                                 
                                             }
                                             Button {
-                                                withAnimation(.spring()) {
+                                                withAnimation(.default) {
                                                     removeProfile(at: profile.id!)
                                                 }
                                             } label: {
@@ -201,16 +205,8 @@ struct ContentView: View {
                                         }
                                     }
                                     .foregroundColor(Color(profile.wrappedColor))
-                                    Text(profile.wrappedUsername)
-                                }
-                            } else {
-                                VStack {
-                                    ZStack {
-                                        Image(systemName: "person.circle")
-                                            .resizable()
-                                            .frame(width: userIconSize, height: userIconSize, alignment: .center)
-                                            .foregroundColor(Color(profile.wrappedColor))
-                                        
+                                    
+                                    if self.editMode?.wrappedValue == .active {
                                         Button(action: {
                                             withAnimation(.spring()) {
                                                 removeProfile(at: profile.id!)
@@ -221,15 +217,28 @@ struct ContentView: View {
                                         }).offset(x: -(userIconSize / 3), y: -(userIconSize / 3))
                                         .foregroundColor(Color(profile.wrappedColor))
                                     }
-                                    Text(profile.wrappedUsername)
-                                }.offset(x: CGFloat(3 * sin(move)), y: CGFloat(3 * cos(move)))
-                                .rotationEffect(.radians( shake))
-                                .animateForever(autoreverses: true) {
-                                    shake += .pi/30
-                                    move += .pi/6
+                                    
                                 }
-                                
+                                Text(profile.wrappedUsername)
                             }
+                            //TODO: try adding jiggle in editMode
+//                            .rotationEffect(self.editMode?.wrappedValue == .active ? .radians(self.shake) : .radians(0.0))
+//                            .animateForever(autoreverses: true) {
+//                                if self.editMode?.wrappedValue == .active {
+//                                    self.shake += .pi/30
+//                                    self.move += .pi/6
+//                                }
+//                                print(shake)
+//                            }
+                            
+//                            if self.editMode?.wrappedValue == .active {
+//                                .offset(x: CGFloat(4 * sin(self.move)), y: CGFloat(4 * cos(self.move)))
+//                                .rotationEffect(.radians(shake))
+//                                .animateForever(autoreverses: true) {
+//                                    shake += .pi/30
+//                                    move += .pi/6
+//                                }
+//                            }
                             
                         }
                     }.padding(.horizontal, gemetricalPadding)
@@ -238,7 +247,7 @@ struct ContentView: View {
                 
                 //MARK:  New User / Done Button
                 Button(action: {
-                    withAnimation(.spring()) {
+                    withAnimation(.default) {
                         if !self.profiles.isEmpty {
                             if self.editMode?.wrappedValue == .inactive {
                                 self.isShowingAddUser.toggle()
