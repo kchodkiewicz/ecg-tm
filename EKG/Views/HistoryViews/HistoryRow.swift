@@ -27,10 +27,9 @@ struct HistoryRow: View {
 
 
                 VStack(alignment: .leading) {
-                    Text(exam.date ?? Date(), formatter: Formatters.dateFormat)
+                    Text(exam.wrappedDate, formatter: Formatters.dateFormat)
                         .font(.headline)
-                    //TODO: add notes preview
-                    Text(exam.notes ?? "default text is very very very very very long. Like way too long, yeah i think now its preety obvious")
+                    Text(exam.wrappedNotes)
                         .font(.caption)
                         .lineLimit(1)
                         .frame(maxWidth: 150.0, alignment: .leading)
@@ -56,7 +55,7 @@ struct HistoryRow: View {
 
             if isShowingDetail() {
                 NavigationLink (
-                    destination: GraphSummaryView(points: exam.sampleArray),
+                    destination: GraphSummaryView(exam: exam, notes: exam.wrappedNotes),
                     label: {
                         ZStack {
                             GraphDetail(points: exam.sampleArray)

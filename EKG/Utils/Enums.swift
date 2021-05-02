@@ -72,3 +72,9 @@ enum Tab: Int, CaseIterable {
     case exam = 1
     case profile = 2
 }
+
+enum ExamType: String, CaseIterable {
+    case resting = "resting"
+    case stress = "stress"
+    case ambulatory = "ambulatory"
+}

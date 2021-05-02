@@ -11,5 +11,9 @@ import CoreData
 
 @objc(Sample)
 public class Sample: NSManagedObject {
-
+    
+    public var wrappedId: UUID {
+        id ?? UUID()
+    }
+    
 }

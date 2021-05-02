@@ -18,7 +18,6 @@ struct ProfileEditView: View {
     @ObservedObject var bleConnection = BLEConnection()
     
     @Environment(\.editMode) var editMode
-    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var activeSession: ActiveSession
     
     @State var username: String = ""
@@ -167,7 +166,7 @@ struct ProfileEditView: View {
             }) {
                 Text(.active == self.editMode?.wrappedValue ? "Done" : "Edit")
             }
-            .padding(.bottom)
+            .padding(.vertical)
             .padding(.leading)
         )
         

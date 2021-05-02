@@ -10,18 +10,18 @@
 		2C03151F25FD3E6C008FD459 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03151E25FD3E6C008FD459 /* OverView.swift */; };
 		2C03152325FD6CDF008FD459 /* ActiveSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03152225FD6CDF008FD459 /* ActiveSession.swift */; };
 		2C03152625FD6FA3008FD459 /* AddNewUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03152525FD6FA3008FD459 /* AddNewUserView.swift */; };
+		2C3C88FC263F59960016CFCA /* Profile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C88FB263F59960016CFCA /* Profile+CoreDataProperties.swift */; };
+		2C3C8902263F5A110016CFCA /* Exam+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C8900263F5A110016CFCA /* Exam+CoreDataProperties.swift */; };
 		2C40294C25FAD7B600268220 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C40294B25FAD7B600268220 /* ProfileEditView.swift */; };
 		2C48467C263700C700656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484676263700C600656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift */; };
 		2C48467D263700C700656C5E /* Sample+CoreDataProperties.swift 16-06-57-693.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484677263700C600656C5E /* Sample+CoreDataProperties.swift 16-06-57-693.swift */; };
 		2C48467E263700C700656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484678263700C600656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift */; };
-		2C48467F263700C700656C5E /* Exam+CoreDataProperties.swift 16-06-57-689.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484679263700C600656C5E /* Exam+CoreDataProperties.swift 16-06-57-689.swift */; };
 		2C48468626370C9700656C5E /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48468526370C9700656C5E /* Formatters.swift */; };
 		2C484689263740FD00656C5E /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484688263740FD00656C5E /* Enums.swift */; };
 		2C48468C263744C000656C5E /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48468B263744C000656C5E /* ColorPickerView.swift */; };
 		2C48468F26375A4400656C5E /* UserIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48468E26375A4400656C5E /* UserIcon.swift */; };
 		2C48469626375C4800656C5E /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48469526375C4800656C5E /* Animations.swift */; };
 		2C48469B263819B000656C5E /* Profile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484699263819AF00656C5E /* Profile+CoreDataClass.swift */; };
-		2C48469C263819B000656C5E /* Profile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48469A263819B000656C5E /* Profile+CoreDataProperties.swift */; };
 		2C4846A526383A9A00656C5E /* UserRemovalOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4846A426383A9A00656C5E /* UserRemovalOverlay.swift */; };
 		2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E226D25F7B83D002E8306 /* GraphExamView.swift */; };
 		2C5E227125F7B85F002E8306 /* GraphSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */; };
@@ -44,18 +44,18 @@
 		2C03151E25FD3E6C008FD459 /* OverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverView.swift; sourceTree = "<group>"; };
 		2C03152225FD6CDF008FD459 /* ActiveSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSession.swift; sourceTree = "<group>"; };
 		2C03152525FD6FA3008FD459 /* AddNewUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewUserView.swift; sourceTree = "<group>"; };
+		2C3C88FB263F59960016CFCA /* Profile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Profile+CoreDataProperties.swift"; path = "../../../Profile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2C3C8900263F5A110016CFCA /* Exam+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Exam+CoreDataProperties.swift"; path = "../Exam+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C40294B25FAD7B600268220 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		2C484676263700C600656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Exam+CoreDataClass.swift 16-06-57-625.swift"; sourceTree = "<group>"; };
 		2C484677263700C600656C5E /* Sample+CoreDataProperties.swift 16-06-57-693.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sample+CoreDataProperties.swift 16-06-57-693.swift"; sourceTree = "<group>"; };
 		2C484678263700C600656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sample+CoreDataClass.swift 16-06-57-635.swift"; sourceTree = "<group>"; };
-		2C484679263700C600656C5E /* Exam+CoreDataProperties.swift 16-06-57-689.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Exam+CoreDataProperties.swift 16-06-57-689.swift"; sourceTree = "<group>"; };
 		2C48468526370C9700656C5E /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		2C484688263740FD00656C5E /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		2C48468B263744C000656C5E /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		2C48468E26375A4400656C5E /* UserIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIcon.swift; sourceTree = "<group>"; };
 		2C48469526375C4800656C5E /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		2C484699263819AF00656C5E /* Profile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Profile+CoreDataClass.swift"; path = "/Users/krzysztofchodkiewicz/Documents/Biurko/studia/CHMURY/TM/EKG/EKG/Models/CoreData/Profile+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		2C48469A263819B000656C5E /* Profile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Profile+CoreDataProperties.swift"; path = "/Users/krzysztofchodkiewicz/Documents/Biurko/studia/CHMURY/TM/EKG/EKG/Models/CoreData/Profile+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		2C4846A426383A9A00656C5E /* UserRemovalOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemovalOverlay.swift; sourceTree = "<group>"; };
 		2C5E226D25F7B83D002E8306 /* GraphExamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphExamView.swift; sourceTree = "<group>"; };
 		2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSummaryView.swift; sourceTree = "<group>"; };
@@ -104,9 +104,9 @@
 			isa = PBXGroup;
 			children = (
 				2C484699263819AF00656C5E /* Profile+CoreDataClass.swift */,
-				2C48469A263819B000656C5E /* Profile+CoreDataProperties.swift */,
+				2C3C88FB263F59960016CFCA /* Profile+CoreDataProperties.swift */,
 				2C484676263700C600656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift */,
-				2C484679263700C600656C5E /* Exam+CoreDataProperties.swift 16-06-57-689.swift */,
+				2C3C8900263F5A110016CFCA /* Exam+CoreDataProperties.swift */,
 				2C484678263700C600656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift */,
 				2C484677263700C600656C5E /* Sample+CoreDataProperties.swift 16-06-57-693.swift */,
 			);
@@ -386,9 +386,8 @@
 				2C48467E263700C700656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift in Sources */,
 				2CC6168F25F6603D0082FC63 /* HistoryView.swift in Sources */,
 				2C9540962621CD9200D115FE /* BTView.swift in Sources */,
-				2C48467F263700C700656C5E /* Exam+CoreDataProperties.swift 16-06-57-689.swift in Sources */,
 				2CC6167C25F657BC0082FC63 /* Persistence.swift in Sources */,
-				2C48469C263819B000656C5E /* Profile+CoreDataProperties.swift in Sources */,
+				2C3C88FC263F59960016CFCA /* Profile+CoreDataProperties.swift in Sources */,
 				2C4846A526383A9A00656C5E /* UserRemovalOverlay.swift in Sources */,
 				2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */,
 				2C48467C263700C700656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift in Sources */,
@@ -405,6 +404,7 @@
 				2C48469B263819B000656C5E /* Profile+CoreDataClass.swift in Sources */,
 				2CC6167F25F657BC0082FC63 /* EKG.xcdatamodeld in Sources */,
 				2C03152325FD6CDF008FD459 /* ActiveSession.swift in Sources */,
+				2C3C8902263F5A110016CFCA /* Exam+CoreDataProperties.swift in Sources */,
 				2C5E227125F7B85F002E8306 /* GraphSummaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

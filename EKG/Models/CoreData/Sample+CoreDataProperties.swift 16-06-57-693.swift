@@ -20,9 +20,6 @@ extension Sample {
     @NSManaged public var xValue: Int64
     @NSManaged public var yValue: Int64
     @NSManaged public var origin: Exam?
-    
-    public var wrappedId: UUID {
-        id ?? UUID()
-    }
+
 
 }
