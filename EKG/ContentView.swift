@@ -177,7 +177,9 @@ struct ContentView: View {
                                         Image(systemName: "person.circle")
                                             .resizable()
                                             .frame(width: userIconSize, height: userIconSize, alignment: .center)
-                                    })
+                                            
+                                    }).buttonStyle(PlainButtonStyle())
+                                    
                                     .contextMenu {
                                         //FIXME: fix contextMenu shadow (circle indead of rectangle)
                                         VStack {

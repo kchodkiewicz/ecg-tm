@@ -11,7 +11,6 @@ import CoreBluetooth
 
 struct ProfileEditView: View {
     
-    //@Binding var profile: Profile
     var viewContext: NSManagedObjectContext
     var profile: Profile
     
@@ -32,7 +31,7 @@ struct ProfileEditView: View {
     
     var body: some View {
         Form {
-            Section {
+            
                 if .inactive == self.editMode?.wrappedValue {
                     HStack {
                         Spacer()
@@ -84,7 +83,7 @@ struct ProfileEditView: View {
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
                         .multilineTextAlignment(.trailing)
                 }
-            }
+            
             Section {
                 if .inactive == self.editMode?.wrappedValue {
                     Button {
@@ -114,7 +113,7 @@ struct ProfileEditView: View {
                         Text("\(Int(self.profile.examDuration))s")
                     }
                 } else {
-                    DatePicker("Birthdate", selection: $age, in: Formatters.closeBirthDateRange, displayedComponents: .date)
+                    DatePicker("", selection: $age, in: Formatters.closeBirthDateRange, displayedComponents: .date)
                         .multilineTextAlignment(.trailing)
                         .datePickerStyle(WheelDatePickerStyle())
                         
@@ -147,6 +146,7 @@ struct ProfileEditView: View {
                 }
             }
         }
+        //.listStyle(GroupedListStyle())
         .navigationBarItems(
             leading: Button(action: {
                 withAnimation(.spring()) {
@@ -160,8 +160,10 @@ struct ProfileEditView: View {
             
             trailing: Button(action: {
                 withAnimation(.spring()) {
+                    if self.editMode?.wrappedValue == .active {
+                        updateProfile()
+                    }
                     self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
-                    updateProfile()
                 }
             }) {
                 Text(.active == self.editMode?.wrappedValue ? "Done" : "Edit")

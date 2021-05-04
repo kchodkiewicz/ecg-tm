@@ -78,3 +78,10 @@ enum ExamType: String, CaseIterable {
     case stress = "stress"
     case ambulatory = "ambulatory"
 }
+
+public enum ExamResult: String {
+    case good = "good"
+    case nominal = "regular"
+    case bad = "bad"
+    case critical = "critical"
+}

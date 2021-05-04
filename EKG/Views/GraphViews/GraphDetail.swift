@@ -14,7 +14,6 @@ struct GraphDetail: View {
     var entries = [ChartDataEntry]()
     
     var body: some View {
-        
         Chart(entries: entries)
     }
     

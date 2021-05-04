@@ -15,7 +15,7 @@ struct OverView: View {
     
     @ObservedObject var bleConnection = BLEConnection()
     
-    var profile: Profile
+    @ObservedObject var profile: Profile
     
     @State private var showingNewExam: Bool = false
     @State private var showingProfile: Bool = false
@@ -28,7 +28,9 @@ struct OverView: View {
         bleConnection.startCentralManager()
         
         //TODO: try connecting to saved device (CoreData: Profile.btRRSI <- add)
-        
+//        if profile.deviceRSSI != 0 {
+//            bleConnection.connect(peripheral: device)
+//        }
     }
     
     var body: some View {
@@ -65,8 +67,8 @@ struct OverView: View {
                     lastName: self.profile.wrappedLastName,
                     age: self.profile.wrappedAge,
                     examDuration: Int(self.profile.examDuration),
-                profileColor: ProfileColor.ColorName(value: self.profile.wrappedColor))
-                
+                profileColor: ProfileColor.ColorName(value: self.profile.wrappedColor)
+                )
             }.tabItem {
                 Image(systemName: "person.crop.circle")
                     .imageScale(.large)

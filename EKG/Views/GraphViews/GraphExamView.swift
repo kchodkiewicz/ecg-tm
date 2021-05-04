@@ -82,11 +82,11 @@ struct GraphExamView: View {
                     
                     // FOR TESTING ONLY -----------
                     var samples: [Sample] = []
-                    for i in 0...10 {
+                    for i in 0...250 * 2 {
                         let sample = Sample(context: viewContext)
                         sample.id = UUID()
                         sample.xValue = Int64(i)
-                        sample.yValue = Int64(Int.random(in: 0...200))
+                        sample.yValue = Int64(Int.random(in: 0...1023))
                         samples.append(sample)
                     }
                     

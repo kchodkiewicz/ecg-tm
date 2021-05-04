@@ -22,7 +22,7 @@ struct HistoryView: View {
         List {
             
             ForEach(profile[0].examArray, id: \.self) { exam in
-                HistoryRow(exam: exam)
+                HistoryRow(exam: exam, profile: profile[0])
             }
             .onDelete(perform: removeExam)
             .buttonStyle(PlainButtonStyle())
@@ -32,14 +32,18 @@ struct HistoryView: View {
     }
     
     func removeExam(at offsets: IndexSet) {
-        for index in offsets {
-            let exam = profile[0].examArray[index]
-            viewContext.delete(exam)
-        }
-        do {
-            try viewContext.save()
-        } catch {
-            print("Some error happened to happed")
+        
+        viewContext.perform {
+            for index in offsets {
+                let exam = profile[0].examArray[index]
+                viewContext.delete(exam)
+            }
+            do {
+                try viewContext.save()
+            } catch {
+                viewContext.rollback()
+                print("Faild to remove user")
+            }
         }
     }
     

@@ -9,82 +9,84 @@ import SwiftUI
 
 struct HistoryRow: View {
     
-    var exam: Exam
-  
+    @ObservedObject var exam: Exam
+    @ObservedObject var profile: Profile
+    
     @State private var showingDetail = false
-
+    
     
     func isShowingDetail() -> Bool {
         return showingDetail
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                //FIXME: change to some icon or preview graph (like in Landmarks.hikeData)
-                GraphDetail(points: exam.sampleArray)
-                    .frame(width: 50, height: 30)
 
-
-                VStack(alignment: .leading) {
-                    Text(exam.wrappedDate, formatter: Formatters.dateFormat)
-                        .font(.headline)
-                    Text(exam.wrappedNotes)
-                        .font(.caption)
-                        .lineLimit(1)
-                        .frame(maxWidth: 150.0, alignment: .leading)
-                        
-                }
-
-                Spacer()
-
-
-                Button(action: {
-                    withAnimation {
-                        self.showingDetail.toggle()
-                    }
-                }) {
-                    Image(systemName: "chevron.right.circle")
-                        .imageScale(.large)
-                        .rotationEffect(.degrees(showingDetail ? 90 : 0))
-                        .scaleEffect(showingDetail ? 1.5 : 1)
-                        .padding()
-                }
-
-            }
-
-            if isShowingDetail() {
-                NavigationLink (
-                    destination: GraphSummaryView(exam: exam, notes: exam.wrappedNotes),
-                    label: {
-                        ZStack {
-                            GraphDetail(points: exam.sampleArray)
-                                .frame(height: 100)
-                                .transition(Transitions.viewTransition)
-                            EmptyView()
-                    }
-                        
-                        
-                    }).buttonStyle(PlainButtonStyle())
+        NavigationLink(
+            destination: GraphSummaryView(exam: exam, notes: exam.wrappedNotes, examType: ExamType(rawValue: exam.wrappedType) ?? ExamType.resting),
+            label: {
+                HStack {
                     
-
-            }
-        }
-        .buttonStyle(PlainButtonStyle())
-
+                    GraphDetail(points: exam.sampleArray)
+                        .frame(width: 150, height: 100)
+//                        .transition(Transitions.viewTransition)
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        
+                        HStack {
+                            
+                            ExamTag(text: String(exam.heartRate), color: profile.wrappedColor)
+                            
+                            ExamTag(text: exam.resultName.rawValue, color: profile.wrappedColor)
+                            
+                            ExamTag(text: exam.wrappedType, color: profile.wrappedColor)
+                            
+                            Spacer()
+                        }
+                        
+                        Text(exam.wrappedDate, formatter: Formatters.dateFormat)
+                            .font(.headline)
+                            .bold()
+                        Text(exam.wrappedNotes)
+                            .font(.caption)
+                            .lineLimit(1)
+                            .frame(maxWidth: 150.0, alignment: .leading)
+                    }
+                }
+                
+            }).buttonStyle(PlainButtonStyle())
+        
     }
 }
 
-struct HistoryItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        let exam = Exam()
-        
-        let exam2 = Exam()
-        
-        Group {
-            HistoryRow(exam: exam)
-            HistoryRow(exam: exam2)
-        }
-        .previewLayout(.fixed(width: 300, height: 70))
+struct ExamTag: View {
+    
+    var text: String
+    var color: String
+    
+    var body: some View {
+        Text("\(text)")
+            .foregroundColor(Color(color))
+            .font(.caption)
+            .padding(4)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color(color), lineWidth: 1)
+            )
     }
+    
 }
+
+
+//struct HistoryItemView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let exam = Exam()
+//
+//        let exam2 = Exam()
+//
+//        Group {
+//            HistoryRow(exam: exam)
+//            HistoryRow(exam: exam2)
+//        }
+//        .previewLayout(.fixed(width: 300, height: 70))
+//    }
+//}
