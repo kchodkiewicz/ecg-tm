@@ -24,7 +24,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
     
     // Properties
     private var centralManager: CBCentralManager! = nil
-    private var peripheral: CBPeripheral!
+    public var peripheral: CBPeripheral!
     var mainCharacteristic:CBCharacteristic? = nil
 
     public static let bleServiceUUID = CBUUID.init(string: "FFE0")

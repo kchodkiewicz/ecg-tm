@@ -7,18 +7,32 @@
 
 /* *** TODO ***
  
-    * Title spacing
-    * Exam rebuild - not requiring samples
-    * Profile age
-    * Profile looks
-    * History previews
+ LEGEND:
+  - * DONE
+  - # Clumsy
+  - ~ Abandoned
+ 
+ * [*] Title spacing
+ * [*] Exam rebuild - not requiring samples
+ * [*] Profile age
+ * [*] Profile looks
+ * [*] History previews
+ * [*] User profile color / photo
+ * [*] Id instead of Username
+ * [*] Remove user on long press
+ * [*] Fix editmode on first new user
+ * [*] Beautify UserRemovalOverlay
+ * [*] Fix ScrollView hit only on text
+ * [#] Centered ScrollView
+ * [~] UserDefaults instead of ActiveSession - chyba nie (UserDefaults przeżywa restart)
+ * [ ] Fix form animation or give up
+ * [ ] History Row images
  
  
-    --- OPTIONAL ---
-    * Profile as sheet in Overview
-    * Tabs: Overview, New Exam
-    *
- 
+ --- OPTIONAL ---
+ * [ ] Profile as sheet in Overview
+ * [ ] Tabs: Overview (pulse, etc. + part of history), History, New Exam
+ *
  
  */
 
@@ -27,23 +41,44 @@ import SwiftUI
 import CoreData
 import CoreBluetooth
 
-struct ShowingSheetKey: EnvironmentKey {
-    static let defaultValue: Binding<Bool>? = nil
+
+extension View {
+    func animate(using animation: Animation = Animation.linear(duration: 0.1), _ action: @escaping () -> Void) -> some View {
+        onAppear {
+            withAnimation(animation) {
+                action()
+            }
+        }
+    }
 }
 
-extension EnvironmentValues {
-    var showingSheet: Binding<Bool>? {
-        get {self[ShowingSheetKey.self]}
-        set {self[ShowingSheetKey.self] = newValue}
+extension View {
+    func animateForever(using animation: Animation = Animation.linear(duration: 0.1), autoreverses: Bool = false, _ action: @escaping () -> Void) -> some View {
+        let repeated = animation.repeatForever(autoreverses: autoreverses)
+        return onAppear {
+            withAnimation(repeated) {
+                action()
+            }
+        }
+    }
+}
+
+
+struct LogoOverlay: View {
+    
+    var isOverlaying: Bool
+    
+    var body: some View {
+        Circle()
+            .fill(LinearGradient(gradient: Gradient(colors: [Color.black, Color.clear]), startPoint: .bottom, endPoint: .top))
+            .opacity(self.isOverlaying ? 0.7 : 0.0)
     }
 }
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var activeSession: ActiveSession
-
-    
-    
+    @Environment(\.editMode) var editMode
     @FetchRequest(
         entity: Profile.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Profile.username, ascending: true)],
@@ -51,150 +86,197 @@ struct ContentView: View {
     private var profiles: FetchedResults<Profile>
     
     @State var username: String = ""
-    @State private var showingNewUser: Bool = false
     
-    private func getRandomColor() -> Color {
-        let colorList = [Color.red, Color.blue, Color.green, Color.yellow, Color.orange, Color.pink, Color.purple]
+    @State private var isShowingAddUser: Bool = false
+    
+    @State var shake: Double = 0.0
+    @State var move: Double = 0.0
+    
+    
+    func removeProfile(at offset: UUID) {
+        let index = profiles.firstIndex{ (Profile) -> Bool in
+            Profile.id == offset
+        }!
         
-        return colorList.randomElement()!
+        let profile = profiles[index]
+        viewContext.delete(profile)
+        
+        do {
+            try viewContext.save()
+        } catch {
+            print("Couldn't remove user at index: \(index)")
+        }
     }
     
+    //TODO: change hardcoded padding
+    let userIconPadding: CGFloat = 10
+    
+    var gemetricalPadding: CGFloat {
+        let icons = UIScreen.main.bounds.width - userIconSize * CGFloat(self.profiles.count)
+        let paddings = (CGFloat(self.profiles.count) - 1) * userIconPadding
+        let finalPadding = (icons - paddings) / 2.0
+        guard finalPadding > 0 else {
+            return 0.0
+        }
+        return finalPadding
+    }
+    
+    var userIconSize: CGFloat {
+        let iconsOnScreen: CGFloat = 3.0
+        return (UIScreen.main.bounds.width / iconsOnScreen) - userIconPadding / 2.0
+    }
+    
+    //MARK: - Body
     var body: some View {
         
-        NavigationView {
-//            if !activeSession.username.isEmpty && activeSession.profile != nil {
-//
-//                let profile = profiles.filter { (Profile) -> Bool in
-//                    Profile.id == activeSession.profile?.wrappedId
-//                }
-//                OverView(profile: profile[0])
-//                    .environmentObject(activeSession)
-//                    .navigationBarHidden(true)
-//            } else {
-                VStack {
-                    Spacer()
-                    Text("ECG")
-                        .font(.title)
-                        .bold()
-                    Spacer()
+        
+        if let session = activeSession.id {
+            //MARK: - Queue to Overview
+            let profile = profiles.filter { (Profile) -> Bool in
+                Profile.id == session
+            }
+            OverView(profile: profile[0])
+            
+        } else {
+            //MARK: - Choose User View
+            VStack {
+                Spacer()
+                
+                //MARK:  Logo & Name
+                ZStack {
+                    Image("logo")
+                        .overlay(self.profiles.isEmpty ? LogoOverlay(isOverlaying: false) : LogoOverlay(isOverlaying: true))
+                        .clipShape(Circle())
+                        .offset(x: 0.0, y: self.profiles.isEmpty ? 100.0 : -30.0)
+                        .shadow(color: .black, radius: self.profiles.isEmpty ? 3.0 : 0.0, x: 0.0, y: 0.0)
+                        .transition(Transitions.viewTransition)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(self.profiles) { profile in
-                                VStack {
-                                    NavigationLink(
-                                        destination: OverView(profile: profile)
-                                                    .environmentObject(activeSession)
-                                                    .navigationBarHidden(true))
-                                    {
-                                        VStack {
+                    Text("ECG")
+                        .foregroundColor(.white)
+                        .font(self.profiles.isEmpty ? .largeTitle : .title)
+                        .bold()
+                        .shadow(color: .black, radius: self.profiles.isEmpty ? 3.0 : 0.0, x: 0.0, y: 0.0)
+                        .transition(Transitions.viewTransition)
+                }
+                
+                //MARK:  Users Scroll View
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(self.profiles) { profile in
+                            VStack() {
+                                ZStack {
+                                    Button(action: {
+                                        withAnimation(.spring()) {
+                                            if self.editMode?.wrappedValue == .inactive {
+                                                activeSession.id = profile.wrappedId
+                                            }
+                                        }
+                                    },
+                                    label: {
                                         Image(systemName: "person.circle")
                                             .resizable()
-                                            .frame(width: 100, height: 100, alignment: .center)
-                                            .foregroundColor(getRandomColor())
-                                        Text(profile.username ?? "-")
+                                            .frame(width: userIconSize, height: userIconSize, alignment: .center)
+                                            
+                                    }).buttonStyle(PlainButtonStyle())
+                                    
+                                    .contextMenu {
+                                        //FIXME: fix contextMenu shadow (circle indead of rectangle)
+                                        VStack {
+                                            Button {
+                                                withAnimation(.default) {
+                                                    
+                                                    self.shake = -.pi/60
+                                                    
+                                                    self.editMode?.wrappedValue = .active
+                                                    
+                                                    print(self.shake)
+                                                    print(self.editMode?.wrappedValue == .active)
+                                                }
+                                            } label: {
+                                                Label("Edit users", systemImage: "pencil")
+                                                
+                                            }
+                                            Button {
+                                                withAnimation(.default) {
+                                                    removeProfile(at: profile.id!)
+                                                }
+                                            } label: {
+                                                Label("Remove  \(profile.username ?? "user")", systemImage: "trash")
+                                            }
                                         }
                                     }
-//                                    Button(action: {
-//                                        activeSession.username = profile.username ?? ""
-//
-//                                        activeSession.profile = profile
-//                                    }, label: {
-//                                        Image(systemName: "person.circle")
-//                                            .resizable()
-//                                            .frame(width: 100, height: 100, alignment: .center)
-//                                    })
-//                                    .foregroundColor(getRandomColor())
-//                                    Text(profile.username ?? "-")
+                                    .foregroundColor(Color(profile.wrappedColor))
+                                    
+                                    if self.editMode?.wrappedValue == .active {
+                                        Button(action: {
+                                            withAnimation(.spring()) {
+                                                removeProfile(at: profile.id!)
+                                            }
+                                        },
+                                        label: {
+                                            UserRemovalOverlay(size: userIconSize)
+                                        }).offset(x: -(userIconSize / 3), y: -(userIconSize / 3))
+                                        .foregroundColor(Color(profile.wrappedColor))
+                                    }
+                                    
                                 }
+                                Text(profile.wrappedUsername)
                             }
-                        }.padding()
-                    }.frame(alignment: .center)
+                            //TODO: try adding jiggle in editMode
+//                            .rotationEffect(self.editMode?.wrappedValue == .active ? .radians(self.shake) : .radians(0.0))
+//                            .animateForever(autoreverses: true) {
+//                                if self.editMode?.wrappedValue == .active {
+//                                    self.shake += .pi/30
+//                                    self.move += .pi/6
+//                                }
+//                                print(shake)
+//                            }
+                            
+//                            if self.editMode?.wrappedValue == .active {
+//                                .offset(x: CGFloat(4 * sin(self.move)), y: CGFloat(4 * cos(self.move)))
+//                                .rotationEffect(.radians(shake))
+//                                .animateForever(autoreverses: true) {
+//                                    shake += .pi/30
+//                                    move += .pi/6
+//                                }
+//                            }
+                            
+                        }
+                    }.padding(.horizontal, gemetricalPadding)
+                }
+                Spacer()
+                
+                //MARK:  New User / Done Button
+                Button(action: {
+                    withAnimation(.default) {
+                        if !self.profiles.isEmpty {
+                            if self.editMode?.wrappedValue == .inactive {
+                                self.isShowingAddUser.toggle()
+                            } else {
+                                self.editMode?.wrappedValue = .inactive
+                            }
+                        } else {
+                            self.editMode?.wrappedValue = .inactive
+                            self.isShowingAddUser.toggle()
+                        }
+                    }
+                }, label: {
+                    Text(self.profiles.isEmpty ? "New user" : self.editMode?.wrappedValue == .inactive ? "New user" : "Done")
+                })
+                .padding()
+                .font(.headline)
+                
+                Spacer()
                     
-                    Spacer()
-//                    Spacer()
-//
-//                    TextField("Username", text: $username)
-//                        .frame(maxWidth: 200, alignment: .center)
-//                        .multilineTextAlignment(.center)
-//                        .padding(.all)
-//                        .background(Color.white)
-//                        .cornerRadius(10)
-//                        .shadow(color: Color.black.opacity(0.25), radius: 3, y: 2)
-//
-//                    Button {
-//                        activeSession.username = username
-//                        activeSession.profile = self.profiles.filter({ (Profile) -> Bool in
-//                            Profile.username == username
-//                        })[0]
-//                    } label: {
-//                        Text("Login")
-//                            .foregroundColor(.white)
-//                    }
-//                    .frame(maxWidth: 200)
-//                    .padding(.all)
-//                    .background(Color.blue)
-//                    .cornerRadius(10)
-//                    .shadow(color: Color.black.opacity(0.25), radius: 3, y: 2)
-                    
-                    
-                    Button(action: {
-                        self.showingNewUser.toggle()
-                    }, label: {
-                        Text("New user")
+                    .sheet(isPresented: $isShowingAddUser, content: {
+                        AddNewUserView()
                     })
-                    .padding()
-                    .font(.headline)
-                    
-                    Spacer()
-                    
-                    
-                    .sheet(isPresented: $showingNewUser, content: {
-                        AddNewUserView().environment(\.showingSheet, self.$showingNewUser)
-                    })
-//                }
             }
         }
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Profile(context: viewContext)
-            newItem.firstName = ""
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-//    private func deleteItems(offsets: IndexSet) {
-//        withAnimation {
-//            offsets.map { items[$0] }.forEach(viewContext.delete)
-//
-//            do {
-//                try viewContext.save()
-//            } catch {
-//                // Replace this implementation with code to handle the error appropriately.
-//                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//                let nsError = error as NSError
-//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-//            }
-//        }
-//    }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

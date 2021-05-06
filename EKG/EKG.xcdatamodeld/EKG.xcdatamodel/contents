@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D80" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20E232" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Exam" representedClassName="Exam" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="origin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="exam" inverseEntity="Profile"/>
         <relationship name="sample" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Sample" inverseName="origin" inverseEntity="Sample"/>
     </entity>
     <entity name="Profile" representedClassName="Profile" syncable="YES">
-        <attribute name="age" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="age" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deviceRSSI" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="examDuration" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
+        <attribute name="profileColor" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
         <relationship name="exam" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exam" inverseName="origin" inverseEntity="Exam"/>
         <uniquenessConstraints>
@@ -27,8 +31,8 @@
         <relationship name="origin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exam" inverseName="sample" inverseEntity="Exam"/>
     </entity>
     <elements>
-        <element name="Exam" positionX="195.696533203125" positionY="-220.3661804199219" width="128" height="89"/>
-        <element name="Profile" positionX="-23.30877685546875" positionY="-240.033203125" width="128" height="134"/>
+        <element name="Exam" positionX="195.696533203125" positionY="-220.3661804199219" width="128" height="119"/>
+        <element name="Profile" positionX="-23.30877685546875" positionY="-240.033203125" width="128" height="164"/>
         <element name="Sample" positionX="437.7916259765625" positionY="-232.8761901855469" width="128" height="89"/>
     </elements>
 </model>

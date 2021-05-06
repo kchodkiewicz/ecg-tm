@@ -9,18 +9,13 @@ import SwiftUI
 import CoreBluetooth
 
 struct OverView: View {
+    
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var activeSession: ActiveSession
     
     @ObservedObject var bleConnection = BLEConnection()
     
-//    @FetchRequest(
-//        entity: Profile.entity(),
-//        sortDescriptors: [NSSortDescriptor(keyPath: \Profile.id, ascending: true)],
-//        animation: .default)
-//    private var profile: FetchedResults<Profile>
-    
-    var profile: Profile
+    @ObservedObject var profile: Profile
     
     @State private var showingNewExam: Bool = false
     @State private var showingProfile: Bool = false
@@ -32,114 +27,59 @@ struct OverView: View {
         // Start Scanning for BLE Devices
         bleConnection.startCentralManager()
         
+        //TODO: try connecting to saved device (CoreData: Profile.btRRSI <- add)
+//        if profile.deviceRSSI != 0 {
+//            bleConnection.connect(peripheral: device)
+//        }
     }
     
     var body: some View {
-//
-//        NavigationView {
-            
-            TabView {
-                HistoryView(filter: profile.username!)
-                    .tabItem{
-                    Image(systemName: "house.circle")
-                        .imageScale(.large)
-                        .accessibility(label: Text("History"))
-                        
-                    Text("History")
-                    }
-                
-                ProfileView(profile: self.profile)
-                    .environmentObject(self.activeSession)
-                    .tabItem{
-                        Image(systemName: "person.crop.circle")
-                                .imageScale(.large)
-                                .accessibility(label: Text("User Profile"))
-                                .padding()
-                        Text("Profile")
-                    }
-                
-                GraphExamView(profile: self.profile)
-                    .tabItem {
-                        Image(systemName: "waveform.path.ecg.rectangle.fill")
-                            .imageScale(.large)
-                            .accessibility(label: Text("New Examination"))
-                        Text("Exam")
-                    }
-                
-                
-            }
-            .onAppear(perform: connectBLEDevice)
-            
-            
-//                .toolbar {
-//                    // Top Toolbar
-//
-//
-//                    ToolbarItem(placement: .primaryAction) {
-//
-//                        NavigationLink(
-//                            destination: ProfileView(profile: self.profile).environmentObject(self.activeSession)) {
-//                            Image(systemName: "person.crop.circle")
-//                                .imageScale(.large)
-//                                .accessibility(label: Text("User Profile"))
-//                                .padding()
-//                        }
-//
-////                            Button(action: {self.showingProfile.toggle()}) {
-////                            Image(systemName: "person.crop.circle")
-////                                .imageScale(.large)
-////                                .accessibility(label: Text("User Profile"))
-////                                .padding()
-////                            }.sheet(isPresented: $showingProfile) {
-////
-////                                ProfileView()
-////                                    .environmentObject(self.activeSession)
-////
-////                            }
-//
-//                    }
-//
-//                    ToolbarItem(placement: .primaryAction) {
-//
-//                        Button(action: {self.showingBTScan.toggle()}) {
-//                            Image(systemName: "antenna.radiowaves.left.and.right")
-//                            .imageScale(.large)
-//                            .accessibility(label: Text("Bluetooth connection"))
-//                            .padding()
-//                        }.sheet(isPresented: $showingBTScan) {
-//
-//                            BTView(bleConnection: bleConnection)
-//
-//                        }
-//
-//                    }
-//
-//                    ToolbarItem(placement: .bottomBar) {
-//
-//                        // Bottom Toolbar
-//                        Button(action: {
-//                            self.showingNewExam.toggle()
-//                        }) {
-//                            Image(systemName: "waveform.path.ecg.rectangle.fill")
-//                                .imageScale(.large)
-//                                .accessibility(label: Text("New Examination"))
-//                                .padding()
-//                        }.sheet(isPresented: $showingNewExam) {
-//
-//                            GraphExamView(profile: self.profile)
-//
-//                        }
-//
-//                    }
-//                }
-//            .sheet(isPresented: $showingNewExam) {
-//                GraphExamView()
-//            }
-            
-                
-            
-//        }
         
+        TabView {
+            // History
+            NavigationView {
+                HistoryView(filter: profile.username!)
+                    
+            }.tabItem {
+                Image(systemName: "house.circle")
+                    .imageScale(.large)
+                    .accessibility(label: Text("History"))
+                Text("History")
+            }.tag(Tab.history)
+            
+            // Exam
+            NavigationView {
+                GraphExamView(profile: self.profile)
+            }.tabItem {
+                Image(systemName: "waveform.path.ecg.rectangle.fill")
+                    .imageScale(.large)
+                    .accessibility(label: Text("New Examination"))
+                Text("Exam")
+            }
+            .tag(Tab.exam)
+            // Profile
+            NavigationView {
+                ProfileEditView(
+                    viewContext: viewContext,
+                    profile: self.profile,
+                    username: self.profile.wrappedUsername,
+                    firstName: self.profile.wrappedFirstName,
+                    lastName: self.profile.wrappedLastName,
+                    age: self.profile.wrappedAge,
+                    examDuration: Int(self.profile.examDuration),
+                profileColor: ProfileColor.ColorName(value: self.profile.wrappedColor)
+                )
+            }.tabItem {
+                Image(systemName: "person.crop.circle")
+                    .imageScale(.large)
+                    .accessibility(label: Text("User Profile"))
+                    .padding()
+                Text("Profile")
+            }.tag(Tab.profile)
+            
+            
+        }
+        .onAppear(perform: connectBLEDevice)
         
     }
 }

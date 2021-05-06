@@ -7,8 +7,6 @@
 import Combine
 import Foundation
 
-class ActiveSession: ObservableObject {
-    @Published var username: String = ""
+class ActiveSession: ObservableObject { 
     @Published var id: UUID?
-    @Published var profile: Profile?
 }
