@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import CoreBluetooth
+import COMMFrameParser
 
 struct Device: Identifiable, Equatable {
     var id: Int
@@ -103,7 +104,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
                 peripheral.discoverCharacteristics(nil, for: service)
             }
             
-            //Bluno Service
+            //BLE Service
             if (service.uuid == BLEConnection.bleServiceUUID) {
                 peripheral.discoverCharacteristics(nil, for: service)
             }
@@ -165,26 +166,6 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
     // Handles the result of the scan
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         print("Peripheral Name: \(String(describing: peripheral.name))  RSSI: \(String(RSSI.doubleValue))")
-        // We've found it so stop scan
-        //self.centralManager.stopScan()
-        // Copy the peripheral instance
-//        self.peripheral = peripheral
-//        self.peripheral.delegate = self
-        // Connect!
-//        self.centralManager.connect(self.peripheral, options: nil)
-        
-        
-//        var peripheralName: String!
-//
-//        if let name = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-//            peripheralName = name
-//        }
-//        else {
-//            peripheralName = "Unknown"
-//        }
-//
-//        let newPeripheral = Device(id: scannedBLEDevices.count, name: peripheralName, rssi: RSSI.intValue)
-//        print(newPeripheral)
         if(!scannedBLEDevices.contains(peripheral)) {
             scannedBLEDevices.append(peripheral)
         }
@@ -203,33 +184,6 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
         }
     }
 
-
-//    // Handles discovery event
-//    public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-//        if let services = peripheral.services {
-//            for service in services {
-//                if service.uuid == BLEConnection.bleServiceUUID {
-//                    print("BLE Service found")
-//                    //Now kick off discovery of characteristics
-//                    peripheral.discoverCharacteristics([BLEConnection.bleCharacteristicUUID], for: service)
-//                    return
-//                }
-//            }
-//        }
-//    }
-//
-//    // Handling discovery of characteristics
-//    public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-//        if let characteristics = service.characteristics {
-//            for characteristic in characteristics {
-//                if characteristic.uuid == BLEConnection.bleCharacteristicUUID {
-//                    print("BLE service characteristic found")
-//                } else {
-//                    print("Characteristic not found.")
-//                }
-//            }
-//        }
-//    }
     
     public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         print("Message is being getting gotten")
@@ -252,6 +206,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
                 let stringValue = String(data: characteristic.value!, encoding: String.Encoding.utf8)!
             
                 print(stringValue)
+                COMMFrameParser.ExecuteFrameData(Array(string.utf8))
             }
         }
         
