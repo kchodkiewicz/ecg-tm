@@ -7,11 +7,6 @@
 
 import Foundation
 
-//import COMMFrame
-//import COMMShiftByte
-//import COMMCommandType
-//import COMMAnswerType
-
 
 struct SendFrame {
     var frameID: UInt16
@@ -66,6 +61,7 @@ class COMMFrameParser {
             
 //            emptyData = frame[0...beforeCRC]
 //            emptyData = frame[afterCRC...frame.count]
+            
             let crcValue: UInt16 = COMMFrame.CRC16(data: emptyData)
             let msbCRC: UInt8 = 6
             let lsbCRC: UInt8 = 5
@@ -126,6 +122,7 @@ class COMMFrameParser {
                 if  cmdType != COMMCommandType.Invalid
                 {
                     let indexAnswerStatus: UInt8 = 4
+                    
                     //typy odpowiedzi
                     switch cmdType {
                         case COMMCommandType.EnableModuleECG:
@@ -214,8 +211,6 @@ class COMMFrameParser {
 
             default:
                 print("Nie zna typu komendy")
-
-
         }
     }
 
