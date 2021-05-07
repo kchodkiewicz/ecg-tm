@@ -1,5 +1,5 @@
 //
-//  Bar.swift
+//  Chart.swift
 //  EKG
 //
 //  Created by Krzysztof Chodkiewicz on 24/04/2021.
@@ -15,8 +15,19 @@ struct Chart : UIViewRepresentable {
     func makeUIView(context: Context) -> LineChartView {
         //crate new chart
         let chart = LineChartView()
+        chart.backgroundColor = UIColor.systemBackground
         chart.borderColor = .red
-        chart.animate(xAxisDuration: 0.5)
+        chart.rightAxis.enabled = false
+        chart.leftAxis.labelFont = .boldSystemFont(ofSize: 10)
+        chart.leftAxis.labelTextColor = UIColor(.primary)
+        chart.leftAxis.axisLineColor = UIColor(.secondary)
+        
+        chart.xAxis.labelPosition = .bottom
+        chart.xAxis.labelFont = .boldSystemFont(ofSize: 10)
+        chart.xAxis.labelTextColor = UIColor(.primary)
+        chart.xAxis.axisLineColor = UIColor(.secondary)
+        
+        
         //it is convenient to form chart data in a separate func
         chart.data = addData()
         return chart
@@ -30,12 +41,16 @@ struct Chart : UIViewRepresentable {
     
     func addData() -> LineChartData{
         let data = LineChartData()
-        //BarChartDataSet is an object that contains information about your data, styling and more
         let dataSet = LineChartDataSet(entries: entries)
-        // change bars color to green
-        dataSet.colors = [NSUIColor.green]
-        //change data label
-        dataSet.label = "My Data"
+        dataSet.drawCirclesEnabled = false
+        dataSet.label = nil
+        dataSet.setColor(.systemRed)
+        dataSet.lineWidth = 4
+        dataSet.drawHorizontalHighlightIndicatorEnabled = false
+        dataSet.drawVerticalHighlightIndicatorEnabled = false
+        dataSet.highlightColor = UIColor(.primary)
+        
+        data.setDrawValues(false)
         data.addDataSet(dataSet)
         return data
     }

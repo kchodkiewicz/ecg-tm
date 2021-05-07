@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import CoreBluetooth
-import COMMFrameParser
+//import COMMFrameParser
 
 struct Device: Identifiable, Equatable {
     var id: Int
@@ -206,7 +206,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
                 let stringValue = String(data: characteristic.value!, encoding: String.Encoding.utf8)!
             
                 print(stringValue)
-                COMMFrameParser.ExecuteFrameData(Array(string.utf8))
+                //COMMFrameParser.ExecuteFrameData(frame: Array(stringValue.utf8))
             }
         }
         

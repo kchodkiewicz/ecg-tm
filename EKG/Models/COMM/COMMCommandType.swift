@@ -1,3 +1,10 @@
+//
+//  COMMCommandType.swift
+//  EKG
+//
+//  Created by Krzysztof Chodkiewicz on 07/05/2021.
+//
+
 import Foundation
 
 
