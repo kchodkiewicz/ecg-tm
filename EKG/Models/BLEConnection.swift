@@ -154,7 +154,8 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
                     
                     //Set Notify is useful to read incoming data async
                     peripheral.setNotifyValue(true, for: characteristic)
-                    print("Found Bluno Data Characteristic")
+                    print("3/3 Found Bluno Data Characteristic")
+                    print("Connection complete")
                     
                 }
                 
@@ -175,12 +176,12 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
 
     // The handler if we do connect successfully
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("Connects corectly")
+        print("1/3 Connecting")
         
         peripheral.delegate = self
         
         if peripheral == self.peripheral {
-            print("Connected to your BLE Board")
+            print("2/3 Connected to your BLE Board")
             peripheral.discoverServices([BLEConnection.bleServiceUUID])
         }
     }

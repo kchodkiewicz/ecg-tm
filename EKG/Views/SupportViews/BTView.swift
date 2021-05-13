@@ -23,12 +23,8 @@ struct BTView: View {
             HStack {
                 Button(action: {
                     
-                    print("CONNECTED TO " + device.name!)
+                    print("Trying to connect to: \(device.name!)")
                     bleConnection.connect(peripheral: device)
-                    
-                    
-                    
-                    //
                     
 //                    let profile = self.profile
 //                    profile.deviceUUID = device.identifier
@@ -51,7 +47,7 @@ struct BTView: View {
                 }
                 
             }
-        }.listStyle(InsetListStyle())
+        }.listStyle(PlainListStyle())
         
         
         .onAppear(perform: {
@@ -64,8 +60,10 @@ struct BTView: View {
     }
 }
 
-//struct BTView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BTView()
-//    }
-//}
+struct BTView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        
+        BTView(profile: Profile(), bleConnection: BLEConnection())
+    }
+}

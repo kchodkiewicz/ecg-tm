@@ -26,7 +26,8 @@ struct ProfileEditView: View {
     @State var examDuration: Int = 5
     @State var profileColor: ProfileColor = ProfileColor.crimson
     
-    @State var showingAge: Bool = true
+    @State var isShowingPallette: Bool = false
+    @State var isShowingAge: Bool = true
 
     
     var body: some View {
@@ -46,7 +47,7 @@ struct ProfileEditView: View {
                         Spacer()
                     }
                 } else {
-                    UserIcon(profileColor: self.$profileColor)
+                    UserIcon(isShowingPallette: self.$isShowingPallette, profileColor: self.$profileColor)
                 }
                 
                 HStack {
@@ -88,15 +89,15 @@ struct ProfileEditView: View {
                 if .inactive == self.editMode?.wrappedValue {
                     Button {
                         withAnimation(.spring()) {
-                            self.showingAge.toggle()
+                            self.isShowingAge.toggle()
                         }
                     } label: {
                         HStack {
-                            Text(self.showingAge ? "Age" : "Birthdate")
+                            Text(self.isShowingAge ? "Age" : "Birthdate")
                             
                             Spacer()
                             
-                            if self.showingAge {
+                            if self.isShowingAge {
                                 Text(getAge(birthdate: self.profile.wrappedAge))
                             } else {
                                 Text(self.profile.wrappedAge, formatter: Formatters.birthDateFormat)
@@ -168,6 +169,8 @@ struct ProfileEditView: View {
             trailing: Button(action: {
                 withAnimation {
                     if self.editMode?.wrappedValue == .active {
+                        //FIXME: hide pallette before updating - make sure age picker is hiding
+                        //self.isShowingPallette = false
                         updateProfile()
                     }
                     self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active

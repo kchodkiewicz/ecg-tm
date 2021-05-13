@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserIcon: View {
     
-    @State var showingPallette: Bool = false
+    @Binding var isShowingPallette: Bool
     @Binding var profileColor: ProfileColor
     
     var body: some View {
@@ -17,7 +17,7 @@ struct UserIcon: View {
             Spacer()
             Button {
                 withAnimation {
-                    self.showingPallette.toggle()
+                    self.isShowingPallette.toggle()
                 }
             } label: {
                 
@@ -32,10 +32,10 @@ struct UserIcon: View {
             .buttonStyle(PlainButtonStyle())
             Spacer()
         }.padding()
-        if self.showingPallette {
+        if self.isShowingPallette {
             
             ColorPickerView(profileColor: self.$profileColor)
-                .transition(.slide)       
+                .transition(.scale)
         }
     }
 }

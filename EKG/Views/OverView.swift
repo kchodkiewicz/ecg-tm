@@ -17,9 +17,9 @@ struct OverView: View {
     
     @ObservedObject var profile: Profile
     
-    @State private var showingNewExam: Bool = false
-    @State private var showingProfile: Bool = false
-    @State private var showingBTScan: Bool = false
+//    @State private var showingNewExam: Bool = false
+//    @State private var showingProfile: Bool = false
+//    @State private var showingBTScan: Bool = false
     
     
     private func connectBLEDevice() {
@@ -48,7 +48,7 @@ struct OverView: View {
                 HistoryView(filter: profile.username!)
                     
             }.tabItem {
-                Image(systemName: "house.circle")
+                Image(systemName: "house.fill")
                     .imageScale(.large)
                     .accessibility(label: Text("History"))
                 Text("History")
@@ -78,7 +78,7 @@ struct OverView: View {
                 profileColor: ProfileColor.ColorName(value: self.profile.wrappedColor)
                 )
             }.tabItem {
-                Image(systemName: "person.crop.circle")
+                Image(systemName: "person.crop.square.fill")
                     .imageScale(.large)
                     .accessibility(label: Text("User Profile"))
                     .padding()
@@ -86,7 +86,7 @@ struct OverView: View {
             }.tag(Tab.profile)
             
             
-        }
+        }.accentColor(Color("\(profile.wrappedColor)"))
         .onAppear(perform: connectBLEDevice)
         
     }

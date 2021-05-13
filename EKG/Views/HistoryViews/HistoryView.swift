@@ -26,7 +26,7 @@ struct HistoryView: View {
             }
             .onDelete(perform: removeExam)
             .buttonStyle(PlainButtonStyle())
-        }
+        }.listStyle(InsetListStyle())
         .navigationTitle("Overview")
         
     }
@@ -42,7 +42,7 @@ struct HistoryView: View {
                 try viewContext.save()
             } catch {
                 viewContext.rollback()
-                print("Faild to remove user")
+                print("Failed to remove user")
             }
         }
     }
@@ -55,6 +55,6 @@ struct HistoryView: View {
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
         
-        HistoryView(filter: "testdude")
+        HistoryView(filter: "thebob")
     }
 }

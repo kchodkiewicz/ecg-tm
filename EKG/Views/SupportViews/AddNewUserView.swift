@@ -18,6 +18,7 @@ struct AddNewUserView: View {
     @State private var age = Date()
     @State private var examDuration = 5
     @State private var profileColor = ProfileColor.crimson
+    @State private var isShowingPallette = false
     
     private var invalidInput: Bool {
         
@@ -30,7 +31,7 @@ struct AddNewUserView: View {
                 
                 Section {
                     
-                    UserIcon(profileColor: self.$profileColor)
+                    UserIcon(isShowingPallette: self.$isShowingPallette, profileColor: self.$profileColor)
                 
                     TextField("Username", text: $username)
                         .disableAutocorrection(true)
