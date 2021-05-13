@@ -25,7 +25,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
     
     // Properties
     private var centralManager: CBCentralManager! = nil
-    public var peripheral: CBPeripheral!
+    @Published public var peripheral: CBPeripheral!
     var mainCharacteristic:CBCharacteristic? = nil
 
     public static let bleServiceUUID = CBUUID.init(string: "FFE0")
@@ -155,6 +155,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
                     //Set Notify is useful to read incoming data async
                     peripheral.setNotifyValue(true, for: characteristic)
                     print("Found Bluno Data Characteristic")
+                    
                 }
                 
             }
@@ -165,7 +166,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
 
     // Handles the result of the scan
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        print("Peripheral Name: \(String(describing: peripheral.name))  RSSI: \(String(RSSI.doubleValue))")
+        print("Peripheral Name: \(String(describing: peripheral.name)) RSSI: \(String(RSSI.doubleValue))")
         if(!scannedBLEDevices.contains(peripheral)) {
             scannedBLEDevices.append(peripheral)
         }
@@ -203,13 +204,28 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
         } else if (characteristic.uuid == BLEConnection.bleCharacteristicUUID) {
             //data recieved
             if(characteristic.value != nil) {
-                let stringValue = String(data: characteristic.value!, encoding: String.Encoding.utf8)!
-            
-                print(stringValue)
-                //COMMFrameParser.ExecuteFrameData(frame: Array(stringValue.utf8))
+//                let stringValue = String(data: characteristic.value!, encoding: String.Encoding.utf8)!
+//                print(characteristic.value!)
+//                print(stringValue)
+                COMMFrameParser.ExecuteFrameData(frame: Array(characteristic.value!))
             }
         }
-        
-        
     }
+
+    
+    public func sendData(data: [UInt8]) {
+        var dataToSend = Data()
+        dataToSend.append(contentsOf: data)
+        print(dataToSend)
+        if self.peripheral != nil {
+            self.peripheral.writeValue(dataToSend, for: mainCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
+        } else {
+            print("Haven't discovered device yet.")
+            return
+        }
+
+    }
+    
+    
 }
+

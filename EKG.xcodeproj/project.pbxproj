@@ -10,7 +10,6 @@
 		2C03151F25FD3E6C008FD459 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03151E25FD3E6C008FD459 /* OverView.swift */; };
 		2C03152325FD6CDF008FD459 /* ActiveSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03152225FD6CDF008FD459 /* ActiveSession.swift */; };
 		2C03152625FD6FA3008FD459 /* AddNewUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03152525FD6FA3008FD459 /* AddNewUserView.swift */; };
-		2C3C88FC263F59960016CFCA /* Profile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C88FB263F59960016CFCA /* Profile+CoreDataProperties.swift */; };
 		2C3C8902263F5A110016CFCA /* Exam+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C8900263F5A110016CFCA /* Exam+CoreDataProperties.swift */; };
 		2C40294C25FAD7B600268220 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C40294B25FAD7B600268220 /* ProfileEditView.swift */; };
 		2C48467C263700C700656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484676263700C600656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift */; };
@@ -43,6 +42,8 @@
 		2CC6168B25F660270082FC63 /* GraphDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6168A25F660270082FC63 /* GraphDetail.swift */; };
 		2CC6168F25F6603D0082FC63 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6168E25F6603D0082FC63 /* HistoryView.swift */; };
 		2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */; };
+		2CE421DC264D3596001CD813 /* GraphCal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE421DB264D3596001CD813 /* GraphCal.swift */; };
+		2CE421DF264D76D8001CD813 /* Profile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE421DE264D76D8001CD813 /* Profile+CoreDataProperties.swift */; };
 		8087124F376F23F61EABD8C9 /* Pods_EKG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +51,6 @@
 		2C03151E25FD3E6C008FD459 /* OverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverView.swift; sourceTree = "<group>"; };
 		2C03152225FD6CDF008FD459 /* ActiveSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSession.swift; sourceTree = "<group>"; };
 		2C03152525FD6FA3008FD459 /* AddNewUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewUserView.swift; sourceTree = "<group>"; };
-		2C3C88FB263F59960016CFCA /* Profile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Profile+CoreDataProperties.swift"; path = "../../../Profile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C3C8900263F5A110016CFCA /* Exam+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Exam+CoreDataProperties.swift"; path = "../Exam+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C40294B25FAD7B600268220 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		2C484676263700C600656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Exam+CoreDataClass.swift 16-06-57-625.swift"; sourceTree = "<group>"; };
@@ -85,6 +85,8 @@
 		2CC6168A25F660270082FC63 /* GraphDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDetail.swift; sourceTree = "<group>"; };
 		2CC6168E25F6603D0082FC63 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
+		2CE421DB264D3596001CD813 /* GraphCal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphCal.swift; sourceTree = "<group>"; };
+		2CE421DE264D76D8001CD813 /* Profile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Profile+CoreDataProperties.swift"; path = "../../../Profile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5BDFF963D48E3A75DD4E5DE7 /* Pods-EKG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EKG.release.xcconfig"; path = "Target Support Files/Pods-EKG/Pods-EKG.release.xcconfig"; sourceTree = "<group>"; };
 		7E88409701BA03AA391BFBC6 /* Pods-EKG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EKG.debug.xcconfig"; path = "Target Support Files/Pods-EKG/Pods-EKG.debug.xcconfig"; sourceTree = "<group>"; };
 		C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EKG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,8 +116,8 @@
 			isa = PBXGroup;
 			children = (
 				2C484699263819AF00656C5E /* Profile+CoreDataClass.swift */,
-				2C3C88FB263F59960016CFCA /* Profile+CoreDataProperties.swift */,
 				2C484676263700C600656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift */,
+				2CE421DE264D76D8001CD813 /* Profile+CoreDataProperties.swift */,
 				2C3C8900263F5A110016CFCA /* Exam+CoreDataProperties.swift */,
 				2C484678263700C600656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift */,
 				2C484677263700C600656C5E /* Sample+CoreDataProperties.swift 16-06-57-693.swift */,
@@ -220,6 +222,7 @@
 				2CC3158126345DD6007ABCF8 /* COMM */,
 				2C03152225FD6CDF008FD459 /* ActiveSession.swift */,
 				2C9540982621D34F00D115FE /* BLEConnection.swift */,
+				2CE421DB264D3596001CD813 /* GraphCal.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -404,9 +407,9 @@
 				2C6367A8264598D3007B34E2 /* COMMAnswerType.swift in Sources */,
 				2C9540962621CD9200D115FE /* BTView.swift in Sources */,
 				2C729E3E2640CB9B00D36A1B /* Extensions.swift in Sources */,
+				2CE421DF264D76D8001CD813 /* Profile+CoreDataProperties.swift in Sources */,
 				2C6367B02645990C007B34E2 /* COMMShiftByte.swift in Sources */,
 				2CC6167C25F657BC0082FC63 /* Persistence.swift in Sources */,
-				2C3C88FC263F59960016CFCA /* Profile+CoreDataProperties.swift in Sources */,
 				2C4846A526383A9A00656C5E /* UserRemovalOverlay.swift in Sources */,
 				2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */,
 				2C48467C263700C700656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift in Sources */,
@@ -425,6 +428,7 @@
 				2CC6167F25F657BC0082FC63 /* EKG.xcdatamodeld in Sources */,
 				2C03152325FD6CDF008FD459 /* ActiveSession.swift in Sources */,
 				2C3C8902263F5A110016CFCA /* Exam+CoreDataProperties.swift in Sources */,
+				2CE421DC264D3596001CD813 /* GraphCal.swift in Sources */,
 				2C5E227125F7B85F002E8306 /* GraphSummaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

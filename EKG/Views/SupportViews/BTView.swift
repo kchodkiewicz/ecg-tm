@@ -9,23 +9,55 @@ import SwiftUI
 import CoreBluetooth
 
 struct BTView: View {
-    var bleConnection: BLEConnection
+    @Environment(\.managedObjectContext) var viewContext
+    
+    var profile: Profile
+    
+    @ObservedObject var bleConnection: BLEConnection
+    
     var body: some View {
-        
+
+            
         List(bleConnection.scannedBLEDevices, id: \.self) { device in
             
-            Button(action: {
+            HStack {
+                Button(action: {
+                    
+                    print("CONNECTED TO " + device.name!)
+                    bleConnection.connect(peripheral: device)
+                    
+                    
+                    
+                    //
+                    
+//                    let profile = self.profile
+//                    profile.deviceUUID = device.identifier
+//
+//                    try? self.viewContext.save()
+                    
+                },
+                label: {
+                    
+                    Text("\(device.name!)")
+                    
+                })
                 
-                print("CONNECTED TO " + device.name!)
-                bleConnection.connect(peripheral: device)
+                Spacer()
+                if device.name! == self.bleConnection.peripheral?.name {
+                    Image(systemName: "checkmark")
+                        .foregroundColor(Color(.systemBlue))
+                } else {
+                    EmptyView()
+                }
                 
-            },
-            label: {
-                
-                Text(verbatim: device.name!)
-                
-            })
-        }
+            }
+        }.listStyle(InsetListStyle())
+        
+        
+        .onAppear(perform: {
+            bleConnection.scannedBLEDevices = []
+            bleConnection.startCentralManager()
+        })
         
         .navigationTitle("Bluetooth Devices")
         

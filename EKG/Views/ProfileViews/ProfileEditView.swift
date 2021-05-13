@@ -14,7 +14,7 @@ struct ProfileEditView: View {
     var viewContext: NSManagedObjectContext
     var profile: Profile
     
-    @ObservedObject var bleConnection = BLEConnection()
+    @ObservedObject var bleConnection: BLEConnection
     
     @Environment(\.editMode) var editMode
     @EnvironmentObject var activeSession: ActiveSession
@@ -31,7 +31,7 @@ struct ProfileEditView: View {
     
     var body: some View {
         Form {
-            
+            Section{
                 if .inactive == self.editMode?.wrappedValue {
                     HStack {
                         Spacer()
@@ -83,7 +83,7 @@ struct ProfileEditView: View {
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
                         .multilineTextAlignment(.trailing)
                 }
-            
+            }
             Section {
                 if .inactive == self.editMode?.wrappedValue {
                     Button {
@@ -126,7 +126,7 @@ struct ProfileEditView: View {
             if self.editMode?.wrappedValue == .inactive {
                 Section {
                     
-                    NavigationLink(destination: BTView(bleConnection: bleConnection)) {
+                    NavigationLink(destination: BTView(profile: profile, bleConnection: bleConnection)) {
                         Text("Bluetooth Device")
                         
                         Spacer()
@@ -144,12 +144,19 @@ struct ProfileEditView: View {
                         Text("Switch User")
                     }
                 }
+            } else {
+                Section {
+                    
+                }
+                Section {
+                    
+                }
             }
         }
         //.listStyle(GroupedListStyle())
         .navigationBarItems(
             leading: Button(action: {
-                withAnimation(.spring()) {
+                withAnimation {
                     self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
                 }
             }) {
@@ -159,7 +166,7 @@ struct ProfileEditView: View {
             .padding(.trailing),
             
             trailing: Button(action: {
-                withAnimation(.spring()) {
+                withAnimation {
                     if self.editMode?.wrappedValue == .active {
                         updateProfile()
                     }

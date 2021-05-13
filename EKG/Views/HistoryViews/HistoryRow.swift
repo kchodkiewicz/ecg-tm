@@ -19,6 +19,18 @@ struct HistoryRow: View {
         return showingDetail
     }
     
+    var exams_previews: [Sample] {
+        var preview: [Sample] = []
+        var i = 0
+        for sample in exam.sampleArray {
+            if i % 25 == 0 {
+            preview.append(sample)
+            }
+            i += 1
+        }
+        return preview
+    }
+    
     var body: some View {
 
         NavigationLink(
@@ -26,7 +38,7 @@ struct HistoryRow: View {
             label: {
                 HStack {
                     
-                    GraphDetail(points: exam.sampleArray)
+                    GraphDetail(points: exams_previews)
                         .frame(width: 150, height: 100)
 //                        .transition(Transitions.viewTransition)
                     

@@ -69,22 +69,32 @@ class COMMFrame {
 
     private func RegenerateData()
     {
-        self.dataSize = self.additionalDataSize + UInt16(COMMFrame.basicFrameSize)
+        self.dataSize = UInt16(COMMFrame.basicFrameSize)
         self.data = [UInt8](repeating: 0, count: Int(self.dataSize))
         self.data[0] = COMMFrame.headerByte1
         self.data[1] = COMMFrame.headerByte2
-        self.data[2] = UInt8(self.frameID << COMMShiftByte.OneByte.rawValue) // przesunac frame id
+        let frameMsb: UInt16 = self.frameID >> COMMShiftByte.OneByte.rawValue
+        self.data[2] = UInt8(frameMsb) // przesunac frame id
         self.data[3] = UInt8(self.frameID & 0xFF)
-        self.data[4] = UInt8(self.additionalDataSize)
+        self.data[6] = UInt8(self.additionalDataSize)
         if(self.additionalDataSize > 0)
         {
-            self.data.insert(contentsOf: additionalData, at: 7)
+//            if additionalData.count > 1 {
+//            self.data.insert(contentsOf: additionalData, at: 7)
+//            } else {
+//                self.data[7] = additionalData[0]
+//            }
+            for elem in additionalData {
+                self.data.append(elem)
+            }
+            
         }
 
         //liczenie CRC
         let crcValue = COMMFrame.CRC16(data: self.data)
-        self.data.insert(UInt8(crcValue) & 0xFF, at:5)
-        self.data.insert(UInt8(crcValue >> COMMShiftByte.OneByte.rawValue), at:6)
+        
+        self.data[4] = UInt8(crcValue & 0xFF)
+        self.data[5] = UInt8(crcValue >> COMMShiftByte.OneByte.rawValue)
         
     }
 
