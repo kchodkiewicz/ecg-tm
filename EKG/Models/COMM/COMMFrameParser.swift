@@ -16,7 +16,8 @@ struct SendFrame {
 class COMMFrameParser {
     
     private static var m_listFrame: [SendFrame] = []
-    
+    private static var m_isTestingECG: Bool = false
+    private static var m_countECGFrame: Int = 0
     enum FrameType: UInt8
     {
         case SendingFrame = 0x00
@@ -24,6 +25,16 @@ class COMMFrameParser {
         case Invalid = 0xFF
     }
     
+    static func EnableECGTest()
+    {
+        m_isTestingECG = True
+    }
+
+    static func DisableECGTest()
+    {
+        m_isTestingECG = False
+    }
+
     static func CheckCRC(frame: [UInt8]) -> Bool
     {
         //wylicza CRC
@@ -113,6 +124,25 @@ class COMMFrameParser {
     
     static func ExecuteFrameData(frame: [UInt8])
     {
+        let frameType: FrameType = GetFrameType(frame: frame)
+        if frameType == FrameType.SendingFrame || m_isTestingECG == True
+        {
+            let commandIndex: UInt8 = 7
+            let commandType: COMMCommandType = COMMCommandType(rawValue: frame[Int(commandIndex)]) ?? COMMCommandType.Invalid
+        
+            if m_isTestingECG == True
+            {
+                
+            }
+            if commandType == COMMCommandType.ECGSamplePackage
+            {
+                m_isTestingECG = True
+            }
+            else 
+            {
+                
+            }
+        }
         if CheckCRC(frame: frame)
         {
             let frameType: FrameType = GetFrameType(frame: frame)
