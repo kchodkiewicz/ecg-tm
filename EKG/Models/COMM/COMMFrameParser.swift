@@ -130,7 +130,7 @@ class COMMFrameParser: ObservableObject {
         return cmdType
     }
     
-    static func ExecuteFrameData(frame: [UInt8]) {
+    static func ExecuteFrameData(frame: [UInt8], graphCal: GraphCal) {
         let frameType: FrameType = GetFrameType(frame: frame)
         var tmpFrame: [UInt8] = []
         if frameType == FrameType.SendingFrame || m_isTestingECG == true {
@@ -166,7 +166,7 @@ class COMMFrameParser: ObservableObject {
         if CheckCRC(frame: tmpFrame) {
             let frameType: FrameType = GetFrameType(frame: tmpFrame)
             if frameType == FrameType.SendingFrame {
-                ExecuteCommand(frame: tmpFrame)
+                ExecuteCommand(frame: tmpFrame, graphCal: graphCal)
             }
             else if frameType == FrameType.ResponseFrame {
                 let cmdType = GetCommandType(frame: tmpFrame)
@@ -233,7 +233,7 @@ class COMMFrameParser: ObservableObject {
         }
     }
     
-    static func ExecuteCommand(frame: [UInt8])
+    static func ExecuteCommand(frame: [UInt8], graphCal: GraphCal)
     {
         //let frameID = GetFrameID(frame: frame)
         
@@ -243,6 +243,9 @@ class COMMFrameParser: ObservableObject {
         switch commandType{
         case COMMCommandType.ECGSamplePackage:
             //odpakuj te dane
+            
+            graphCal.addDataFromBT(data: Array(frame[9...frame.count - 1]))
+            
             print("Dostalem paczke danych EKG")
             
         case COMMCommandType.EndECGTest:
@@ -251,7 +254,7 @@ class COMMFrameParser: ObservableObject {
             //self.ecgFinished = true
             
         default:
-            print("Nie zna typu komendy")
+            print("Nie znam typu komendy")
         }
     }
     

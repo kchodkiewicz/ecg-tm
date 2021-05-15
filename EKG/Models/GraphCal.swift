@@ -9,11 +9,11 @@ import Foundation
 import Charts
 
 
-class GraphCal
+class GraphCal: ObservableObject
 
 {
 
-    @Published var entries : [ChartDataEntry] = []
+    @Published public var entries : [ChartDataEntry] = []
     var charts: LineChartView = LineChartView()
     var numOfSamble: Int = 0
     //@Published var lineChartData: LineChartData = LineChartData()
@@ -91,12 +91,12 @@ class GraphCal
         let resolutionAdc = 1023
         
         
-        for i in stride(from: 0, to: data.count, by: 2)
+        for i in stride(from: 0, to: data.count - 1, by: 2)
         {
 //            let bytes:[UInt8] = [data[i], data[i+1]]
 //            let u16 = UnsafePointer<UInt16>(bytes).memory
             
-            let u16 = UInt16((data[i+1] << COMMShiftByte.OneByte.rawValue) + data[i])
+            let u16 = UInt16((data[i+1] >> COMMShiftByte.OneByte.rawValue) + data[i])
             
             dataU16T.append(u16)
         }

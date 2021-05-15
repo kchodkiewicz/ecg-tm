@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import Charts
 
 struct RoundButtonStyle: ButtonStyle {
     
@@ -35,8 +36,9 @@ struct GraphExamView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State var graphData = GraphCal()
+    //@State var graphData = GraphCal()
     @ObservedObject var bleConnection: BLEConnection
+    
     
     let profile: Profile
     
@@ -48,7 +50,7 @@ struct GraphExamView: View {
         VStack {
             
             Spacer()
-            Chart(entries: graphData.entries)
+            Chart(entries: Binding<[ChartDataEntry]>(GraphCal.entries))
             //GraphDetail(points: profile.examArray.last?.sampleArray ?? [])
             
             Spacer()
@@ -60,7 +62,7 @@ struct GraphExamView: View {
                 Button(action: {
                     
                     //TODO: Send stop signal to BT
-                    
+                 
                     // Stop examination
                     print("Stop button")
                     
