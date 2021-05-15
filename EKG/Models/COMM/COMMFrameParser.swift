@@ -17,13 +17,13 @@ class COMMFrameParser: ObservableObject {
         var frameType: COMMCommandType
     }
     
-    @Published var ecgFinished: Bool = false
+    //@Published var ecgFinished: Bool = false
     
-    private var m_listFrame: [SendFrame] = []
-    private var m_isTestingECG: Bool = false
-    private var m_countECGFrame: Int = 0
+    private static var m_listFrame: [SendFrame] = []
+    private static var m_isTestingECG: Bool = false
+    private static var m_countECGFrame: Int = 0
     
-    private var frameExecution: [UInt8] = []
+    private static var frameExecution: [UInt8] = []
     
     enum FrameType: UInt8
     {
@@ -32,17 +32,17 @@ class COMMFrameParser: ObservableObject {
         case Invalid = 0xFF
     }
     
-    func EnableECGTest()
+    static func EnableECGTest()
     {
         m_isTestingECG = true
     }
 
-    func DisableECGTest()
+    static func DisableECGTest()
     {
         m_isTestingECG = false
     }
 
-    func CheckCRC(frame: [UInt8]) -> Bool
+    static func CheckCRC(frame: [UInt8]) -> Bool
     {
         //wylicza CRC
         var emptyData: [UInt8] = []
@@ -92,7 +92,7 @@ class COMMFrameParser: ObservableObject {
         }
     }
     
-    func GetFrameType(frame: [UInt8]) -> FrameType
+    static func GetFrameType(frame: [UInt8]) -> FrameType
     {
         //Zwraca typ ramki
         let header1: UInt8 = 0x55
@@ -110,11 +110,11 @@ class COMMFrameParser: ObservableObject {
         return FrameType.Invalid
     }
     
-    func SetCommandType(frameId: UInt16, type: COMMCommandType) {
+    static func SetCommandType(frameId: UInt16, type: COMMCommandType) {
         self.m_listFrame.append(SendFrame(frameID: frameId, frameType: type))
     }
     
-    func GetCommandType(frame: [UInt8]) -> COMMCommandType {
+    static func GetCommandType(frame: [UInt8]) -> COMMCommandType {
         
         let frameID = COMMFrameParser.GetFrameID(frame: frame)
         
@@ -130,7 +130,7 @@ class COMMFrameParser: ObservableObject {
         return cmdType
     }
     
-    func ExecuteFrameData(frame: [UInt8]) {
+    static func ExecuteFrameData(frame: [UInt8]) {
         let frameType: FrameType = GetFrameType(frame: frame)
         var tmpFrame: [UInt8] = []
         if frameType == FrameType.SendingFrame || m_isTestingECG == true {
@@ -229,11 +229,11 @@ class COMMFrameParser: ObservableObject {
             }
         }
         else {
-            print ("Blad CRC")
+            print("Blad CRC")
         }
     }
     
-    func ExecuteCommand(frame: [UInt8])
+    static func ExecuteCommand(frame: [UInt8])
     {
         //let frameID = GetFrameID(frame: frame)
         
@@ -248,7 +248,7 @@ class COMMFrameParser: ObservableObject {
         case COMMCommandType.EndECGTest:
             //informacja o koncu ECG
             print("Skonczylem EKG")
-            self.ecgFinished = true
+            //self.ecgFinished = true
             
         default:
             print("Nie zna typu komendy")
