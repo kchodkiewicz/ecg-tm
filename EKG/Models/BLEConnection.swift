@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import CoreBluetooth
-//import COMMFrameParser
 
 struct Device: Identifiable, Equatable {
     var id: Int
@@ -22,6 +21,11 @@ struct Device: Identifiable, Equatable {
 
 open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate, ObservableObject {
     
+    var frameParser: COMMFrameParser?
+    
+    func setFrameParser(frameParser: COMMFrameParser) {
+        self.frameParser = frameParser
+    }
     
     // Properties
     private var centralManager: CBCentralManager! = nil
@@ -188,7 +192,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
 
     
     public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("Message is being getting gotten")
+        print("Message: ", terminator: String(""))
         
         if (characteristic.uuid.uuidString == "2A00") {
             //value for device name recieved
@@ -208,7 +212,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
 //                let stringValue = String(data: characteristic.value!, encoding: String.Encoding.utf8)!
 //                print(characteristic.value!)
 //                print(stringValue)
-                COMMFrameParser.ExecuteFrameData(frame: Array(characteristic.value!))
+                frameParser!.ExecuteFrameData(frame: Array(characteristic.value!))
             }
         }
     }

@@ -37,6 +37,7 @@ struct GraphExamView: View {
     
     @State var graphData = GraphCal()
     @ObservedObject var bleConnection: BLEConnection
+    @EnvironmentObject var frameParser: COMMFrameParser
     
     let profile: Profile
     
@@ -67,7 +68,7 @@ struct GraphExamView: View {
                      
                     
                 }, label: {
-                    Text("Stop")
+                    Text(self.frameParser.ecgFinished ? "DONE" : "Stop")
                     
                 })
                 .buttonStyle(RoundButtonStyle(foregroundColor: Color(red: 185/255, green: 45/255, blue: 45/255)))
@@ -80,9 +81,9 @@ struct GraphExamView: View {
                     let commFrame = COMMFrame()
                     commFrame.SetFrameID(frameID: 0x001)
                     commFrame.SetAdditionalData(data: [COMMCommandType.SetDuringTimeECGTest.rawValue, UInt8(self.profile.examDuration)], size: 2)
-                    
+                    print(UInt8(self.profile.examDuration))
                     let frame = commFrame.GetFrameData()
-                    COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.SetDuringTimeECGTest)
+                    frameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.SetDuringTimeECGTest)
                     bleConnection.sendData(data: frame)
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -91,7 +92,7 @@ struct GraphExamView: View {
                         commFrame.SetAdditionalData(data: [COMMCommandType.StartECGTest.rawValue], size: 1)
                         
                         let frame = commFrame.GetFrameData()
-                        COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.StartECGTest)
+                        frameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.StartECGTest)
                         
                         bleConnection.sendData(data: frame)
                     }

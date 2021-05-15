@@ -17,6 +17,7 @@ struct EKGApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(ActiveSession())
+                .environmentObject(COMMFrameParser())
         }
     }
 }

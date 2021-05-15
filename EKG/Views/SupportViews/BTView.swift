@@ -41,7 +41,7 @@ struct BTView: View {
                 Spacer()
                 if device.name! == self.bleConnection.peripheral?.name {
                     Image(systemName: "checkmark")
-                        .foregroundColor(Color(.systemBlue))
+                        .foregroundColor(Color("\(profile.wrappedColor)"))
                 } else {
                     EmptyView()
                 }

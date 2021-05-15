@@ -13,13 +13,21 @@ struct OverView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var activeSession: ActiveSession
     
-    @ObservedObject var bleConnection = BLEConnection()
+    @EnvironmentObject var frameParser: COMMFrameParser
+    
+    @ObservedObject var bleConnection: BLEConnection
     
     @ObservedObject var profile: Profile
     
 //    @State private var showingNewExam: Bool = false
 //    @State private var showingProfile: Bool = false
 //    @State private var showingBTScan: Bool = false
+    
+    init(profile: Profile) {
+        self.profile = profile
+        self.bleConnection = BLEConnection()
+        self.bleConnection.setFrameParser(frameParser: self.frameParser)
+    }
     
     
     private func connectBLEDevice() {

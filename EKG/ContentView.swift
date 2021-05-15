@@ -136,6 +136,7 @@ struct ContentView: View {
                 Profile.id == session
             }
             OverView(profile: profile[0])
+                
             
         } else {
             //MARK: - Choose User View

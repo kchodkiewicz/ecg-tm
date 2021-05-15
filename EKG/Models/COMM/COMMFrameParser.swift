@@ -5,19 +5,26 @@
 //  Created by Krzysztof Chodkiewicz on 07/05/2021.
 //
 
+import Combine
 import Foundation
 
 
-struct SendFrame {
-    var frameID: UInt16
-    var frameType: COMMCommandType
-}
 
-class COMMFrameParser {
+class COMMFrameParser: ObservableObject {
     
-    private static var m_listFrame: [SendFrame] = []
-    private static var m_isTestingECG: Bool = false
-    private static var m_countECGFrame: Int = 0
+    struct SendFrame {
+        var frameID: UInt16
+        var frameType: COMMCommandType
+    }
+    
+    @Published var ecgFinished: Bool = false
+    
+    private var m_listFrame: [SendFrame] = []
+    private var m_isTestingECG: Bool = false
+    private var m_countECGFrame: Int = 0
+    
+    private var frameExecution: [UInt8] = []
+    
     enum FrameType: UInt8
     {
         case SendingFrame = 0x00
@@ -25,17 +32,17 @@ class COMMFrameParser {
         case Invalid = 0xFF
     }
     
-    static func EnableECGTest()
+    func EnableECGTest()
     {
-        m_isTestingECG = True
+        m_isTestingECG = true
     }
 
-    static func DisableECGTest()
+    func DisableECGTest()
     {
-        m_isTestingECG = False
+        m_isTestingECG = false
     }
 
-    static func CheckCRC(frame: [UInt8]) -> Bool
+    func CheckCRC(frame: [UInt8]) -> Bool
     {
         //wylicza CRC
         var emptyData: [UInt8] = []
@@ -85,7 +92,7 @@ class COMMFrameParser {
         }
     }
     
-    static func GetFrameType(frame: [UInt8]) -> FrameType
+    func GetFrameType(frame: [UInt8]) -> FrameType
     {
         //Zwraca typ ramki
         let header1: UInt8 = 0x55
@@ -103,11 +110,11 @@ class COMMFrameParser {
         return FrameType.Invalid
     }
     
-    static func SetCommandType(frameId: UInt16, type: COMMCommandType) {
-        COMMFrameParser.m_listFrame.append(SendFrame(frameID: frameId, frameType: type))
+    func SetCommandType(frameId: UInt16, type: COMMCommandType) {
+        self.m_listFrame.append(SendFrame(frameID: frameId, frameType: type))
     }
     
-    static func GetCommandType(frame: [UInt8]) -> COMMCommandType {
+    func GetCommandType(frame: [UInt8]) -> COMMCommandType {
         
         let frameID = COMMFrameParser.GetFrameID(frame: frame)
         
@@ -118,51 +125,59 @@ class COMMFrameParser {
             return COMMCommandType.Invalid
         }
         
-        let cmdType = m_listFrame[mIndex!].frameType
+        let cmdType = m_listFrame.remove(at: mIndex!).frameType
+        
         return cmdType
     }
     
-    static func ExecuteFrameData(frame: [UInt8])
-    {
+    func ExecuteFrameData(frame: [UInt8]) {
         let frameType: FrameType = GetFrameType(frame: frame)
-        if frameType == FrameType.SendingFrame || m_isTestingECG == True
-        {
+        var tmpFrame: [UInt8] = []
+        if frameType == FrameType.SendingFrame || m_isTestingECG == true {
             let commandIndex: UInt8 = 7
             let commandType: COMMCommandType = COMMCommandType(rawValue: frame[Int(commandIndex)]) ?? COMMCommandType.Invalid
         
-            if m_isTestingECG == True
-            {
+            if m_isTestingECG == true {
+                if frameExecution.count < 238 {
+                    frameExecution += frame
+                    print("Dostałem część próbek")
+                    return
+                }
                 
+                frameExecution += frame
+                m_isTestingECG = false
+                tmpFrame = frameExecution
+                frameExecution.removeAll()
+                print("Dostałem całą ramkę")
             }
-            if commandType == COMMCommandType.ECGSamplePackage
-            {
-                m_isTestingECG = True
+            if commandType == COMMCommandType.ECGSamplePackage {
+                m_isTestingECG = true
+                frameExecution += frame
+                print("Dostałem początek ramki próbkami")
+                return
             }
-            else 
-            {
-                
+            if commandType == COMMCommandType.EndECGTest {
+                tmpFrame = frame
             }
+            
+        } else {
+            tmpFrame = frame
         }
-        if CheckCRC(frame: frame)
-        {
-            let frameType: FrameType = GetFrameType(frame: frame)
-            if frameType == FrameType.SendingFrame
-            {
-                ExecuteCommand(frame: frame)
+        if CheckCRC(frame: tmpFrame) {
+            let frameType: FrameType = GetFrameType(frame: tmpFrame)
+            if frameType == FrameType.SendingFrame {
+                ExecuteCommand(frame: tmpFrame)
             }
-            else if frameType == FrameType.ResponseFrame
-            {
-                let cmdType = GetCommandType(frame: frame)
-                if  cmdType != COMMCommandType.Invalid
-                {
+            else if frameType == FrameType.ResponseFrame {
+                let cmdType = GetCommandType(frame: tmpFrame)
+                if  cmdType != COMMCommandType.Invalid {
                     let indexAnswerStatus: UInt8 = 4
                     
                     //typy odpowiedzi
                     switch cmdType {
                     case COMMCommandType.EnableModuleECG:
                         
-                        if (frame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue)
-                        {
+                        if (tmpFrame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue) {
                             print ("Problem z wlaczeniem modulu")
                         } else {
                             print ("Modul wlaczony")
@@ -170,49 +185,41 @@ class COMMFrameParser {
                         
                     case COMMCommandType.DisableModuleECG:
                         
-                        if (frame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue)
-                        {
+                        if (tmpFrame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue) {
                             print ("Problem z wylaczeniem modulu")
                         } else {
                             print("Modul wylaczony")
                         }
                     case COMMCommandType.GetModuleECGStatus:
                         
-                        if (frame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue)
-                        {
+                        if (tmpFrame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue) {
                             print ("Problem z odpowiedzia na temat statusu modulu")
                         } else {
                             print("Dostalem status modulu")
                         }
                     case COMMCommandType.SetDuringTimeECGTest:
                         
-                        if (frame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue)
-                        {
+                        if (tmpFrame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue) {
                             print ("Problem z ustawieniem czasu")
                         } else {
                             print("Ustawiony czas wykonywania EKG")
                         }
                     case COMMCommandType.StartECGTest:
                         
-                        if (frame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue)
-                        {
+                        if (tmpFrame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue) {
                             print ("Problem z startem badania")
                         } else {
                             print("Zaczeto robic badanie EKG")
                         }
                     case COMMCommandType.StopECGTest:
                         
-                        if (frame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue)
-                        {
+                        if (tmpFrame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue) {
                             print ("Problem z zatrzymaniem EKG")
                         } else {
                             print("Zatrzymano badanie EKG")
                         }
-                        
                     default:
-                        
                         print("Nie znam komendy")
-                        
                     }
                 }
                 else {
@@ -221,14 +228,12 @@ class COMMFrameParser {
                 
             }
         }
-        else
-        {
+        else {
             print ("Blad CRC")
         }
-        
     }
     
-    static func ExecuteCommand(frame: [UInt8])
+    func ExecuteCommand(frame: [UInt8])
     {
         //let frameID = GetFrameID(frame: frame)
         
@@ -243,14 +248,14 @@ class COMMFrameParser {
         case COMMCommandType.EndECGTest:
             //informacja o koncu ECG
             print("Skonczylem EKG")
+            self.ecgFinished = true
             
         default:
             print("Nie zna typu komendy")
         }
     }
     
-    static func GetFrameID(frame: [UInt8]) -> UInt16
-    {
+    static func GetFrameID(frame: [UInt8]) -> UInt16 {
         var frameID: UInt16 = 0
         let msbID: UInt8 = 2
         let lsbID: UInt8 = 3
