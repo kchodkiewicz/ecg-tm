@@ -38,7 +38,7 @@ struct HistoryRow: View {
             label: {
                 HStack {
                     
-                    GraphDetail(points: exams_previews)
+                    ChartPreview(points: exams_previews)
                         .frame(width: 150, height: 100)
 //                        .transition(Transitions.viewTransition)
                     

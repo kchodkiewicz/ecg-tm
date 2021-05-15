@@ -38,11 +38,7 @@ struct GraphExamView: View {
     
     @State var graphData = GraphCal()
     @ObservedObject var bleConnection: BLEConnection
-    @State var isShowingAlert: Bool
-    
-    init() {
-        self.isShowingAlert = (bleConnection.btMessage != nil) ? true : false
-    }
+    @State var isShowingAlert: Bool = false
     
     let profile: Profile
     
@@ -55,7 +51,7 @@ struct GraphExamView: View {
             
             Spacer()
             Chart(entries: graphData.addDataFromBT(data: bleConnection.recievedString))
-            //GraphDetail(points: profile.examArray.last?.sampleArray ?? [])
+            
             
             Spacer()
             
@@ -82,26 +78,28 @@ struct GraphExamView: View {
                 Spacer()
                 
                 Button(action: {
-                    
-                    let commFrame = COMMFrame()
-                    commFrame.SetFrameID(frameID: 0x001)
-                    commFrame.SetAdditionalData(data: [COMMCommandType.SetDuringTimeECGTest.rawValue, UInt8(self.profile.examDuration)], size: 2)
-                    print(UInt8(self.profile.examDuration))
-                    let frame = commFrame.GetFrameData()
-                    COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.SetDuringTimeECGTest)
-                    bleConnection.sendData(data: frame)
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    if self.bleConnection.peripheral != nil {
                         let commFrame = COMMFrame()
                         commFrame.SetFrameID(frameID: 0x001)
-                        commFrame.SetAdditionalData(data: [COMMCommandType.StartECGTest.rawValue], size: 1)
-                        
+                        commFrame.SetAdditionalData(data: [COMMCommandType.SetDuringTimeECGTest.rawValue, UInt8(self.profile.examDuration)], size: 2)
+                        print(UInt8(self.profile.examDuration))
                         let frame = commFrame.GetFrameData()
-                        COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.StartECGTest)
-                        
+                        COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.SetDuringTimeECGTest)
                         bleConnection.sendData(data: frame)
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            let commFrame = COMMFrame()
+                            commFrame.SetFrameID(frameID: 0x001)
+                            commFrame.SetAdditionalData(data: [COMMCommandType.StartECGTest.rawValue], size: 1)
+                            
+                            let frame = commFrame.GetFrameData()
+                            COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.StartECGTest)
+                            
+                            bleConnection.sendData(data: frame)
+                        }
+                    } else {
+                        self.isShowingAlert = true
                     }
-                    
                     
                     // Start examination
                     print("Start button")
@@ -139,8 +137,13 @@ struct GraphExamView: View {
             
             Spacer()
             Spacer()
+                
                 .alert(isPresented: self.$isShowingAlert) {
-                    Text("\(bleConnection.btMessage)")
+                    Alert(title: Text("Not connected to a device"), message: Text("Connect with device in profile settings"), primaryButton: .cancel(), secondaryButton: .default(Text("Go to settings"), action: {
+                        self.isShowingAlert = false
+                        print("Switching view to profile")
+                    }))
+                    
                 }
         }
         .navigationTitle("Examination")

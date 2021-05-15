@@ -1,14 +1,14 @@
 //
-//  Chart.swift
+//  ChartPreview.swift
 //  EKG
 //
-//  Created by Krzysztof Chodkiewicz on 24/04/2021.
+//  Created by Krzysztof Chodkiewicz on 15/05/2021.
 //
 
 import Charts
 import SwiftUI
 
-struct Chart : UIViewRepresentable {
+struct ChartPreview : UIViewRepresentable {
     //Bar chart accepts data as array of BarChartDataEntry objects
     var entries : [ChartDataEntry]
     // this func is required to conform to UIViewRepresentable protocol
@@ -16,23 +16,18 @@ struct Chart : UIViewRepresentable {
         //crate new chart
         let chart = LineChartView()
         chart.backgroundColor = UIColor.systemBackground
+        // visual
         chart.borderColor = .red
+        chart.rightAxis.enabled = false
+        chart.leftAxis.enabled = false
         chart.legend.enabled = false
-        chart.rightAxis.enabled = true
-        chart.leftAxis.labelFont = .boldSystemFont(ofSize: 10)
-        chart.leftAxis.labelTextColor = UIColor(.primary)
-        chart.leftAxis.axisLineColor = UIColor(.secondary)
-        chart.rightAxis.labelFont = .boldSystemFont(ofSize: 10)
-        chart.rightAxis.labelTextColor = UIColor(.primary)
-        chart.rightAxis.axisLineColor = UIColor(.secondary)
+        chart.drawGridBackgroundEnabled = false
+        //touch
+        chart.doubleTapToZoomEnabled = false
         chart.dragYEnabled = false
+        chart.dragXEnabled = false
         chart.scaleYEnabled = false
-        chart.xAxis.labelPosition = .bottom
-        chart.xAxis.labelFont = .boldSystemFont(ofSize: 10)
-        chart.xAxis.labelTextColor = UIColor(.primary)
-        chart.xAxis.axisLineColor = UIColor(.secondary)
-        chart.noDataText = "Start new examination"
-        
+        chart.scaleXEnabled = false
         
         //it is convenient to form chart data in a separate func
         chart.data = addData()
@@ -52,14 +47,25 @@ struct Chart : UIViewRepresentable {
         dataSet.label = nil
         dataSet.setColor(.systemRed)
         dataSet.lineWidth = 4
+        dataSet.drawValuesEnabled = false
         dataSet.drawHorizontalHighlightIndicatorEnabled = false
         dataSet.drawVerticalHighlightIndicatorEnabled = false
         dataSet.highlightColor = UIColor(.primary)
-        dataSet.drawValuesEnabled = false
+        
         data.setDrawValues(false)
         data.addDataSet(dataSet)
         return data
     }
+    
+    init(points: [Sample]) {
+        var data: [ChartDataEntry] = []
+        for point in points {
+            let entry = ChartDataEntry(x: Double(Int(point.xValue)), y: Double(point.yValue))
+            data.append(entry)
+        }
+        self.entries = data
+    }
+    
     
     typealias UIViewType = LineChartView
     
@@ -67,7 +73,7 @@ struct Chart : UIViewRepresentable {
 
 
 
-struct Chart_Previews: PreviewProvider {
+struct ChartPreview_Previews: PreviewProvider {
     static var previews: some View {
         Chart(entries: [
             //x - position of a bar, y - height of a bar
@@ -80,3 +86,4 @@ struct Chart_Previews: PreviewProvider {
         ])
     }
 }
+

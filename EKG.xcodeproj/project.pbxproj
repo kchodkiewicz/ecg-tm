@@ -44,6 +44,7 @@
 		2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */; };
 		2CE421DC264D3596001CD813 /* GraphCal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE421DB264D3596001CD813 /* GraphCal.swift */; };
 		2CE421DF264D76D8001CD813 /* Profile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE421DE264D76D8001CD813 /* Profile+CoreDataProperties.swift */; };
+		2CE421E126502431001CD813 /* ChartPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE421E026502430001CD813 /* ChartPreview.swift */; };
 		8087124F376F23F61EABD8C9 /* Pods_EKG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
 		2CE421DB264D3596001CD813 /* GraphCal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphCal.swift; sourceTree = "<group>"; };
 		2CE421DE264D76D8001CD813 /* Profile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Profile+CoreDataProperties.swift"; path = "../../../Profile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2CE421E026502430001CD813 /* ChartPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPreview.swift; sourceTree = "<group>"; };
 		5BDFF963D48E3A75DD4E5DE7 /* Pods-EKG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EKG.release.xcconfig"; path = "Target Support Files/Pods-EKG/Pods-EKG.release.xcconfig"; sourceTree = "<group>"; };
 		7E88409701BA03AA391BFBC6 /* Pods-EKG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EKG.debug.xcconfig"; path = "Target Support Files/Pods-EKG/Pods-EKG.debug.xcconfig"; sourceTree = "<group>"; };
 		C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EKG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -243,6 +245,7 @@
 				2C5E226D25F7B83D002E8306 /* GraphExamView.swift */,
 				2C5E227025F7B85F002E8306 /* GraphSummaryView.swift */,
 				2CC31579263456D4007ABCF8 /* Chart.swift */,
+				2CE421E026502430001CD813 /* ChartPreview.swift */,
 			);
 			path = GraphViews;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				2C48467E263700C700656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift in Sources */,
 				2CC6168F25F6603D0082FC63 /* HistoryView.swift in Sources */,
 				2C6367AA264598E2007B34E2 /* COMMCommandType.swift in Sources */,
+				2CE421E126502431001CD813 /* ChartPreview.swift in Sources */,
 				2C6367A8264598D3007B34E2 /* COMMAnswerType.swift in Sources */,
 				2C9540962621CD9200D115FE /* BTView.swift in Sources */,
 				2C729E3E2640CB9B00D36A1B /* Extensions.swift in Sources */,
