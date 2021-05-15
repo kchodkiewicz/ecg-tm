@@ -38,7 +38,11 @@ struct GraphExamView: View {
     
     @State var graphData = GraphCal()
     @ObservedObject var bleConnection: BLEConnection
+    @State var isShowingAlert: Bool
     
+    init() {
+        self.isShowingAlert = (bleConnection.btMessage != nil) ? true : false
+    }
     
     let profile: Profile
     
@@ -135,6 +139,9 @@ struct GraphExamView: View {
             
             Spacer()
             Spacer()
+                .alert(isPresented: self.$isShowingAlert) {
+                    Text("\(bleConnection.btMessage)")
+                }
         }
         .navigationTitle("Examination")
     }

@@ -22,6 +22,7 @@ struct Device: Identifiable, Equatable {
 open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate, ObservableObject {
     
     @Published public var recievedString: [UInt8] = []
+    @Published public var btMessage: String?
     // Properties
     private var centralManager: CBCentralManager! = nil
     @Published public var peripheral: CBPeripheral!
@@ -82,7 +83,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
        if(central.state != CBManagerState.poweredOn)
        {
            // In a real app, you'd deal with all the states correctly
-           return;
+           return
        }
     }
     
@@ -226,8 +227,10 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
         print(dataToSend)
         if self.peripheral != nil {
             self.peripheral.writeValue(dataToSend, for: mainCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
+            btMessage = nil
         } else {
             print("Haven't discovered device yet.")
+            btMessage = "Haven't discovered device yet."
             return
         }
 
