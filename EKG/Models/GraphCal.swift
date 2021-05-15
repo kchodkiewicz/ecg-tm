@@ -15,7 +15,7 @@ class GraphCal: ObservableObject
 
     @Published public var entries : [ChartDataEntry] = []
     var charts: LineChartView = LineChartView()
-    var numOfSamble: Int = 0
+    var numOfSample: Int = 0
     //@Published var lineChartData: LineChartData = LineChartData()
 
 //    func initCharts() -> LineChartView
@@ -79,15 +79,15 @@ class GraphCal: ObservableObject
 //    }
 
 
-    func addDataFromBT(data : [UInt8])
+    func addDataFromBT(data : [UInt8]) -> [ChartDataEntry]
     {
         
         var dataU16T : [UInt16] = []
-        let freq = 1000
+        let freq = 250
         let gain = 1100
         let offsetError = 1
         let offsetLeads = 330
-        let maxValueADC = 1000
+        let maxValueADC = 1024
         let resolutionAdc = 1023
         
         
@@ -96,27 +96,28 @@ class GraphCal: ObservableObject
 //            let bytes:[UInt8] = [data[i], data[i+1]]
 //            let u16 = UnsafePointer<UInt16>(bytes).memory
             
-            let u16 = UInt16((data[i+1] >> COMMShiftByte.OneByte.rawValue) + data[i])
-            
+            //let u16 = UInt16(UInt16(data[i+1]) << COMMShiftByte.OneByte.rawValue + UInt16(data[i]))
+            let u16 = UInt16(UInt16(data[i+1]) << COMMShiftByte.OneByte.rawValue + UInt16(data[i ]))
+            print("U16 ----- \(u16)")
             dataU16T.append(u16)
         }
         
-        var x = 0
+        var x: Double = 0
         var tmp: [ChartDataEntry] = []
         for sample in dataU16T
         {
-            x = numOfSamble / freq;
-            var ecgDisp = Int(sample) * maxValueADC;
-            ecgDisp = ecgDisp * (320 / 100);
-            ecgDisp = ecgDisp / resolutionAdc;
-            ecgDisp = ((ecgDisp - offsetLeads) / gain) - offsetError;
+            x = Double(Double(numOfSample) / Double(freq))
+            var ecgDisp = Double(sample) * Double(maxValueADC)
+            ecgDisp = ecgDisp * (320 / 100)
+            ecgDisp = Double(ecgDisp / Double(resolutionAdc))
+            ecgDisp = Double((ecgDisp - Double(offsetLeads)) / Double(gain)) - Double(offsetError)
 
             let entry = ChartDataEntry(x: Double(x), y: Double(ecgDisp))
              tmp.append(entry)
-             numOfSamble = numOfSamble + 1
+             numOfSample += 1
         }
         self.entries += tmp
-        
+        return self.entries
 //
 //        let lineChartData = updateData(data: entries)
 //        //self.lineChartData = lineChartData
@@ -126,7 +127,7 @@ class GraphCal: ObservableObject
     func saveDataToDB() -> [ChartDataEntry]
     {
     
-        numOfSamble = 0
+        numOfSample = 0
         let tmpDataArray = entries
         
         entries.removeAll()

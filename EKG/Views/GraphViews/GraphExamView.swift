@@ -36,7 +36,7 @@ struct GraphExamView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    //@State var graphData = GraphCal()
+    @State var graphData = GraphCal()
     @ObservedObject var bleConnection: BLEConnection
     
     
@@ -50,7 +50,7 @@ struct GraphExamView: View {
         VStack {
             
             Spacer()
-            Chart(entries: Binding<[ChartDataEntry]>(GraphCal.entries))
+            Chart(entries: graphData.addDataFromBT(data: bleConnection.recievedString))
             //GraphDetail(points: profile.examArray.last?.sampleArray ?? [])
             
             Spacer()

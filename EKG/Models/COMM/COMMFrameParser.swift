@@ -17,7 +17,8 @@ class COMMFrameParser: ObservableObject {
         var frameType: COMMCommandType
     }
     
-    //@Published var ecgFinished: Bool = false
+    static var ecgFinished: Bool = false
+    static var frameEntries: [UInt8] = []
     
     private static var m_listFrame: [SendFrame] = []
     private static var m_isTestingECG: Bool = false
@@ -130,7 +131,7 @@ class COMMFrameParser: ObservableObject {
         return cmdType
     }
     
-    static func ExecuteFrameData(frame: [UInt8], graphCal: GraphCal) {
+    static func ExecuteFrameData(frame: [UInt8]) {
         let frameType: FrameType = GetFrameType(frame: frame)
         var tmpFrame: [UInt8] = []
         if frameType == FrameType.SendingFrame || m_isTestingECG == true {
@@ -166,7 +167,7 @@ class COMMFrameParser: ObservableObject {
         if CheckCRC(frame: tmpFrame) {
             let frameType: FrameType = GetFrameType(frame: tmpFrame)
             if frameType == FrameType.SendingFrame {
-                ExecuteCommand(frame: tmpFrame, graphCal: graphCal)
+                ExecuteCommand(frame: tmpFrame)
             }
             else if frameType == FrameType.ResponseFrame {
                 let cmdType = GetCommandType(frame: tmpFrame)
@@ -233,7 +234,7 @@ class COMMFrameParser: ObservableObject {
         }
     }
     
-    static func ExecuteCommand(frame: [UInt8], graphCal: GraphCal)
+    static func ExecuteCommand(frame: [UInt8])
     {
         //let frameID = GetFrameID(frame: frame)
         
@@ -244,7 +245,8 @@ class COMMFrameParser: ObservableObject {
         case COMMCommandType.ECGSamplePackage:
             //odpakuj te dane
             
-            graphCal.addDataFromBT(data: Array(frame[9...frame.count - 1]))
+            COMMFrameParser.frameEntries = Array(frame[8...frame.count - 1])
+            COMMFrameParser.ecgFinished = true
             
             print("Dostalem paczke danych EKG")
             

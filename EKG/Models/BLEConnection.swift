@@ -21,6 +21,7 @@ struct Device: Identifiable, Equatable {
 
 open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate, ObservableObject {
     
+    @Published public var recievedString: [UInt8] = []
     // Properties
     private var centralManager: CBCentralManager! = nil
     @Published public var peripheral: CBPeripheral!
@@ -206,7 +207,14 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
 //                let stringValue = String(data: characteristic.value!, encoding: String.Encoding.utf8)!
 //                print(characteristic.value!)
 //                print(stringValue)
+                //self.recievedString = Array(characteristic.value!)
                 COMMFrameParser.ExecuteFrameData(frame: Array(characteristic.value!))
+                if COMMFrameParser.ecgFinished {
+                    self.recievedString = COMMFrameParser.frameEntries
+                    COMMFrameParser.ecgFinished = false
+                    COMMFrameParser.frameEntries.removeAll()
+                }
+                
             }
         }
     }
