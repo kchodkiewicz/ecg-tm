@@ -7,11 +7,15 @@
 
 import Foundation
 import Charts
+import Combine
 
-
-class GraphCal: ObservableObject
+class GraphCal: ObservableObject, Equatable
 
 {
+    static func == (lhs: GraphCal, rhs: GraphCal) -> Bool {
+        lhs.entries == rhs.entries
+    }
+    
 
     @Published public var entries : [ChartDataEntry] = []
     var charts: LineChartView = LineChartView()
@@ -124,15 +128,14 @@ class GraphCal: ObservableObject
 //        return lineChartData
     }
     
-    func saveDataToDB() -> [ChartDataEntry]
-    {
+    func saveDataToDB() {
     
         numOfSample = 0
-        let tmpDataArray = entries
+        //let tmpDataArray = entries
         
         entries.removeAll()
     
-        return tmpDataArray
+        //return tmpDataArray
     }
 
 

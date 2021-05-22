@@ -2,7 +2,7 @@
 //  Sample+CoreDataProperties.swift
 //  
 //
-//  Created by Krzysztof Chodkiewicz on 26/04/2021.
+//  Created by Krzysztof Chodkiewicz on 17/05/2021.
 //
 //
 
@@ -17,9 +17,8 @@ extension Sample {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var xValue: Int64
-    @NSManaged public var yValue: Int64
+    @NSManaged public var xValue: Double
+    @NSManaged public var yValue: Double
     @NSManaged public var origin: Exam?
-
 
 }

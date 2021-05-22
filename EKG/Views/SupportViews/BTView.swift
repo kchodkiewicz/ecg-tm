@@ -25,7 +25,7 @@ struct BTView: View {
                     
                     print("Trying to connect to: \(device.name!)")
                     bleConnection.connect(peripheral: device)
-                    
+//                    
 //                    let profile = self.profile
 //                    profile.deviceUUID = device.identifier
 //

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import CoreBluetooth
+import Combine
 
 struct Device: Identifiable, Equatable {
     var id: Int
@@ -23,6 +24,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
     
     @Published public var recievedString: [UInt8] = []
     @Published public var btMessage: String?
+    @Published public var finishedExamination: Bool = false
     // Properties
     private var centralManager: CBCentralManager! = nil
     @Published public var peripheral: CBPeripheral!
@@ -205,15 +207,13 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
         } else if (characteristic.uuid == BLEConnection.bleCharacteristicUUID) {
             //data recieved
             if(characteristic.value != nil) {
-//                let stringValue = String(data: characteristic.value!, encoding: String.Encoding.utf8)!
-//                print(characteristic.value!)
-//                print(stringValue)
-                //self.recievedString = Array(characteristic.value!)
+                
                 COMMFrameParser.ExecuteFrameData(frame: Array(characteristic.value!))
                 if COMMFrameParser.ecgFinished {
                     self.recievedString = COMMFrameParser.frameEntries
                     COMMFrameParser.ecgFinished = false
                     COMMFrameParser.frameEntries.removeAll()
+                    self.finishedExamination = true
                 }
                 
             }

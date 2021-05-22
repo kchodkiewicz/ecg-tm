@@ -41,7 +41,7 @@ public class Exam: NSManagedObject, Identifiable {
         // peak if value greater than both neighbours and value
         // grater than 512 (or other constant according to samples)
         let samples = self.sampleArray
-        var peaks: [Int64] = []
+        var peaks: [Double] = []
         
         guard samples.count - 1 > 1 else {
             return -1

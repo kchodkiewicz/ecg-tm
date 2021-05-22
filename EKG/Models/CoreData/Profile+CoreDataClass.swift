@@ -44,4 +44,5 @@ public class Profile: NSManagedObject, Identifiable {
         }
     }
     
+    
 }

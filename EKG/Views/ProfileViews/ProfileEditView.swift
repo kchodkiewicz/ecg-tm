@@ -10,14 +10,21 @@ import CoreBluetooth
 
 
 struct ProfileEditView: View {
-    
-    var viewContext: NSManagedObjectContext
+    @Environment(\.managedObjectContext) private var viewContext
+    //var viewContext: NSManagedObjectContext
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var profile: Profile
     
     @ObservedObject var bleConnection: BLEConnection
     
     @Environment(\.editMode) var editMode
-    @EnvironmentObject var activeSession: ActiveSession
+    //@EnvironmentObject var activeSession: ActiveSession
+    
+    @Binding var dismiss: Bool
+    
+    //TODO: Animate and make less clumsy
+    @Binding var goToBluetooth: Bool?
+    //@Binding var isLoggedIn: Bool
     
     @State var username: String = ""
     @State var firstName: String = ""
@@ -28,12 +35,14 @@ struct ProfileEditView: View {
     
     @State var isShowingPallette: Bool = false
     @State var isShowingAge: Bool = true
-
+    
     
     var body: some View {
+        
         Form {
-            Section{
-                if .inactive == self.editMode?.wrappedValue {
+            
+            if .inactive == self.editMode?.wrappedValue {
+                Section{
                     HStack {
                         Spacer()
                         
@@ -46,10 +55,14 @@ struct ProfileEditView: View {
                         
                         Spacer()
                     }
-                } else {
+                }
+            } else {
+                Section {
                     UserIcon(isShowingPallette: self.$isShowingPallette, profileColor: self.$profileColor)
                 }
-                
+            }
+            
+            Section {
                 HStack {
                     Text("Username")
                     
@@ -85,8 +98,9 @@ struct ProfileEditView: View {
                         .multilineTextAlignment(.trailing)
                 }
             }
-            Section {
-                if .inactive == self.editMode?.wrappedValue {
+            
+            if .inactive == self.editMode?.wrappedValue {
+                Section {
                     Button {
                         withAnimation(.spring()) {
                             self.isShowingAge.toggle()
@@ -113,21 +127,25 @@ struct ProfileEditView: View {
                         
                         Text("\(Int(self.profile.examDuration))s")
                     }
-                } else {
+                }
+            } else {
+                Section {
                     DatePicker("", selection: $age, in: Formatters.closeBirthDateRange, displayedComponents: .date)
                         .multilineTextAlignment(.trailing)
                         .datePickerStyle(WheelDatePickerStyle())
-                        
+                }
+                Section {
                     Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
                         .disabled(.inactive == self.editMode?.wrappedValue)
                         .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
                 }
             }
             
+            
             if self.editMode?.wrappedValue == .inactive {
                 Section {
                     
-                    NavigationLink(destination: BTView(profile: profile, bleConnection: bleConnection)) {
+                    NavigationLink(destination: BTView(profile: profile, bleConnection: bleConnection), tag: true, selection: self.$goToBluetooth) {
                         Text("Bluetooth Device")
                         
                         Spacer()
@@ -138,22 +156,26 @@ struct ProfileEditView: View {
                 Section {
                     
                     Button {
-                        withAnimation(.easeInOut(duration: 0.35)) {
-                            self.activeSession.id = nil
-                        }
+                        //withAnimation(.easeInOut(duration: 0.35)) {
+                            //self.activeSession.id = nil
+                            //self.isLoggedIn = false
+                        //print("Switching, wrappedValue: \(self.presentationMode.wrappedValue)")
+                        //self.presentationMode.wrappedValue.dismiss()
+                        self.dismiss.toggle()
+                        //}
                     } label: {
                         Text("Switch User")
                     }
                 }
             } else {
-                Section {
-                    
-                }
-                Section {
-                    
+                Section { }
+                Section { }
+                if self.isShowingPallette {
+                    Section { }
                 }
             }
         }
+        
         //.listStyle(GroupedListStyle())
         .navigationBarItems(
             leading: Button(action: {
@@ -169,8 +191,9 @@ struct ProfileEditView: View {
             trailing: Button(action: {
                 withAnimation {
                     if self.editMode?.wrappedValue == .active {
-                        //FIXME: hide pallette before updating - make sure age picker is hiding
-                        //self.isShowingPallette = false
+                        if self.isShowingPallette {
+                            self.isShowingPallette.toggle()
+                        }
                         updateProfile()
                     }
                     self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
@@ -190,9 +213,9 @@ struct ProfileEditView: View {
         
         let current = Calendar.current
         let years = current.dateComponents(
-          [.year],
-          from: birthdate,
-          to: Date()
+            [.year],
+            from: birthdate,
+            to: Date()
         )
         return String(years.year!)
     }

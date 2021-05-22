@@ -22,6 +22,7 @@ struct GraphDetail: View {
         self.entries = []
         
         guard !points.isEmpty else {
+            print("Recieved empty array. Creating default [Sample]")
             self.entries = [
                 ChartDataEntry(x: 1.0, y: 1.0),
                 ChartDataEntry(x: 2.0, y: 1.1),

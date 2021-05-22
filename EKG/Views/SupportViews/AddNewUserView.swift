@@ -32,7 +32,8 @@ struct AddNewUserView: View {
                 Section {
                     
                     UserIcon(isShowingPallette: self.$isShowingPallette, profileColor: self.$profileColor)
-                
+                }.transition(.opacity)
+                Section {
                     TextField("Username", text: $username)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)

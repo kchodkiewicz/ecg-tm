@@ -26,7 +26,7 @@ struct HistoryView: View {
             }
             .onDelete(perform: removeExam)
             .buttonStyle(PlainButtonStyle())
-        }.listStyle(InsetListStyle())
+        }.listStyle(PlainListStyle())
         .navigationTitle("Overview")
         
     }

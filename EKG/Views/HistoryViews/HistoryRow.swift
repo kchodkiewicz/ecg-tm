@@ -65,8 +65,9 @@ struct HistoryRow: View {
                     }
                 }
                 
-            }).buttonStyle(PlainButtonStyle())
-        
+            })
+            .isDetailLink(true)
+            
     }
 }
 

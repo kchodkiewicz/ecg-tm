@@ -92,6 +92,7 @@ struct GraphSummaryView: View {
                 GroupBox(
                     label: Label("Notes", systemImage: "note.text")
                         .foregroundColor(Color(UIColor.systemOrange))
+                    
                 ) {
                     TextEditor(text: $notes)
                         .frame(minHeight: 200)
@@ -99,7 +100,7 @@ struct GraphSummaryView: View {
                         .multilineTextAlignment(.leading)
                         .onAppear(perform: {
                             UITextView.appearance().backgroundColor = .clear
-                            UITextView.appearance().keyboardDismissMode = .onDrag
+                            UITextView.appearance().keyboardDismissMode = .interactive
                         })
                     
                 }

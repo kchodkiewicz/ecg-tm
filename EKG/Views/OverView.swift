@@ -7,21 +7,24 @@
 
 import SwiftUI
 import CoreBluetooth
+import Combine
+
 
 struct OverView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject var activeSession: ActiveSession
+    //@EnvironmentObject var activeSession: ActiveSession
     
     @ObservedObject var bleConnection: BLEConnection = BLEConnection()
     
     @ObservedObject var profile: Profile
     
-//    @State private var showingNewExam: Bool = false
-//    @State private var showingProfile: Bool = false
-//    @State private var showingBTScan: Bool = false
+    @Binding var dismiss: Bool
     
+    @State var selectedTab: Tab = .history
+    @State var goToBluetooth: Bool? = false
     
+    @State var isShowingLogin: Bool = true
     
     private func connectBLEDevice() {
         
@@ -42,13 +45,14 @@ struct OverView: View {
     }
     
     var body: some View {
-        
-        TabView {
+        //if !self.isShowingLogin {
+        TabView(selection: $selectedTab) {
             // History
             NavigationView {
                 HistoryView(filter: profile.username!)
                     
-            }.tabItem {
+            }
+        .tabItem {
                 Image(systemName: "house.fill")
                     .imageScale(.large)
                     .accessibility(label: Text("History"))
@@ -57,8 +61,9 @@ struct OverView: View {
             
             // Exam
             NavigationView {
-                GraphExamView(bleConnection: bleConnection, profile: self.profile)
-            }.tabItem {
+                GraphExamView(bleConnection: bleConnection, profile: self.profile, switchTab: $selectedTab, goToBT: $goToBluetooth)
+            }
+                    .tabItem {
                 Image(systemName: "waveform.path.ecg.rectangle.fill")
                     .imageScale(.large)
                     .accessibility(label: Text("New Examination"))
@@ -68,28 +73,38 @@ struct OverView: View {
             // Profile
             NavigationView {
                 ProfileEditView(
-                    viewContext: viewContext,
+                    //viewContext: viewContext,
                     profile: self.profile,
                     bleConnection: bleConnection,
+                    dismiss: self.$dismiss,
+                    goToBluetooth: $goToBluetooth,
                     username: self.profile.wrappedUsername,
                     firstName: self.profile.wrappedFirstName,
                     lastName: self.profile.wrappedLastName,
                     age: self.profile.wrappedAge,
                     examDuration: Int(self.profile.examDuration),
-                profileColor: ProfileColor.ColorName(value: self.profile.wrappedColor)
+                    profileColor: ProfileColor.ColorName(value: self.profile.wrappedColor)
                 )
-            }.tabItem {
+            }
+        .tabItem {
                 Image(systemName: "person.crop.square.fill")
                     .imageScale(.large)
                     .accessibility(label: Text("User Profile"))
                     .padding()
                 Text("Profile")
             }.tag(Tab.profile)
-            
-            
-        }.accentColor(Color("\(profile.wrappedColor)"))
-        .onAppear(perform: connectBLEDevice)
+                
+        }
+        .accentColor(Color("\(profile.wrappedColor)"))
         
+        .onAppear(perform: connectBLEDevice)
+        //TODO: turn everithing around (contentView is main, overview is modal)
+//    } else {
+//    Text("Hello")
+//
+//
+//
+//    }
     }
 }
 
