@@ -47,14 +47,14 @@ struct HistoryView: View {
         }
     }
     
-    init(filter: String) {
-        fetchRequest = FetchRequest<Profile>(entity: Profile.entity(), sortDescriptors: [], predicate: NSPredicate(format: "username == %@", filter), animation: .default)
+    init(filter: UUID) {
+        fetchRequest = FetchRequest<Profile>(entity: Profile.entity(), sortDescriptors: [], predicate: NSPredicate(format: "id == %@", filter as CVarArg), animation: .default)
     }
 }
 
-struct HistoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        HistoryView(filter: "thebob")
-    }
-}
+//struct HistoryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//
+//        HistoryView(filter: "thebob")
+//    }
+//}

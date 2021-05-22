@@ -49,7 +49,7 @@ struct OverView: View {
         TabView(selection: $selectedTab) {
             // History
             NavigationView {
-                HistoryView(filter: profile.username!)
+                HistoryView(filter: profile.id!)
                     
             }
         .tabItem {

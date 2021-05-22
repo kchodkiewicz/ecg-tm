@@ -13,7 +13,7 @@ struct ProfileEditView: View {
     @Environment(\.managedObjectContext) private var viewContext
     //var viewContext: NSManagedObjectContext
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    var profile: Profile
+    @ObservedObject var profile: Profile
     
     @ObservedObject var bleConnection: BLEConnection
     
@@ -167,13 +167,15 @@ struct ProfileEditView: View {
                         Text("Switch User")
                     }
                 }
-            } else {
-                Section { }
-                Section { }
-                if self.isShowingPallette {
-                    Section { }
-                }
             }
+//            else {
+//            
+//                Section { }
+//                Section { }
+//                if self.isShowingPallette {
+//                    Section { }
+//                }
+//            }
         }
         
         //.listStyle(GroupedListStyle())
@@ -191,9 +193,9 @@ struct ProfileEditView: View {
             trailing: Button(action: {
                 withAnimation {
                     if self.editMode?.wrappedValue == .active {
-                        if self.isShowingPallette {
-                            self.isShowingPallette.toggle()
-                        }
+//                        if self.isShowingPallette {
+//                            self.isShowingPallette.toggle()
+//                        }
                         updateProfile()
                     }
                     self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
@@ -230,7 +232,11 @@ struct ProfileEditView: View {
         profile.age = self.age
         profile.examDuration = Float(self.examDuration)
         profile.profileColor = self.profileColor.rawValue
-        
-        try? self.viewContext.save()
+        do {
+        try self.viewContext.save()
+        } catch {
+            print("Fuck")
+            self.viewContext.rollback()
+        }
     }
 }
