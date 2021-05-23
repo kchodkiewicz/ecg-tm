@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 import Charts
 import Combine
+import Foundation
 
 struct RoundButtonStyle: ButtonStyle {
     
@@ -47,6 +48,8 @@ struct GraphExamView: View {
     @Binding var switchTab: Tab
     @Binding var goToBT: Bool?
     
+    @State var examArray: [ChartDataEntry] = []
+    
     private func queueToSummary() {
         //TODO: Queue to GraphSummaryView if stopButton or examDuration exceeded
     }
@@ -56,7 +59,7 @@ struct GraphExamView: View {
         print("Zapisuję do CoreData")
         var samples: [Sample] = []
         
-        for chartData in graphData.entries {
+        for chartData in examArray {
             let sample = Sample(context: viewContext)
             sample.id = UUID()
             sample.xValue = Double(chartData.x)
@@ -71,8 +74,12 @@ struct GraphExamView: View {
         
         let profile = self.profile
         profile.addToExam(exam)
-        
-        try? self.viewContext.save()
+        do {
+        try self.viewContext.save()
+            
+        } catch {
+            print("Shit shit shit")
+        }
         graphData.saveDataToDB()
         
         
@@ -91,7 +98,7 @@ struct GraphExamView: View {
     
     func setCountdown() {
         withAnimation(.easeInOut) {
-            for i in stride(from: 0.8, to: 5.7, by: 0.8) {
+            for i in stride(from: 0.8, to: 5.7, by: 0.4) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + i) {
                     if i == 5.6 {
                         self.countdown = 6
@@ -119,7 +126,7 @@ struct GraphExamView: View {
     }
     
     var body: some View {
-        VStack {
+        let vStack = VStack {
             
             Spacer()
             ZStack {
@@ -180,6 +187,7 @@ struct GraphExamView: View {
                             
                             bleConnection.sendData(data: frame)
                         }
+                       
                         
 //                        DispatchQueue.async {
 //                            while true {
@@ -244,20 +252,27 @@ struct GraphExamView: View {
                     
                 }
         }
-//        .onReceive(bleConnection.examinationhasFinished, perform: { _ in
-//            countdown = 6
-//            saveData()
-//            bleConnection.finishedExamination = false
-//            bleConnection.examinationhasFinished.send(false)
-//
-//        })
-        
-//        .onChange(of: graphData, perform: { _ in
-//            if bleConnection.finishedExamination {
+        return vStack.onReceive(self.graphData.passThroughSubjectPublisher) { result in
+            print("Got some data")
+            print("Count ", examArray.count, "Samples per second ", (Float(examArray.count) / self.profile.examDuration))
+            if examArray.count >= Int((self.profile.examDuration) * 230) {
+                print("Got full array")
+                countdown = 6
+                saveData()
+                examArray.removeAll()
+            } else {
+                examArray += result
+            }
+            
+//            if self.bleConnection.finishedExamination {
+//                countdown = 6
 //                saveData()
 //                bleConnection.finishedExamination = false
 //            }
-//        })
+            //bleConnection.examinationhasFinished.send(false)
+
+        }
+   
             
         
         .navigationTitle("Examination")

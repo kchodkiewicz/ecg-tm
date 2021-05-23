@@ -10,8 +10,8 @@ import CoreBluetooth
 
 
 struct ProfileEditView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    //var viewContext: NSManagedObjectContext
+    //@Environment(\.managedObjectContext) private var viewContext
+    var viewContext: NSManagedObjectContext
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var profile: Profile
     
@@ -20,11 +20,11 @@ struct ProfileEditView: View {
     @Environment(\.editMode) var editMode
     //@EnvironmentObject var activeSession: ActiveSession
     
-    @Binding var dismiss: Bool
+    
     
     //TODO: Animate and make less clumsy
     @Binding var goToBluetooth: Bool?
-    //@Binding var isLoggedIn: Bool
+    @Binding var dismiss: Bool
     
     @State var username: String = ""
     @State var firstName: String = ""
@@ -70,7 +70,7 @@ struct ProfileEditView: View {
                     
                     TextField("Username", text: $username)
                         .disabled(.inactive == self.editMode?.wrappedValue)
-                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+                        .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
                         .multilineTextAlignment(.trailing)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
@@ -83,7 +83,7 @@ struct ProfileEditView: View {
                     
                     TextField("First Name", text: $firstName)
                         .disabled(.inactive == self.editMode?.wrappedValue)
-                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+                        .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
                         .multilineTextAlignment(.trailing)
                 }
                 
@@ -94,7 +94,7 @@ struct ProfileEditView: View {
                     
                     TextField("Last Name", text: $lastName)
                         .disabled(.inactive == self.editMode?.wrappedValue)
-                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+                        .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
                         .multilineTextAlignment(.trailing)
                 }
             }
@@ -136,8 +136,8 @@ struct ProfileEditView: View {
                 }
                 Section {
                     Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
-                        .disabled(.inactive == self.editMode?.wrappedValue)
-                        .foregroundColor((.active == self.editMode?.wrappedValue) ? Color.blue : Color.primary)
+//                        .disabled(.inactive == self.editMode?.wrappedValue)
+//                        .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
                 }
             }
             
@@ -182,26 +182,26 @@ struct ProfileEditView: View {
         .navigationBarItems(
             leading: Button(action: {
                 withAnimation {
-                    self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
+                    self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
                 }
             }) {
-                Text(.active == self.editMode?.wrappedValue ? "Cancel" : "")
+                Text(.inactive == self.editMode?.wrappedValue ? "" : "Cancel")
             }
             .padding(.vertical)
             .padding(.trailing),
             
             trailing: Button(action: {
                 withAnimation {
-                    if self.editMode?.wrappedValue == .active {
+                    if !(self.editMode?.wrappedValue == .inactive) {
 //                        if self.isShowingPallette {
 //                            self.isShowingPallette.toggle()
 //                        }
                         updateProfile()
                     }
-                    self.editMode?.wrappedValue = .active == self.editMode?.wrappedValue ? .inactive : .active
+                    self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
                 }
             }) {
-                Text(.active == self.editMode?.wrappedValue ? "Done" : "Edit")
+                Text(.inactive == self.editMode?.wrappedValue ? "Edit" : "Done")
             }
             .padding(.vertical)
             .padding(.leading)

@@ -16,7 +16,7 @@ class GraphCal: ObservableObject, Equatable
         lhs.entries == rhs.entries
     }
     
-
+    let passThroughSubjectPublisher = PassthroughSubject<[ChartDataEntry], Never>()
     @Published public var entries : [ChartDataEntry] = []
     var charts: LineChartView = LineChartView()
     var numOfSample: Int = 0
@@ -121,6 +121,7 @@ class GraphCal: ObservableObject, Equatable
              numOfSample += 1
         }
         self.entries += tmp
+        passThroughSubjectPublisher.send(tmp)
         return self.entries
 //
 //        let lineChartData = updateData(data: entries)

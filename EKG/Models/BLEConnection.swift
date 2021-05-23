@@ -20,9 +20,10 @@ struct Device: Identifiable, Equatable {
     }
 }
 
-open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate, ObservableObject {
+open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate, ObservableObject {    
     
     @Published public var recievedString: [UInt8] = []
+    let passThroughSubjectPublisher = PassthroughSubject<[UInt8], Never>()
     @Published public var btMessage: String?
     @Published public var finishedExamination: Bool = false
     // Properties
@@ -211,9 +212,12 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
                 COMMFrameParser.ExecuteFrameData(frame: Array(characteristic.value!))
                 if COMMFrameParser.ecgFinished {
                     self.recievedString = COMMFrameParser.frameEntries
-                    COMMFrameParser.ecgFinished = false
+                    //COMMFrameParser.ecgFinished = false
                     COMMFrameParser.frameEntries.removeAll()
-                    self.finishedExamination = true
+                    //self.finishedExamination = true
+                    
+                    //passThroughSubjectPublisher.send(COMMFrameParser.frameEntries)
+                    
                 }
                 
             }

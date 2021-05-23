@@ -210,7 +210,7 @@ class COMMFrameParser: ObservableObject {
                         if (tmpFrame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue) {
                             print ("Problem z startem badania")
                         } else {
-                            print("Zaczeto robic badanie EKG")
+                            print("Rozpoczęto badanie EKG")
                         }
                     case COMMCommandType.StopECGTest:
                         

@@ -73,11 +73,11 @@ struct OverView: View {
             // Profile
             NavigationView {
                 ProfileEditView(
-                    //viewContext: viewContext,
+                    viewContext: viewContext,
                     profile: self.profile,
                     bleConnection: bleConnection,
-                    dismiss: self.$dismiss,
                     goToBluetooth: $goToBluetooth,
+                    dismiss: self.$dismiss,
                     username: self.profile.wrappedUsername,
                     firstName: self.profile.wrappedFirstName,
                     lastName: self.profile.wrappedLastName,

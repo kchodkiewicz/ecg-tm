@@ -36,7 +36,7 @@ struct GraphDetail: View {
         }
         
         for point in points {
-            let entry = ChartDataEntry(x: Double(Int(point.xValue)), y: Double(point.yValue))
+            let entry = ChartDataEntry(x: Double(point.xValue), y: Double(point.yValue))
             self.entries.append(entry)
         }
         
