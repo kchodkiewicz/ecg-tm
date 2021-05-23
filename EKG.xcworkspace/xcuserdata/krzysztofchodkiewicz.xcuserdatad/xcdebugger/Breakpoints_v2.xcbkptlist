@@ -14,8 +14,8 @@
             filePath = "EKG/Models/GraphCal.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "addDataFromBT(data:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "EKG/Models/GraphCal.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
             landmarkName = "addDataFromBT(data:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "EKG/Models/GraphCal.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "addDataFromBT(data:)"
             landmarkType = "7">
          </BreakpointContent>

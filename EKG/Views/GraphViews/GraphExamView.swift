@@ -47,11 +47,15 @@ struct GraphExamView: View {
     
     @Binding var switchTab: Tab
     @Binding var goToBT: Bool?
+    @State var exam: Exam? = nil
+    @State var goToExam: Bool = false
+    @State var examinationStopped: Bool = false
     
     @State var examArray: [ChartDataEntry] = []
     
     private func queueToSummary() {
-        //TODO: Queue to GraphSummaryView if stopButton or examDuration exceeded
+        
+        self.goToExam = true
     }
     
     public func saveData() {
@@ -75,23 +79,24 @@ struct GraphExamView: View {
         let profile = self.profile
         profile.addToExam(exam)
         do {
-        try self.viewContext.save()
+            try self.viewContext.save()
             
         } catch {
             print("Shit shit shit")
         }
         graphData.saveDataToDB()
+        self.exam = exam
         
         
     }
     func getEntries() -> [ChartDataEntry] {
         
         let entries = graphData.addDataFromBT(data: bleConnection.recievedString)
-//        if bleConnection.finishedExamination {
-//            saveData()
-//            bleConnection.finishedExamination = false
-//            //countdown = 6
-//        }
+        //        if bleConnection.finishedExamination {
+        //            saveData()
+        //            bleConnection.finishedExamination = false
+        //            //countdown = 6
+        //        }
         return entries
         
     }
@@ -107,21 +112,21 @@ struct GraphExamView: View {
                     }
                 }
             }
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
-//                self.countdown -= 1
-//            }
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.4) {
-//                self.countdown -= 1
-//            }
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
-//                self.countdown -= 1
-//            }
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-//                self.countdown -= 1
-//            }
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 4.8) {
-//                self.countdown -= 1
-//            }
+            //            DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+            //                self.countdown -= 1
+            //            }
+            //            DispatchQueue.main.asyncAfter(deadline: .now() + 2.4) {
+            //                self.countdown -= 1
+            //            }
+            //            DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
+            //                self.countdown -= 1
+            //            }
+            //            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            //                self.countdown -= 1
+            //            }
+            //            DispatchQueue.main.asyncAfter(deadline: .now() + 4.8) {
+            //                self.countdown -= 1
+            //            }
         }
     }
     
@@ -149,15 +154,11 @@ struct GraphExamView: View {
                 
                 Button(action: {
                     
-                    //TODO: Send stop signal to BT
-                    
-                    // Stop examination
-                    print("Stop button")
-                    
-                    
+                    self.examinationStopped = true
+                    //TODO: send STOP to ECG
                     
                 }, label: {
-                    Text(bleConnection.finishedExamination ? "End" : "Stop")
+                    Text("Stop")
                     
                 })
                 .buttonStyle(RoundButtonStyle(foregroundColor: Color(red: 185/255, green: 45/255, blue: 45/255)))
@@ -187,48 +188,14 @@ struct GraphExamView: View {
                             
                             bleConnection.sendData(data: frame)
                         }
-                       
-                        
-//                        DispatchQueue.async {
-//                            while true {
-//                                if self.bleConnection.finishedExamination {
-//                                    saveData()
-//                                    break
-//                                }
-//                            }
-//                        }
                     } else {
+                        
                         self.isShowingAlert = true
+                        
                     }
-                    
-                   
-                    
                     
                     // Start examination
                     print("Start button")
-                    
-                    // FOR TESTING ONLY -----------
-                    //                    var samples: [Sample] = []
-                    //                    for i in 0...Int(250 * Float(profile.examDuration )) {
-                    //                        let sample = Sample(context: viewContext)
-                    //                        sample.id = UUID()
-                    //                        sample.xValue = Int64(i)
-                    //                        sample.yValue = Int64(Int.random(in: 0...1023))
-                    //                        samples.append(sample)
-                    //                    }
-                    //
-                    //                    let exam = Exam(context: viewContext)
-                    //                    exam.id = UUID()
-                    //                    exam.date = Date()
-                    //                    exam.addToSample(NSSet(array: samples))
-                    //
-                    //                    let profile = self.profile
-                    //                    profile.addToExam(exam)
-                    //
-                    //                    try? self.viewContext.save()
-                    // ---------------------------
-                    
-                    
                     
                 }, label: {
                     Text("Start")
@@ -251,29 +218,28 @@ struct GraphExamView: View {
                     }))
                     
                 }
+                
+                .sheet(isPresented: self.$goToExam) {
+                    self.switchTab = .history
+                } content: {
+                    GraphSummaryView(exam: self.exam!, notes: self.exam!.wrappedNotes, examType: ExamType(rawValue: self.exam!.wrappedType) ?? ExamType.resting)
+                }
+            
         }
         return vStack.onReceive(self.graphData.passThroughSubjectPublisher) { result in
             print("Got some data")
             print("Count ", examArray.count, "Samples per second ", (Float(examArray.count) / self.profile.examDuration))
-            if examArray.count >= Int((self.profile.examDuration) * 230) {
+            if examArray.count >= Int((self.profile.examDuration) * 230) || self.examinationStopped {
                 print("Got full array")
                 countdown = 6
                 saveData()
                 examArray.removeAll()
+                self.examinationStopped = false
+                queueToSummary()
             } else {
                 examArray += result
             }
-            
-//            if self.bleConnection.finishedExamination {
-//                countdown = 6
-//                saveData()
-//                bleConnection.finishedExamination = false
-//            }
-            //bleConnection.examinationhasFinished.send(false)
-
         }
-   
-            
         
         .navigationTitle("Examination")
     }

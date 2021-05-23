@@ -224,7 +224,7 @@ struct ProfileEditView: View {
     
     private func updateProfile() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        
+        //FIXME: something is fuck up, probably with saving
         let profile = self.profile
         profile.username = self.username
         profile.firstName = self.firstName
@@ -235,7 +235,6 @@ struct ProfileEditView: View {
         do {
         try self.viewContext.save()
         } catch {
-            print("Fuck")
             self.viewContext.rollback()
         }
     }

@@ -60,7 +60,7 @@ struct ChartPreview : UIViewRepresentable {
     init(points: [Sample]) {
         var data: [ChartDataEntry] = []
         for point in points {
-            let entry = ChartDataEntry(x: Double(Int(point.xValue)), y: Double(point.yValue))
+            let entry = ChartDataEntry(x: Double(point.xValue), y: Double(point.yValue))
             data.append(entry)
         }
         self.entries = data

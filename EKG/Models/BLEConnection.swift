@@ -25,7 +25,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
     @Published public var recievedString: [UInt8] = []
     let passThroughSubjectPublisher = PassthroughSubject<[UInt8], Never>()
     @Published public var btMessage: String?
-    @Published public var finishedExamination: Bool = false
+    //@Published public var finishedExamination: Bool = false
     // Properties
     private var centralManager: CBCentralManager! = nil
     @Published public var peripheral: CBPeripheral!

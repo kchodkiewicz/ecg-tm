@@ -13,7 +13,7 @@ struct HistoryRow: View {
     @ObservedObject var profile: Profile
     
     @State private var showingDetail = false
-    
+    //@Binding var selection: Bool
     
     func isShowingDetail() -> Bool {
         return showingDetail

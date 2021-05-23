@@ -47,7 +47,7 @@ public class Exam: NSManagedObject, Identifiable {
             return -1
         }
         for index in 1 ..< samples.count - 1 {
-            if (samples[index] > samples[index + 1] && samples[index] > samples[index - 1]) && samples[index].yValue >= 512 {
+            if (samples[index] > samples[index + 1] && samples[index] > samples[index - 1]) && samples[index].yValue >= 1.2 {
                 peaks.append(samples[index].xValue)
             }
         }

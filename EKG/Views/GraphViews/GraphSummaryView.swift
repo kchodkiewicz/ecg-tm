@@ -100,7 +100,7 @@ struct GraphSummaryView: View {
                         .multilineTextAlignment(.leading)
                         .onAppear(perform: {
                             UITextView.appearance().backgroundColor = .clear
-                            UITextView.appearance().keyboardDismissMode = .interactive
+                            //UITextView.appearance().keyboardDismissMode = .interactive
                         })
                     
                 }

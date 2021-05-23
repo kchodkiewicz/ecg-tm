@@ -27,20 +27,21 @@ struct OverView: View {
     @State var isShowingLogin: Bool = true
     
     private func connectBLEDevice() {
-        
-        // Start Scanning for BLE Devices
-        bleConnection.startCentralManager()
-        
-        //TODO: try connecting to saved device (CoreData: Profile.btRRSI <- add)
-        if let devUUID = profile.deviceUUID {
-          // try filtering list of devices with RSSI
-            let peripheral = bleConnection.scannedBLEDevices.first { CBPeripheral in
-                CBPeripheral.identifier == devUUID
+        if bleConnection.peripheral == nil {
+            // Start Scanning for BLE Devices
+            bleConnection.startCentralManager()
+            
+            //TODO: try connecting to saved device (CoreData: Profile.btRRSI <- add)
+            if let devUUID = profile.deviceUUID {
+              // try filtering list of devices with RSSI
+                let peripheral = bleConnection.scannedBLEDevices.first { CBPeripheral in
+                    CBPeripheral.identifier == devUUID
+                }
+                guard peripheral != nil else {
+                    return
+                }
+                bleConnection.connect(peripheral: peripheral!)
             }
-            guard peripheral != nil else {
-                return
-            }
-            bleConnection.connect(peripheral: peripheral!)
         }
     }
     
@@ -98,13 +99,7 @@ struct OverView: View {
         .accentColor(Color("\(profile.wrappedColor)"))
         
         .onAppear(perform: connectBLEDevice)
-        //TODO: turn everithing around (contentView is main, overview is modal)
-//    } else {
-//    Text("Hello")
-//
-//
-//
-//    }
+        
     }
 }
 

@@ -12,17 +12,23 @@ struct HistoryView: View {
     
     @Environment(\.managedObjectContext) var viewContext
     
+   
     var fetchRequest: FetchRequest<Profile>
     var profile: FetchedResults<Profile> {
         fetchRequest.wrappedValue
     }
+    
+//    @Binding var goToExam: UUID
+//    @State var selection: Bool = false
     
     var body: some View {
         
         List {
             
             ForEach(profile[0].examArray, id: \.self) { exam in
+                
                 HistoryRow(exam: exam, profile: profile[0])
+                    
             }
             .onDelete(perform: removeExam)
             .buttonStyle(PlainButtonStyle())
@@ -49,6 +55,8 @@ struct HistoryView: View {
     
     init(filter: UUID) {
         fetchRequest = FetchRequest<Profile>(entity: Profile.entity(), sortDescriptors: [], predicate: NSPredicate(format: "id == %@", filter as CVarArg), animation: .default)
+        
+        
     }
 }
 
