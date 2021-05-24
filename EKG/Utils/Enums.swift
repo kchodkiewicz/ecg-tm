@@ -87,3 +87,9 @@ public enum ExamResult: String {
     case bad = "bad"
     case critical = "critical"
 }
+
+public enum TimePeriod: Int {
+    case week = 7
+    case month = 30
+    case year = 365
+}

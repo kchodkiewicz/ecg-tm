@@ -217,6 +217,7 @@ class COMMFrameParser: ObservableObject {
                         if (tmpFrame[Int(indexAnswerStatus)] != COMMAnswerType.Ok.rawValue) {
                             print ("Problem z zatrzymaniem EKG")
                         } else {
+                            COMMFrameParser.DisableECGTest()
                             print("Zatrzymano badanie EKG")
                         }
                     default:

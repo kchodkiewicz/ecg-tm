@@ -16,6 +16,13 @@ struct Formatters {
         return formatter
     }()
     
+    static let justDay: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        return formatter
+    }()
+    
     static let titleDateFormat: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium

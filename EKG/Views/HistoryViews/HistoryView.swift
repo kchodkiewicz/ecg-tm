@@ -12,7 +12,6 @@ struct HistoryView: View {
     
     @Environment(\.managedObjectContext) var viewContext
     
-   
     var fetchRequest: FetchRequest<Profile>
     var profile: FetchedResults<Profile> {
         fetchRequest.wrappedValue
@@ -23,7 +22,7 @@ struct HistoryView: View {
     
     var body: some View {
         
-        List {
+        //List {
             
             ForEach(profile[0].examArray, id: \.self) { exam in
                 
@@ -32,8 +31,9 @@ struct HistoryView: View {
             }
             .onDelete(perform: removeExam)
             .buttonStyle(PlainButtonStyle())
-        }.listStyle(PlainListStyle())
-        .navigationTitle("Overview")
+        //}
+        //.listStyle(PlainListStyle())
+        //.navigationTitle("Overview")
         
     }
     

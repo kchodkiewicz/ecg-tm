@@ -15,6 +15,8 @@ struct GraphDetail: View {
     
     var body: some View {
         Chart(entries: entries)
+//            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10.0, height: 10.0)))
+//            .shadow(radius: 10.0)
     }
     
     init(points: [Sample]) {

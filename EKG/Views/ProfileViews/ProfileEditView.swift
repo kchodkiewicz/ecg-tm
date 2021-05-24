@@ -13,7 +13,8 @@ struct ProfileEditView: View {
     //@Environment(\.managedObjectContext) private var viewContext
     var viewContext: NSManagedObjectContext
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject var profile: Profile
+    //TODO: test if let profile helps
+    let profile: Profile
     
     @ObservedObject var bleConnection: BLEConnection
     
@@ -235,6 +236,7 @@ struct ProfileEditView: View {
         do {
         try self.viewContext.save()
         } catch {
+            print("Oupsie dudle")
             self.viewContext.rollback()
         }
     }

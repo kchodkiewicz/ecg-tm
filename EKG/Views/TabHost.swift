@@ -10,7 +10,7 @@ import CoreBluetooth
 import Combine
 
 
-struct OverView: View {
+struct TabHost: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     //@EnvironmentObject var activeSession: ActiveSession
@@ -50,8 +50,8 @@ struct OverView: View {
         TabView(selection: $selectedTab) {
             // History
             NavigationView {
-                HistoryView(filter: profile.id!)
-                    
+                HistoryOverview(profile: profile, switchTab: $selectedTab)
+                //Text("Hello")
             }
         .tabItem {
                 Image(systemName: "house.fill")

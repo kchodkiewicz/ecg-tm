@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C03151F25FD3E6C008FD459 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03151E25FD3E6C008FD459 /* OverView.swift */; };
+		2C03151F25FD3E6C008FD459 /* TabHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03151E25FD3E6C008FD459 /* TabHost.swift */; };
 		2C03152325FD6CDF008FD459 /* ActiveSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03152225FD6CDF008FD459 /* ActiveSession.swift */; };
 		2C03152625FD6FA3008FD459 /* AddNewUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03152525FD6FA3008FD459 /* AddNewUserView.swift */; };
 		2C3C8902263F5A110016CFCA /* Exam+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C8900263F5A110016CFCA /* Exam+CoreDataProperties.swift */; };
@@ -28,6 +28,11 @@
 		2C6367AC264598ED007B34E2 /* COMMFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6367AB264598ED007B34E2 /* COMMFrame.swift */; };
 		2C6367AE264598FE007B34E2 /* COMMFrameParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6367AD264598FE007B34E2 /* COMMFrameParser.swift */; };
 		2C6367B02645990C007B34E2 /* COMMShiftByte.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6367AF2645990C007B34E2 /* COMMShiftByte.swift */; };
+		2C6BC4C0265ABB0500A3DAC7 /* LogoOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4BF265ABB0500A3DAC7 /* LogoOverlay.swift */; };
+		2C6BC4C2265ABCE000A3DAC7 /* HistoryOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C1265ABCE000A3DAC7 /* HistoryOverview.swift */; };
+		2C6BC4C4265ABD6300A3DAC7 /* RecentExamTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C3265ABD6300A3DAC7 /* RecentExamTab.swift */; };
+		2C6BC4C6265ABF9600A3DAC7 /* MeanBmpGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C5265ABF9600A3DAC7 /* MeanBmpGraph.swift */; };
+		2C6BC4C8265AC36A00A3DAC7 /* RecentExamOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C7265AC36A00A3DAC7 /* RecentExamOverlay.swift */; };
 		2C729E3E2640CB9B00D36A1B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C729E3D2640CB9B00D36A1B /* Extensions.swift */; };
 		2C9540962621CD9200D115FE /* BTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540952621CD9200D115FE /* BTView.swift */; };
 		2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540982621D34F00D115FE /* BLEConnection.swift */; };
@@ -49,7 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2C03151E25FD3E6C008FD459 /* OverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverView.swift; sourceTree = "<group>"; };
+		2C03151E25FD3E6C008FD459 /* TabHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabHost.swift; sourceTree = "<group>"; };
 		2C03152225FD6CDF008FD459 /* ActiveSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSession.swift; sourceTree = "<group>"; };
 		2C03152525FD6FA3008FD459 /* AddNewUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewUserView.swift; sourceTree = "<group>"; };
 		2C3C8900263F5A110016CFCA /* Exam+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Exam+CoreDataProperties.swift"; path = "../Exam+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -70,6 +75,11 @@
 		2C6367AB264598ED007B34E2 /* COMMFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COMMFrame.swift; sourceTree = "<group>"; };
 		2C6367AD264598FE007B34E2 /* COMMFrameParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COMMFrameParser.swift; sourceTree = "<group>"; };
 		2C6367AF2645990C007B34E2 /* COMMShiftByte.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COMMShiftByte.swift; sourceTree = "<group>"; };
+		2C6BC4BF265ABB0500A3DAC7 /* LogoOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoOverlay.swift; sourceTree = "<group>"; };
+		2C6BC4C1265ABCE000A3DAC7 /* HistoryOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryOverview.swift; sourceTree = "<group>"; };
+		2C6BC4C3265ABD6300A3DAC7 /* RecentExamTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentExamTab.swift; sourceTree = "<group>"; };
+		2C6BC4C5265ABF9600A3DAC7 /* MeanBmpGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanBmpGraph.swift; sourceTree = "<group>"; };
+		2C6BC4C7265AC36A00A3DAC7 /* RecentExamOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentExamOverlay.swift; sourceTree = "<group>"; };
 		2C729E3D2640CB9B00D36A1B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2C9540952621CD9200D115FE /* BTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTView.swift; sourceTree = "<group>"; };
 		2C9540982621D34F00D115FE /* BLEConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConnection.swift; sourceTree = "<group>"; };
@@ -138,7 +148,7 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		2C48469126375B9A00656C5E /* SupportViews */ = {
+		2C48469126375B9A00656C5E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				2C03152525FD6FA3008FD459 /* AddNewUserView.swift */,
@@ -146,8 +156,10 @@
 				2C48468B263744C000656C5E /* ColorPickerView.swift */,
 				2C48468E26375A4400656C5E /* UserIcon.swift */,
 				2C4846A426383A9A00656C5E /* UserRemovalOverlay.swift */,
+				2C6BC4BF265ABB0500A3DAC7 /* LogoOverlay.swift */,
+				2C6BC4C7265AC36A00A3DAC7 /* RecentExamOverlay.swift */,
 			);
-			path = SupportViews;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		2CC3158126345DD6007ABCF8 /* COMM */ = {
@@ -208,11 +220,11 @@
 		2CC6168825F65FDE0082FC63 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2C48469126375B9A00656C5E /* SupportViews */,
+				2C48469126375B9A00656C5E /* Helpers */,
 				2CC6169F25F6D5290082FC63 /* ProfileViews */,
 				2CC6169E25F6D5220082FC63 /* GraphViews */,
 				2CC6169D25F6D51B0082FC63 /* HistoryViews */,
-				2C03151E25FD3E6C008FD459 /* OverView.swift */,
+				2C03151E25FD3E6C008FD459 /* TabHost.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -234,6 +246,9 @@
 			children = (
 				2CC6168E25F6603D0082FC63 /* HistoryView.swift */,
 				2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */,
+				2C6BC4C1265ABCE000A3DAC7 /* HistoryOverview.swift */,
+				2C6BC4C3265ABD6300A3DAC7 /* RecentExamTab.swift */,
+				2C6BC4C5265ABF9600A3DAC7 /* MeanBmpGraph.swift */,
 			);
 			path = HistoryViews;
 			sourceTree = "<group>";
@@ -405,10 +420,14 @@
 				2C48468626370C9700656C5E /* Formatters.swift in Sources */,
 				2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */,
 				2C48467E263700C700656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift in Sources */,
+				2C6BC4C6265ABF9600A3DAC7 /* MeanBmpGraph.swift in Sources */,
+				2C6BC4C0265ABB0500A3DAC7 /* LogoOverlay.swift in Sources */,
+				2C6BC4C8265AC36A00A3DAC7 /* RecentExamOverlay.swift in Sources */,
 				2CC6168F25F6603D0082FC63 /* HistoryView.swift in Sources */,
 				2C6367AA264598E2007B34E2 /* COMMCommandType.swift in Sources */,
 				2CE421E126502431001CD813 /* ChartPreview.swift in Sources */,
 				2C6367A8264598D3007B34E2 /* COMMAnswerType.swift in Sources */,
+				2C6BC4C4265ABD6300A3DAC7 /* RecentExamTab.swift in Sources */,
 				2CE421E52652F99C001CD813 /* Sample+CoreDataProperties.swift in Sources */,
 				2C9540962621CD9200D115FE /* BTView.swift in Sources */,
 				2C729E3E2640CB9B00D36A1B /* Extensions.swift in Sources */,
@@ -416,6 +435,7 @@
 				2C6367B02645990C007B34E2 /* COMMShiftByte.swift in Sources */,
 				2CC6167C25F657BC0082FC63 /* Persistence.swift in Sources */,
 				2C4846A526383A9A00656C5E /* UserRemovalOverlay.swift in Sources */,
+				2C6BC4C2265ABCE000A3DAC7 /* HistoryOverview.swift in Sources */,
 				2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */,
 				2C48467C263700C700656C5E /* Exam+CoreDataClass.swift 16-06-57-625.swift in Sources */,
 				2CC6167525F657BA0082FC63 /* ContentView.swift in Sources */,
@@ -424,7 +444,7 @@
 				2C03152625FD6FA3008FD459 /* AddNewUserView.swift in Sources */,
 				2CC3157A263456D4007ABCF8 /* Chart.swift in Sources */,
 				2C6367AE264598FE007B34E2 /* COMMFrameParser.swift in Sources */,
-				2C03151F25FD3E6C008FD459 /* OverView.swift in Sources */,
+				2C03151F25FD3E6C008FD459 /* TabHost.swift in Sources */,
 				2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */,
 				2CC6167325F657BA0082FC63 /* EKGApp.swift in Sources */,
 				2C484689263740FD00656C5E /* Enums.swift in Sources */,

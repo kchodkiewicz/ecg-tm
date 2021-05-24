@@ -25,6 +25,7 @@ class GraphCal: ObservableObject, Equatable
     func addDataFromBT(data : [UInt8]) -> [ChartDataEntry]
     {
         
+        
         var dataU16T : [UInt16] = []
         let freq = 250
         let gain = 1100
@@ -37,7 +38,6 @@ class GraphCal: ObservableObject, Equatable
         for i in stride(from: 0, to: data.count - 1, by: 2)
         {
             let u16 = UInt16(UInt16(data[i+1]) << COMMShiftByte.OneByte.rawValue + UInt16(data[i ]))
-            print("U16 ----- \(u16)")
             dataU16T.append(u16)
         }
         
@@ -55,6 +55,9 @@ class GraphCal: ObservableObject, Equatable
              tmp.append(entry)
              numOfSample += 1
         }
+        
+        
+        
         self.entries += tmp
         passThroughSubjectPublisher.send(tmp)
         return self.entries
