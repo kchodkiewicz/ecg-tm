@@ -68,9 +68,10 @@ extension ProfileColor: Identifiable {
 
 //MARK: - Tabs Tags
 enum Tab: Int, CaseIterable {
-    case history = 0
-    case exam = 1
-    case profile = 2
+    case overview = 0
+    case history = 1
+    case exam = 2
+    case profile = 3
 }
 
 //MARK: - Exam Type

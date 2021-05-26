@@ -33,6 +33,7 @@
 		2C6BC4C4265ABD6300A3DAC7 /* RecentExamTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C3265ABD6300A3DAC7 /* RecentExamTab.swift */; };
 		2C6BC4C6265ABF9600A3DAC7 /* MeanBmpGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C5265ABF9600A3DAC7 /* MeanBmpGraph.swift */; };
 		2C6BC4C8265AC36A00A3DAC7 /* RecentExamOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C7265AC36A00A3DAC7 /* RecentExamOverlay.swift */; };
+		2C6BC4CA265C4CA300A3DAC7 /* EmptyChartSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C9265C4CA300A3DAC7 /* EmptyChartSplashView.swift */; };
 		2C729E3E2640CB9B00D36A1B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C729E3D2640CB9B00D36A1B /* Extensions.swift */; };
 		2C9540962621CD9200D115FE /* BTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540952621CD9200D115FE /* BTView.swift */; };
 		2C9540992621D34F00D115FE /* BLEConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540982621D34F00D115FE /* BLEConnection.swift */; };
@@ -80,6 +81,7 @@
 		2C6BC4C3265ABD6300A3DAC7 /* RecentExamTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentExamTab.swift; sourceTree = "<group>"; };
 		2C6BC4C5265ABF9600A3DAC7 /* MeanBmpGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanBmpGraph.swift; sourceTree = "<group>"; };
 		2C6BC4C7265AC36A00A3DAC7 /* RecentExamOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentExamOverlay.swift; sourceTree = "<group>"; };
+		2C6BC4C9265C4CA300A3DAC7 /* EmptyChartSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyChartSplashView.swift; sourceTree = "<group>"; };
 		2C729E3D2640CB9B00D36A1B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2C9540952621CD9200D115FE /* BTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTView.swift; sourceTree = "<group>"; };
 		2C9540982621D34F00D115FE /* BLEConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConnection.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				2C4846A426383A9A00656C5E /* UserRemovalOverlay.swift */,
 				2C6BC4BF265ABB0500A3DAC7 /* LogoOverlay.swift */,
 				2C6BC4C7265AC36A00A3DAC7 /* RecentExamOverlay.swift */,
+				2C6BC4C9265C4CA300A3DAC7 /* EmptyChartSplashView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				2C6367AC264598ED007B34E2 /* COMMFrame.swift in Sources */,
 				2C48468F26375A4400656C5E /* UserIcon.swift in Sources */,
 				2C40294C25FAD7B600268220 /* ProfileEditView.swift in Sources */,
+				2C6BC4CA265C4CA300A3DAC7 /* EmptyChartSplashView.swift in Sources */,
 				2C48468626370C9700656C5E /* Formatters.swift in Sources */,
 				2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */,
 				2C48467E263700C700656C5E /* Sample+CoreDataClass.swift 16-06-57-635.swift in Sources */,

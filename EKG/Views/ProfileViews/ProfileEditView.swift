@@ -43,7 +43,7 @@ struct ProfileEditView: View {
         Form {
             
             if .inactive == self.editMode?.wrappedValue {
-                Section{
+                Section {
                     HStack {
                         Spacer()
                         
@@ -134,8 +134,8 @@ struct ProfileEditView: View {
                     DatePicker("", selection: $age, in: Formatters.closeBirthDateRange, displayedComponents: .date)
                         .multilineTextAlignment(.trailing)
                         .datePickerStyle(WheelDatePickerStyle())
-                }
-                Section {
+//                }
+//                Section {
                     Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
 //                        .disabled(.inactive == self.editMode?.wrappedValue)
 //                        .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
@@ -157,26 +157,18 @@ struct ProfileEditView: View {
                 Section {
                     
                     Button {
-                        //withAnimation(.easeInOut(duration: 0.35)) {
-                            //self.activeSession.id = nil
-                            //self.isLoggedIn = false
-                        //print("Switching, wrappedValue: \(self.presentationMode.wrappedValue)")
-                        //self.presentationMode.wrappedValue.dismiss()
                         self.dismiss.toggle()
-                        //}
                     } label: {
                         Text("Switch User")
                     }
                 }
             }
-//            else {
-//            
-//                Section { }
-//                Section { }
-//                if self.isShowingPallette {
-//                    Section { }
-//                }
-//            }
+            else {
+
+                Section { }
+                Section { }
+               
+            }
         }
         
         //.listStyle(GroupedListStyle())
@@ -193,10 +185,10 @@ struct ProfileEditView: View {
             
             trailing: Button(action: {
                 withAnimation {
-                    if !(self.editMode?.wrappedValue == .inactive) {
-//                        if self.isShowingPallette {
-//                            self.isShowingPallette.toggle()
-//                        }
+                    if self.editMode?.wrappedValue == .active {
+                        if self.isShowingPallette {
+                            self.isShowingPallette.toggle()
+                        }
                         updateProfile()
                     }
                     self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
@@ -225,7 +217,7 @@ struct ProfileEditView: View {
     
     private func updateProfile() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        //FIXME: something is fuck up, probably with saving
+        //FIXME: something is fuckd up, probably with saving
         let profile = self.profile
         profile.username = self.username
         profile.firstName = self.firstName

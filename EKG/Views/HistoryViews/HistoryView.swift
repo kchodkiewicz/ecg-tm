@@ -22,7 +22,7 @@ struct HistoryView: View {
     
     var body: some View {
         
-        //List {
+        List {
             
             ForEach(profile[0].examArray, id: \.self) { exam in
                 
@@ -31,9 +31,9 @@ struct HistoryView: View {
             }
             .onDelete(perform: removeExam)
             .buttonStyle(PlainButtonStyle())
-        //}
-        //.listStyle(PlainListStyle())
-        //.navigationTitle("Overview")
+        }
+        .listStyle(PlainListStyle())
+        .navigationTitle("History")
         
     }
     

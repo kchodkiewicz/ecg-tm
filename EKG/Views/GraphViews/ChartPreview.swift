@@ -17,17 +17,20 @@ struct ChartPreview : UIViewRepresentable {
         let chart = LineChartView()
         chart.backgroundColor = UIColor.systemBackground
         // visual
-        chart.borderColor = .red
+        //chart.borderColor = .red
         chart.rightAxis.enabled = false
         chart.leftAxis.enabled = false
         chart.legend.enabled = false
         chart.drawGridBackgroundEnabled = false
+        
+        
         //touch
         chart.doubleTapToZoomEnabled = false
         chart.dragYEnabled = false
         chart.dragXEnabled = false
         chart.scaleYEnabled = false
         chart.scaleXEnabled = false
+        
         
         //it is convenient to form chart data in a separate func
         chart.data = addData()

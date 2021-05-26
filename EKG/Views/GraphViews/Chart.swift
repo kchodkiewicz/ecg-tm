@@ -15,22 +15,23 @@ struct Chart : UIViewRepresentable {
     func makeUIView(context: Context) -> LineChartView {
         //crate new chart
         let chart = LineChartView()
-        chart.backgroundColor = UIColor.systemBackground
+        chart.backgroundColor = UIColor(Color.clear) // .systemBackground
         chart.borderColor = .red
         chart.legend.enabled = false
         chart.rightAxis.enabled = true
         chart.leftAxis.labelFont = .boldSystemFont(ofSize: 10)
-        chart.leftAxis.labelTextColor = UIColor(.primary)
+        chart.leftAxis.labelTextColor = UIColor(.secondary)
         chart.leftAxis.axisLineColor = UIColor(.secondary)
         chart.rightAxis.labelFont = .boldSystemFont(ofSize: 10)
-        chart.rightAxis.labelTextColor = UIColor(.primary)
+        chart.rightAxis.labelTextColor = UIColor(.secondary)
         chart.rightAxis.axisLineColor = UIColor(.secondary)
         chart.dragYEnabled = false
         chart.scaleYEnabled = false
         chart.xAxis.labelPosition = .bottom
         chart.xAxis.labelFont = .boldSystemFont(ofSize: 10)
-        chart.xAxis.labelTextColor = UIColor(.primary)
+        chart.xAxis.labelTextColor = UIColor(.secondary)
         chart.xAxis.axisLineColor = UIColor(.secondary)
+        chart.animate(xAxisDuration: 0.5)
         chart.noDataText = "Start new examination"
         
         

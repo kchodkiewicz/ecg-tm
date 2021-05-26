@@ -81,3 +81,27 @@ struct RoundButtonStyle: ButtonStyle {
         }
     }
 }
+
+struct ColoredGroupBoxStyle: GroupBoxStyle {
+    var backgroundColor: UIColor = UIColor.systemGroupedBackground
+    
+    var labelColor: UIColor = UIColor.label
+    var opacity: Double = 1
+    func makeBody(configuration: Configuration) -> some View {
+        VStack {
+            HStack {
+                configuration.label
+                    .font(Font.bold(.body)())
+                    .foregroundColor(Color(labelColor))
+                Spacer()
+            }
+            configuration.content
+        }
+        
+        .padding()
+        .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(Color(backgroundColor))
+                        .opacity(opacity)
+        )
+    }
+}

@@ -33,7 +33,7 @@ struct TabHost: View {
             
             //TODO: try connecting to saved device (CoreData: Profile.btRRSI <- add)
             if let devUUID = profile.deviceUUID {
-              // try filtering list of devices with RSSI
+                // try filtering list of devices with RSSI
                 let peripheral = bleConnection.scannedBLEDevices.first { CBPeripheral in
                     CBPeripheral.identifier == devUUID
                 }
@@ -53,8 +53,18 @@ struct TabHost: View {
                 HistoryOverview(profile: profile, switchTab: $selectedTab)
                 //Text("Hello")
             }
-        .tabItem {
+            .tabItem {
                 Image(systemName: "house.fill")
+                    .imageScale(.large)
+                    .accessibility(label: Text("Overview"))
+                Text("Overview")
+            }.tag(Tab.overview)
+            
+            NavigationView {
+                HistoryView(filter: profile.wrappedId)
+            }
+            .tabItem {
+                Image(systemName: "list.bullet.rectangle") // tray.full.fill
                     .imageScale(.large)
                     .accessibility(label: Text("History"))
                 Text("History")
@@ -64,7 +74,7 @@ struct TabHost: View {
             NavigationView {
                 GraphExamView(bleConnection: bleConnection, profile: self.profile, switchTab: $selectedTab, goToBT: $goToBluetooth)
             }
-                    .tabItem {
+            .tabItem {
                 Image(systemName: "waveform.path.ecg.rectangle.fill")
                     .imageScale(.large)
                     .accessibility(label: Text("New Examination"))
@@ -87,16 +97,16 @@ struct TabHost: View {
                     profileColor: ProfileColor.ColorName(value: self.profile.wrappedColor)
                 )
             }
-        .tabItem {
+            .tabItem {
                 Image(systemName: "person.crop.square.fill")
                     .imageScale(.large)
                     .accessibility(label: Text("User Profile"))
                     .padding()
                 Text("Profile")
             }.tag(Tab.profile)
-                
+            
         }
-        .accentColor(Color("\(profile.wrappedColor)"))
+        //.accentColor(Color("\(profile.wrappedColor)"))
         
         .onAppear(perform: connectBLEDevice)
         

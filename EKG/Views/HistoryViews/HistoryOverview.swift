@@ -14,80 +14,77 @@ struct HistoryOverview: View {
     @State var selectPeriod: TimePeriod = .week
     
     var body: some View {
-        
-        List {
-        
-            
-            TabView {
-                if profile.examArray.count > 0 {
-                    ForEach(Range(0...min(2, profile.examArray.count - 1))) {index in
-                        RecentExamTab(exam: profile.examArray[index])
-                            .tabItem {
-                                Text(profile.examArray[index].wrappedDate, formatter: Formatters.dateFormat)
-                            }
-                            .tag(index)
-                    }
-//                RecentExamTab(exam: profile.examArray[0])
-//                    .tabItem {
-//                        Text("Last Exam")
-//                    }
-//                    .tag(1)
-//
-//                RecentExamTab(exam: profile.examArray[1])
-//                    .tabItem {
-//                        Text("One but Last Exam")
-//                    }
-//                    .tag(2)
-//
-//                RecentExamTab(exam: profile.examArray[2])
-//                    .tabItem {
-//                        Text("Two but Last Exam")
-//                    }
-//                    .tag(3)
-                } else {
-                    Button {
-                        switchTab = .exam
-                    } label: {
-                        Text("Make first examination")
-                            .padding()
-                            
-                    }.background(Color(self.profile.wrappedColor))
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                    .cornerRadius(CGFloat(20.0))
-                    
-
-                    
-                }
+        ScrollView {
+            VStack {
                 
-            }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .frame(height: 200)
-            
-            TabView(selection: self.$selectPeriod) {
-                if self.profile.examArray.count > 0 {
                 
-//                    MeanBmpGraph(profile: self.profile, period: .month)
-//                        .tabItem {
-//                            EmptyView()
-//                        }
-//                        .tag(TimePeriod.month)
-                    
-                    MeanBmpGraph(profile: self.profile, period: .week)
-                        .tabItem {
-                            EmptyView()
-                        }
-                        .tag(TimePeriod.week)
+                TabView {
+                    if !profile.examArray.isEmpty {
+                        //                    ForEach(profile.examArray.filter({ Exam in
+                        //
+                        //                        Calendar.current.isDate(Exam.wrappedDate, inSameDayAs: Date())
+                        //
+                        //                    })) { exam in
+                        //                        RecentExamTab(exam: exam)
+                        //                            .tabItem {
+                        //                                Text(exam.wrappedDate, formatter: Formatters.dateFormat)
+                        //                            }
+                        //                            .tag(exam.wrappedId)
+                        //                    }
                         
-                }
-
-            }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .frame(height: 200)
-            
-            HistoryView(filter: profile.wrappedId)
-            
-            
-            
-        }.listStyle(PlainListStyle())
+                        RecentExamTab(exam: profile.examArray[0])
+                            .tabItem {
+                                Text("Last Exam")
+                            }
+                            .tag(1)
+                        if profile.examArray.count > 1 {
+                            RecentExamTab(exam: profile.examArray[1])
+                                .tabItem {
+                                    Text("One but Last Exam")
+                                }
+                                .tag(2)
+                        }
+                        if profile.examArray.count > 2 {
+                            RecentExamTab(exam: profile.examArray[2])
+                                .tabItem {
+                                    Text("Two but Last Exam")
+                                }
+                                .tag(3)
+                        }
+                    } else {
+                        Button {
+                            switchTab = .exam
+                        } label: {
+                            Text("Make first examination")
+                        }
+                        
+                    }
+                    
+                }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .frame(height: 200)
+                
+                TabView(selection: self.$selectPeriod) {
+                    if !self.profile.examArray.isEmpty {
+                        
+                        //                    MeanBmpGraph(profile: self.profile, period: .month)
+                        //                        .tabItem {
+                        //                            EmptyView()
+                        //                        }
+                        //                        .tag(TimePeriod.month)
+                        
+                        MeanBmpGraph(profile: self.profile, period: .week)
+                            .tabItem {
+                                EmptyView()
+                            }
+                            .tag(TimePeriod.week)
+                        
+                    }
+                    
+                }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .frame(height: 200)
+                
+            }
+        }
         
         .navigationTitle("Overview")
     }

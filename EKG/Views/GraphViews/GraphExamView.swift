@@ -20,7 +20,7 @@ struct GraphExamView: View {
     @ObservedObject var bleConnection: BLEConnection
     @State var isShowingAlert: Bool = false
     @State var countdown: Int = 6
-    //@State var examinationInProgress: Bool = false
+    @State var examinationInProgress: Bool = false
     
     @ObservedObject var profile: Profile
     
@@ -68,14 +68,12 @@ struct GraphExamView: View {
         
         self.exam = exam
         
-        print("Hello")
-        
     }
     
     func getEntries() -> [ChartDataEntry] {
         
         let entries = graphData.addDataFromBT(data: bleConnection.recievedString)
-
+        
         return entries
         
     }
@@ -101,13 +99,15 @@ struct GraphExamView: View {
             ZStack {
                 
                 Chart(entries: getEntries())
-                
-//                if countdown > 0 && countdown < 6 {
-//                    Text("\(self.countdown)")
-//                        .font(.largeTitle)
-//                        .bold()
-//                        .transition(.scale)
-//                }
+                if !self.examinationInProgress {
+                    EmptyChartSplashView()
+                }
+                //                if countdown > 0 && countdown < 6 {
+                //                    Text("\(self.countdown)")
+                //                        .font(.largeTitle)
+                //                        .bold()
+                //                        .transition(.scale)
+                //                }
             }
             
             Spacer()
@@ -117,20 +117,24 @@ struct GraphExamView: View {
                 Spacer()
                 
                 Button(action: {
-                    
-                    self.examinationStopped = true
-                    
-                    let commFrame = COMMFrame()
-                    commFrame.SetFrameID(frameID: 0x001)
-                    commFrame.SetAdditionalData(data: [COMMCommandType.StopECGTest.rawValue], size: 1)
-                    print("Stop Button")
-                    
-                    let frame = commFrame.GetFrameData()
-                    COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.StopECGTest)
-                    
-                    bleConnection.sendData(data: frame)
-                    
-                    //TODO: send STOP to ECG
+                    if self.bleConnection.peripheral != nil {
+                        if self.examinationInProgress {
+                            self.examinationStopped = true
+                            
+                            // Send signal to BT
+                            let commFrame = COMMFrame()
+                            commFrame.SetFrameID(frameID: 0x001)
+                            commFrame.SetAdditionalData(data: [COMMCommandType.StopECGTest.rawValue], size: 1)
+                            print("Stop Button")
+                            
+                            let frame = commFrame.GetFrameData()
+                            COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.StopECGTest)
+                            
+                            bleConnection.sendData(data: frame)
+                        }
+                    } else {
+                        self.isShowingAlert = true
+                    }
                     
                 }, label: {
                     Text("Stop")
@@ -144,7 +148,9 @@ struct GraphExamView: View {
                 Button(action: {
                     if self.bleConnection.peripheral != nil {
                         //setCountdown()
+                        self.examinationInProgress = true
                         
+                        // Send signal to BT
                         let commFrame = COMMFrame()
                         commFrame.SetFrameID(frameID: 0x001)
                         commFrame.SetAdditionalData(data: [COMMCommandType.SetDuringTimeECGTest.rawValue, UInt8(self.profile.examDuration)], size: 2)
@@ -196,14 +202,14 @@ struct GraphExamView: View {
                 
                 .sheet(isPresented: self.$goToExam) {
                     self.switchTab = .history
-
+                    
                 } content: {
                     GraphSummaryView(exam: self.profile.examArray[0], notes: self.profile.examArray[0].wrappedNotes, examType: ExamType(rawValue: self.profile.examArray[0].wrappedType) ?? ExamType.resting)
                 }
             
         }
         return vStack.onReceive(self.graphData.passThroughSubjectPublisher) { result in
-        
+            
             print("Got some data")
             print("Count ", examArray.count, "Samples per second ", (Float(examArray.count) / self.profile.examDuration))
             if examArray.count >= Int((self.profile.examDuration) * 250) || self.examinationStopped {
@@ -213,6 +219,7 @@ struct GraphExamView: View {
                 saveData()
                 examArray.removeAll()
                 self.examinationStopped = false
+                self.examinationInProgress = false
                 queueToSummary()
             } else {
                 examArray += result

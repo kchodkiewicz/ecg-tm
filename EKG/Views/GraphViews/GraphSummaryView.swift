@@ -37,22 +37,27 @@ struct GraphSummaryView: View {
         
         ScrollView(.vertical, showsIndicators: false) {
             
-            GraphDetail(points: exam.sampleArray)
-                .frame(minHeight: 300.0)
+            GroupBox(
+                label: Label("Electrocardiogram", systemImage: "waveform.path.ecg")
+                        .foregroundColor(Color(UIColor.systemGreen))
+            ) {
+                GraphDetail(points: exam.sampleArray)
+                    .frame(minHeight: 300.0)
+            }
+            
             
             Spacer()
             
+            VStack {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 
                 GroupBox(
                     label: Label("Heart Rate", systemImage: "heart.fill")
                         .foregroundColor(Color(UIColor.systemRed))
                 ) {
-                    
                     Text("\(exam.heartRate) BPM")
                         .font(.largeTitle)
                         .bold()
-                    
                 }
                 
                 GroupBox(
@@ -71,6 +76,8 @@ struct GraphSummaryView: View {
                 }
                 
             }.padding(.horizontal)
+            .padding(.top)
+            
             
             
             LazyVGrid(columns: [GridItem(.flexible())]) {
@@ -107,11 +114,12 @@ struct GraphSummaryView: View {
             }
             .padding(.horizontal)
             .padding(.bottom)
+            }.background(Color(UIColor.systemGroupedBackground))
             
         }
-        
+        .groupBoxStyle(ColoredGroupBoxStyle(backgroundColor: UIColor.secondarySystemGroupedBackground))
         .navigationTitle(Text(exam.wrappedDate, formatter: Formatters.titleDateFormat))
-        
+        //.background(Color(UIColor.systemGroupedBackground))
         .onDisappear(perform: updateExam)
     }
     

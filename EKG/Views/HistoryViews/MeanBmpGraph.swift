@@ -55,11 +55,7 @@ struct MeanBmpGraph: View {
         
         let current = Calendar.current
         let day = current.dateComponents([.day], from: date)
-//        let years = current.dateComponents(
-//            [.day],
-//            from: date,
-//            to: Date()
-//        )
+
         return String(day.day!)
     }
     
