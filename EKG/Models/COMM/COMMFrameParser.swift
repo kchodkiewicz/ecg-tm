@@ -45,6 +45,9 @@ class COMMFrameParser: ObservableObject {
 
     static func CheckCRC(frame: [UInt8]) -> Bool
     {
+        if COMMFrameParser.m_isTestingECG {
+            return true
+        }
         //wylicza CRC
         var emptyData: [UInt8] = []
         if(GetFrameType(frame: frame) == FrameType.SendingFrame)

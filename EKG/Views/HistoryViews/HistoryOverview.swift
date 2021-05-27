@@ -63,25 +63,7 @@ struct HistoryOverview: View {
                 }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 .frame(height: 200)
                 
-                TabView(selection: self.$selectPeriod) {
-                    if !self.profile.examArray.isEmpty {
-                        
-                        //                    MeanBmpGraph(profile: self.profile, period: .month)
-                        //                        .tabItem {
-                        //                            EmptyView()
-                        //                        }
-                        //                        .tag(TimePeriod.month)
-                        
-                        MeanBmpGraph(profile: self.profile, period: .week)
-                            .tabItem {
-                                EmptyView()
-                            }
-                            .tag(TimePeriod.week)
-                        
-                    }
-                    
-                }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .frame(height: 200)
+                MeanBmpGraph(profile: self.profile)
                 
             }
         }

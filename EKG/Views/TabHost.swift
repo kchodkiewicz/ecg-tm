@@ -83,7 +83,7 @@ struct TabHost: View {
             .tag(Tab.exam)
             // Profile
             NavigationView {
-                ProfileEditView(
+                ProfileView(
                     viewContext: viewContext,
                     profile: self.profile,
                     bleConnection: bleConnection,

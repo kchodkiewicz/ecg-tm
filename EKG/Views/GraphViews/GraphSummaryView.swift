@@ -55,22 +55,28 @@ struct GraphSummaryView: View {
                     label: Label("Heart Rate", systemImage: "heart.fill")
                         .foregroundColor(Color(UIColor.systemRed))
                 ) {
-                    Text("\(exam.heartRate) BPM")
-                        .font(.largeTitle)
-                        .bold()
+                    HStack(alignment: .lastTextBaseline, spacing: 0) {
+                        Text("\(exam.heartRate)")
+                            .font(.system(.largeTitle, design: .rounded))
+                            .bold()
+                        Text("BPM")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.secondary)
+                    }
                 }
                 
                 GroupBox(
                     label: Label("Result", systemImage: "heart.text.square.fill")
                         .foregroundColor(Color(UIColor.systemTeal))
                 ) {
-                    HStack {
+                    HStack(alignment: .lastTextBaseline, spacing: 0) {
                         resultImage
-                            .font(.largeTitle)
-                        
+                            .font(.system(.largeTitle, design: .rounded))
                         Text("\(exam.resultName.rawValue)")
-                            .font(.largeTitle)
+                            .font(.title2)
                             .bold()
+                            .foregroundColor(.secondary)
                             .lineLimit(1)
                     }
                 }
@@ -117,6 +123,7 @@ struct GraphSummaryView: View {
             }.background(Color(UIColor.systemGroupedBackground))
             
         }
+        
         .groupBoxStyle(ColoredGroupBoxStyle(backgroundColor: UIColor.secondarySystemGroupedBackground))
         .navigationTitle(Text(exam.wrappedDate, formatter: Formatters.titleDateFormat))
         //.background(Color(UIColor.systemGroupedBackground))

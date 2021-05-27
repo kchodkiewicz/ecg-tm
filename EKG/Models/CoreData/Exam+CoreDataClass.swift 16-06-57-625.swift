@@ -46,8 +46,8 @@ public class Exam: NSManagedObject, Identifiable {
         guard samples.count - 1 > 1 else {
             return -1
         }
-        for index in 100 ..< samples.count - 100 {
-            if (samples[index] > samples[index + 100] && samples[index] > samples[index - 100]) && samples[index].yValue >= 1.2 {
+        for index in 1 ..< samples.count - 1 {
+            if (samples[index] > samples[index + 1] && samples[index] > samples[index - 1]) && samples[index].yValue >= 0.6 {
                 peaks.append(samples[index].xValue)
             }
         }
@@ -56,7 +56,7 @@ public class Exam: NSManagedObject, Identifiable {
         guard duration != 0 else {
             return -1
         }
-        let rate = peaks.count// / duration * 60 // for bpm
+        let rate = Int(Double(peaks.count) / Double(duration) * 60.0) // for bpm
         
         return rate
         

@@ -16,6 +16,7 @@ struct GraphExamView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
+    @EnvironmentObject var stats: CardioStatistics
     @State var graphData = GraphCal()
     @ObservedObject var bleConnection: BLEConnection
     @State var isShowingAlert: Bool = false
@@ -67,6 +68,7 @@ struct GraphExamView: View {
         graphData.saveDataToDB()
         
         self.exam = exam
+        stats.recalculateMean(exam: exam)
         
     }
     
