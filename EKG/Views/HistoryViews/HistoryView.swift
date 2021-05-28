@@ -11,7 +11,7 @@ import SwiftUI
 struct HistoryView: View {
     
     @Environment(\.managedObjectContext) var viewContext
-    
+    //@EnvironmentObject var stats: CardioStatistics
     var fetchRequest: FetchRequest<Profile>
     var profile: FetchedResults<Profile> {
         fetchRequest.wrappedValue
@@ -39,16 +39,19 @@ struct HistoryView: View {
     
     func removeExam(at offsets: IndexSet) {
         
-        viewContext.perform {
-            for index in offsets {
-                let exam = profile[0].examArray[index]
-                viewContext.delete(exam)
-            }
-            do {
-                try viewContext.save()
-            } catch {
-                viewContext.rollback()
-                print("Failed to remove user")
+        
+        DispatchQueue.global(qos: .background).async {
+            viewContext.perform {
+                for index in offsets {
+                    let exam = profile[0].examArray[index]
+                    viewContext.delete(exam)
+                }
+                do {
+                    try viewContext.save()
+                } catch {
+                    viewContext.rollback()
+                    print("Failed to remove user")
+                }
             }
         }
     }

@@ -36,10 +36,10 @@ struct HistoryRow: View {
         NavigationLink(
             destination: GraphSummaryView(exam: exam, notes: exam.wrappedNotes, examType: ExamType(rawValue: exam.wrappedType) ?? ExamType.resting),
             label: {
-                HStack {
+                VStack {
                     
                     ChartPreview(points: exams_previews)
-                        .frame(width: 150, height: 100)
+                        .frame(height: 50)
 //                        .transition(Transitions.viewTransition)
                     
                     VStack(alignment: .leading, spacing: 8) {

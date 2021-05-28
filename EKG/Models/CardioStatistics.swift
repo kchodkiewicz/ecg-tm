@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class CardioStatistics: ObservableObject {
     
@@ -27,13 +28,13 @@ class CardioStatistics: ObservableObject {
         guard self.monthlyMean.2.count > 0 else {
             
             // add date = Date(), count = 1, mean = 1 (normalized), max = heartRate (mean == heartRate)
-            self.weeklyMean.0.append(1)
+            self.weeklyMean.0.append(Double(exam.heartRate))
             self.weeklyMean.1.append(exam.wrappedDate)
             self.weeklyMean.2.append(1)
             self.weeklyMax = Double(exam.heartRate)
             
             // add date = Date(), count = 1, mean = 1 (normalized), max = heartRate (mean == heartRate)
-            self.monthlyMean.0.append(1)
+            self.monthlyMean.0.append(Double(exam.heartRate))
             self.monthlyMean.1.append(exam.wrappedDate)
             self.monthlyMean.2.append(1)
             self.monthlyMax = Double(exam.heartRate)
@@ -89,7 +90,7 @@ class CardioStatistics: ObservableObject {
         
     }
     
-    private func calculateMean() {
+    public func calculateMean() {
         
         var heartRates: [Double] = []
         var dates: [Date] = []
@@ -102,7 +103,7 @@ class CardioStatistics: ObservableObject {
                 Calendar.current.isDate(evaluatedDate, inSameDayAs: Exam.wrappedDate)
             }
             
-            var sum = 0
+            var sum: Int64 = 0
             
             for exam in examsOfADay {
                 sum += exam.heartRate
@@ -123,29 +124,13 @@ class CardioStatistics: ObservableObject {
         guard let max = heartRates.max() else { return }
         self.monthlyMax = max
         
-        var normalized: [Double] {
-            var out: [Double] = []
-            for rate in heartRates {
-                out.append(Double(rate) / Double(max))
-            }
-            return out
-        }
-        
-        self.monthlyMean = (normalized.reversed(), dates.reversed(), counts.reversed())
+        self.monthlyMean = (heartRates.reversed(), dates.reversed(), counts.reversed())
         
         let weeklyHeartRates = Array(heartRates[0...6])
         guard let weeklyMax = weeklyHeartRates.max() else { return }
         self.weeklyMax = weeklyMax
         
-        var weeklyNormalized: [Double] {
-            var out: [Double] = []
-            for rate in weeklyHeartRates {
-                out.append(Double(rate) / Double(weeklyMax))
-            }
-            return out
-        }
-        
-        self.weeklyMean = (weeklyNormalized.reversed(), Array(dates[0...6].reversed()), Array(counts[0...6].reversed()))
+        self.weeklyMean = (weeklyHeartRates.reversed(), Array(dates[0...6].reversed()), Array(counts[0...6].reversed()))
         
     }
     

@@ -37,6 +37,7 @@ struct GraphSummaryView: View {
         
         ScrollView(.vertical, showsIndicators: false) {
             
+            
             GroupBox(
                 label: Label("Electrocardiogram", systemImage: "waveform.path.ecg")
                         .foregroundColor(Color(UIColor.systemGreen))
@@ -88,6 +89,8 @@ struct GraphSummaryView: View {
             
             LazyVGrid(columns: [GridItem(.flexible())]) {
                 
+                PeaksGroupBox(exam: self.exam)
+                
                 GroupBox(
                     label: Label("Exam type", systemImage: "lungs.fill")
                         .foregroundColor(Color(UIColor.systemIndigo))
@@ -113,20 +116,21 @@ struct GraphSummaryView: View {
                         .multilineTextAlignment(.leading)
                         .onAppear(perform: {
                             UITextView.appearance().backgroundColor = .clear
-                            //UITextView.appearance().keyboardDismissMode = .interactive
+                            UITextView.appearance().keyboardDismissMode = .interactive
                         })
                     
                 }
             }
             .padding(.horizontal)
             .padding(.bottom)
-            }.background(Color(UIColor.systemGroupedBackground))
+            }//.background(Color(UIColor.systemGroupedBackground))
             
-        }
         
+        }
         .groupBoxStyle(ColoredGroupBoxStyle(backgroundColor: UIColor.secondarySystemGroupedBackground))
         .navigationTitle(Text(exam.wrappedDate, formatter: Formatters.titleDateFormat))
-        //.background(Color(UIColor.systemGroupedBackground))
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Color(.systemGroupedBackground))
         .onDisappear(perform: updateExam)
     }
     

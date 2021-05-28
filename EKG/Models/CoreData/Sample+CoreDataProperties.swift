@@ -1,8 +1,8 @@
 //
 //  Sample+CoreDataProperties.swift
-//  
+//  EKG
 //
-//  Created by Krzysztof Chodkiewicz on 17/05/2021.
+//  Created by Krzysztof Chodkiewicz on 28/05/2021.
 //
 //
 
@@ -20,5 +20,9 @@ extension Sample {
     @NSManaged public var xValue: Double
     @NSManaged public var yValue: Double
     @NSManaged public var origin: Exam?
+
+}
+
+extension Sample : Identifiable {
 
 }

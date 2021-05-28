@@ -1,8 +1,8 @@
 //
 //  Profile+CoreDataProperties.swift
-//  
+//  EKG
 //
-//  Created by Krzysztof Chodkiewicz on 13/05/2021.
+//  Created by Krzysztof Chodkiewicz on 28/05/2021.
 //
 //
 
@@ -44,3 +44,4 @@ extension Profile {
     @NSManaged public func removeFromExam(_ values: NSSet)
 
 }
+

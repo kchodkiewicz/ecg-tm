@@ -14,7 +14,7 @@ struct GraphDetail: View {
     var entries = [ChartDataEntry]()
     
     var body: some View {
-        Chart(entries: entries)
+        ECGGraph(entries: entries)
 //            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10.0, height: 10.0)))
 //            .shadow(radius: 10.0)
     }

@@ -16,7 +16,7 @@ struct GraphExamView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    @EnvironmentObject var stats: CardioStatistics
+    //@EnvironmentObject var stats: CardioStatistics
     @State var graphData = GraphCal()
     @ObservedObject var bleConnection: BLEConnection
     @State var isShowingAlert: Bool = false
@@ -38,38 +38,67 @@ struct GraphExamView: View {
         self.goToExam = true
     }
     
+    private func calcHeartRate() -> (Int64, [Double]) {
+        // peak if value greater than both neighbours and value
+        // greater than 0.6
+        let samples = self.exam!.sampleArray
+        var peaks: [Double] = []
+        
+        guard samples.count - 1 > 1 else {
+            return (-1, [])
+        }
+        for index in 1 ..< samples.count - 1 {
+            if (samples[index] > samples[index + 1] && samples[index] > samples[index - 1]) && samples[index].yValue >= 0.6 {
+                peaks.append(samples[index].xValue)
+            }
+        }
+        
+        let duration = samples.count / 250
+        guard duration != 0 else {
+            return (-1, [])
+        }
+        let rate = Int64(Double(peaks.count) / Double(duration) * 60.0) // for bpm
+        
+        // return peaks
+        return (rate, peaks)
+    }
+    
     public func saveData() {
-        
-        print("Zapisuję do CoreData")
-        var samples: [Sample] = []
-        
-        for chartData in examArray {
-            let sample = Sample(context: viewContext)
-            sample.id = UUID()
-            sample.xValue = Double(chartData.x)
-            sample.yValue = Double(chartData.y)
-            samples.append(sample)
-        }
-        
-        let exam = Exam(context: viewContext)
-        exam.id = UUID()
-        exam.date = Date()
-        exam.addToSample(NSSet(array: samples))
-        
-        let profile = self.profile
-        profile.addToExam(exam)
-        do {
-            try self.viewContext.save()
+        DispatchQueue.global(qos: .background).async {
+            print("Saving exam to CoreData")
+            var samples: [Sample] = []
             
-        } catch {
-            print("Encountered problem while updating exam array")
-            self.viewContext.rollback()
+            for chartData in examArray {
+                let sample = Sample(context: viewContext)
+                sample.id = UUID()
+                sample.xValue = Double(chartData.x)
+                sample.yValue = Double(chartData.y)
+                samples.append(sample)
+            }
+            
+            let stats = calcHeartRate()
+            
+            let exam = Exam(context: viewContext)
+            exam.id = UUID()
+            exam.date = Date()
+            exam.heartRate = stats.0
+            exam.addToPeaks(NSSet(array: stats.1))
+            exam.addToSample(NSSet(array: samples))
+            
+            let profile = self.profile
+            profile.addToExam(exam)
+            do {
+                try self.viewContext.save()
+                
+            } catch {
+                print("Encountered problem while updating exam array")
+                self.viewContext.rollback()
+            }
+            graphData.saveDataToDB()
+            
+            self.exam = exam
+            //stats.recalculateMean(exam: exam)
         }
-        graphData.saveDataToDB()
-        
-        self.exam = exam
-        stats.recalculateMean(exam: exam)
-        
     }
     
     func getEntries() -> [ChartDataEntry] {
@@ -100,16 +129,10 @@ struct GraphExamView: View {
             Spacer()
             ZStack {
                 
-                Chart(entries: getEntries())
+                ECGGraph(entries: getEntries())
                 if !self.examinationInProgress {
                     EmptyChartSplashView()
                 }
-                //                if countdown > 0 && countdown < 6 {
-                //                    Text("\(self.countdown)")
-                //                        .font(.largeTitle)
-                //                        .bold()
-                //                        .transition(.scale)
-                //                }
             }
             
             Spacer()
@@ -156,7 +179,7 @@ struct GraphExamView: View {
                         let commFrame = COMMFrame()
                         commFrame.SetFrameID(frameID: 0x001)
                         commFrame.SetAdditionalData(data: [COMMCommandType.SetDuringTimeECGTest.rawValue, UInt8(self.profile.examDuration)], size: 2)
-                        print(UInt8(self.profile.examDuration))
+                        
                         let frame = commFrame.GetFrameData()
                         COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.SetDuringTimeECGTest)
                         bleConnection.sendData(data: frame)

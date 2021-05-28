@@ -8,7 +8,7 @@
 import Charts
 import SwiftUI
 
-struct Chart : UIViewRepresentable {
+struct ECGGraph : UIViewRepresentable {
     //Bar chart accepts data as array of BarChartDataEntry objects
     var entries : [ChartDataEntry]
     // this func is required to conform to UIViewRepresentable protocol
@@ -70,7 +70,7 @@ struct Chart : UIViewRepresentable {
 
 struct Chart_Previews: PreviewProvider {
     static var previews: some View {
-        Chart(entries: [
+        ECGGraph(entries: [
             //x - position of a bar, y - height of a bar
             ChartDataEntry(x: 1, y: 1),
             ChartDataEntry(x: 2, y: 2),

@@ -237,7 +237,7 @@ struct ContentView: View {
             Spacer()
                 
             .fullScreenCover(isPresented: $isUserSet) {
-                TabHost(profile: self.profile, dismiss: self.$isUserSet).environmentObject(CardioStatistics(profile: self.profile))
+                TabHost(profile: self.profile, dismiss: self.$isUserSet)//.environmentObject(CardioStatistics(profile: self.profile))
             }
         }
     }

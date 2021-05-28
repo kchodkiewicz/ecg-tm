@@ -22,6 +22,7 @@ struct ChartPreview : UIViewRepresentable {
         chart.leftAxis.enabled = false
         chart.legend.enabled = false
         chart.drawGridBackgroundEnabled = false
+        chart.xAxis.enabled = false
         
         
         //touch
@@ -69,7 +70,6 @@ struct ChartPreview : UIViewRepresentable {
         self.entries = data
     }
     
-    
     typealias UIViewType = LineChartView
     
 }
@@ -78,7 +78,7 @@ struct ChartPreview : UIViewRepresentable {
 
 struct ChartPreview_Previews: PreviewProvider {
     static var previews: some View {
-        Chart(entries: [
+        ECGGraph(entries: [
             //x - position of a bar, y - height of a bar
             ChartDataEntry(x: 1, y: 1),
             ChartDataEntry(x: 2, y: 2),
