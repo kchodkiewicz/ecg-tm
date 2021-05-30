@@ -6,15 +6,25 @@
 //
 import SwiftUI
 
+struct CardioStats {
+    var meanTime: Double = 0.0
+    var variation: Double = 0.0
+    var times: [Double] = []
+    
+}
+
 struct PeaksGroupBox: View {
     
     var exam: Exam
     @State var isShowingGraph: Bool = false
     
-    func getMeanTime() -> Double {
+    var stats: CardioStats
+    
+    func getStats() -> CardioStats {
+        var stats = CardioStats()
         var times: [Double] = []
         guard exam.peaksArray.count > 1 else {
-            return 0.0
+            return stats
         }
         for index in 1..<exam.peaksArray.count {
             times.append(exam.peaksArray[index] - exam.peaksArray[index - 1])
@@ -28,36 +38,85 @@ struct PeaksGroupBox: View {
             return sum
         }
         
-        return sum / Double(times.count)
+        stats.meanTime = sum / Double(times.count)
+        stats.variation = times.sorted().last! - times.sorted().first!
+        stats.times = times
+        return stats
     }
     
+    
     var body: some View {
-        if !exam.peaksArray.isEmpty {
+        
         GroupBox(label:
-            Label("Rhythm", systemImage: "metronome.fill")
-                .foregroundColor(Color(UIColor.systemPink))
+                    Label("Rhythm", systemImage: "metronome.fill")
+                    .foregroundColor(Color(UIColor.systemGreen))
         ) {
             Button {
                 withAnimation {
-                    self.isShowingGraph.toggle()
+                    if !self.exam.peaksArray.isEmpty {
+                        self.isShowingGraph.toggle()
+                    }
                 }
             } label: {
                 if self.isShowingGraph {
-                    MeanGraph(points: exam.peaksArray)
+                    MeanGraph(points: self.stats.times)
+                        .frame(height: 400)
                 } else {
-                    Text("\(getMeanTime())")
-                        .font(.system(.largeTitle, design: .rounded))
-                        .bold()
-                    Text("BPM")
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(.secondary)
+                    
+                    HStack {
+                        Spacer()
+                        VStack(alignment: .center)  {
+                            Text("Interval")
+                                .font(.system(.headline, design: .rounded))
+                                .bold()
+                                .foregroundColor(Color(.systemRed))
+                            HStack(alignment: .lastTextBaseline, spacing: 0) {
+                                Text("\(Int(1000 * self.stats.meanTime))")
+                                    .font(.system(.largeTitle, design: .rounded))
+                                    .bold()
+                                Text("ms")
+                                    .font(.title2)
+                                    .bold()
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        
+                        Divider()
+                        
+                        VStack(alignment: .center) {
+                            Text("Variability")
+                                .font(.system(.headline, design: .rounded))
+                                .bold()
+                                .foregroundColor(Color(.systemBlue))
+                            HStack(alignment: .lastTextBaseline, spacing: 0) {
+                                Text("\(Int(1000 * self.stats.variation))")
+                                    .font(.system(.largeTitle, design: .rounded))
+                                    .bold()
+                                Text("ms")
+                                    .font(.title2)
+                                    .bold()
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        
+                        Spacer()
+                    }
+                    
+                    
                 }
-            }.buttonStyle(PlainButtonStyle())
-
+            }
+            .buttonStyle(PlainButtonStyle())
             
         }
-        }
+    }
+    
+    init(exam: Exam) {
+        self.exam = exam
+        self.stats = CardioStats()
+        let stats = getStats()
+        self.stats.meanTime = stats.meanTime
+        self.stats.times = stats.times
+        self.stats.variation = stats.variation
         
     }
 }

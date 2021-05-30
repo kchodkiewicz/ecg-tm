@@ -15,7 +15,7 @@ struct ChartPreview : UIViewRepresentable {
     func makeUIView(context: Context) -> LineChartView {
         //crate new chart
         let chart = LineChartView()
-        chart.backgroundColor = UIColor.systemBackground
+        chart.backgroundColor = UIColor.clear
         // visual
         //chart.borderColor = .red
         chart.rightAxis.enabled = false

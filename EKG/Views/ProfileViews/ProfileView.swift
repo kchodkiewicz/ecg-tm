@@ -14,7 +14,7 @@ struct ProfileView: View {
     //@Environment(\.managedObjectContext) private var viewContext
     var viewContext: NSManagedObjectContext
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    //TODO: test if let profile helps
+    
     let profile: Profile
     
     @ObservedObject var bleConnection: BLEConnection

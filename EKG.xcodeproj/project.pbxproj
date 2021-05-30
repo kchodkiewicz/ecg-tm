@@ -19,6 +19,8 @@
 		2C2226F526618D49002473E2 /* Exam+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2226ED26618D49002473E2 /* Exam+CoreDataClass.swift */; };
 		2C2226F626618D49002473E2 /* Exam+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2226EE26618D49002473E2 /* Exam+CoreDataProperties.swift */; };
 		2C2226F826619B34002473E2 /* PeaksGroupBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2226F726619B34002473E2 /* PeaksGroupBox.swift */; };
+		2C2226FB2662858A002473E2 /* PreviewHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2226FA2662858A002473E2 /* PreviewHost.swift */; };
+		2C2226FD266290A7002473E2 /* TestProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2226FC266290A7002473E2 /* TestProfile.swift */; };
 		2C40294C25FAD7B600268220 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C40294B25FAD7B600268220 /* ProfileEditView.swift */; };
 		2C48468626370C9700656C5E /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48468526370C9700656C5E /* Formatters.swift */; };
 		2C484689263740FD00656C5E /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484688263740FD00656C5E /* Enums.swift */; };
@@ -73,6 +75,8 @@
 		2C2226ED26618D49002473E2 /* Exam+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exam+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2C2226EE26618D49002473E2 /* Exam+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exam+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C2226F726619B34002473E2 /* PeaksGroupBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeaksGroupBox.swift; sourceTree = "<group>"; };
+		2C2226FA2662858A002473E2 /* PreviewHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHost.swift; sourceTree = "<group>"; };
+		2C2226FC266290A7002473E2 /* TestProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProfile.swift; sourceTree = "<group>"; };
 		2C40294B25FAD7B600268220 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		2C48468526370C9700656C5E /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		2C484688263740FD00656C5E /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -136,6 +140,15 @@
 				C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2C2226F926628561002473E2 /* Previews */ = {
+			isa = PBXGroup;
+			children = (
+				2C2226FA2662858A002473E2 /* PreviewHost.swift */,
+				2C2226FC266290A7002473E2 /* TestProfile.swift */,
+			);
+			path = Previews;
 			sourceTree = "<group>";
 		};
 		2C4846542636FA9500656C5E /* CoreData */ = {
@@ -250,6 +263,7 @@
 		2CC6168925F65FF40082FC63 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2C2226F926628561002473E2 /* Previews */,
 				2C4846542636FA9500656C5E /* CoreData */,
 				2CC3158126345DD6007ABCF8 /* COMM */,
 				2C03152225FD6CDF008FD459 /* ActiveSession.swift */,
@@ -438,6 +452,7 @@
 				2C6367AC264598ED007B34E2 /* COMMFrame.swift in Sources */,
 				2C2226F226618D49002473E2 /* Sample+CoreDataProperties.swift in Sources */,
 				2C48468F26375A4400656C5E /* UserIcon.swift in Sources */,
+				2C2226FB2662858A002473E2 /* PreviewHost.swift in Sources */,
 				2C40294C25FAD7B600268220 /* ProfileEditView.swift in Sources */,
 				2C6BC4CA265C4CA300A3DAC7 /* EmptyChartSplashView.swift in Sources */,
 				2C48468626370C9700656C5E /* Formatters.swift in Sources */,
@@ -472,6 +487,7 @@
 				2C48469626375C4800656C5E /* Animations.swift in Sources */,
 				2C03152625FD6FA3008FD459 /* AddNewUserView.swift in Sources */,
 				2CC3157A263456D4007ABCF8 /* ECGGraph.swift in Sources */,
+				2C2226FD266290A7002473E2 /* TestProfile.swift in Sources */,
 				2C6367AE264598FE007B34E2 /* COMMFrameParser.swift in Sources */,
 				2C03151F25FD3E6C008FD459 /* TabHost.swift in Sources */,
 				2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */,

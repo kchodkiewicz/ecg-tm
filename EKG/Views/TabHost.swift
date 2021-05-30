@@ -31,7 +31,6 @@ struct TabHost: View {
             // Start Scanning for BLE Devices
             bleConnection.startCentralManager()
             
-            //TODO: try connecting to saved device (CoreData: Profile.btRRSI <- add)
             if let devUUID = profile.deviceUUID {
                 // try filtering list of devices with RSSI
                 let peripheral = bleConnection.scannedBLEDevices.first { CBPeripheral in

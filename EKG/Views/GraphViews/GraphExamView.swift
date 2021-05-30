@@ -78,11 +78,21 @@ struct GraphExamView: View {
             
             let stats = calcHeartRate()
             
+            var peaks: [Peaks] = []
+            
+            for index in 0..<stats.1.count {
+                let peak = Peaks(context: viewContext)
+                peak.id = UUID()
+                peak.peakNo = Double(index)
+                peak.xValue = stats.1[index]
+                peaks.append(peak)
+            }
+            
             let exam = Exam(context: viewContext)
             exam.id = UUID()
             exam.date = Date()
             exam.heartRate = stats.0
-            exam.addToPeaks(NSSet(array: stats.1))
+            exam.addToPeaks(NSSet(array: peaks))
             exam.addToSample(NSSet(array: samples))
             
             let profile = self.profile
@@ -91,7 +101,7 @@ struct GraphExamView: View {
                 try self.viewContext.save()
                 
             } catch {
-                print("Encountered problem while updating exam array")
+                print("Encountered problem while saving exam array")
                 self.viewContext.rollback()
             }
             graphData.saveDataToDB()
@@ -165,7 +175,7 @@ struct GraphExamView: View {
                     Text("Stop")
                     
                 })
-                .buttonStyle(RoundButtonStyle(foregroundColor: Color(red: 185/255, green: 45/255, blue: 45/255)))
+                .buttonStyle(RoundButtonStyle(foregroundColor: Color(.systemPink)))
                 
                 Spacer()
                 Spacer()
@@ -204,9 +214,9 @@ struct GraphExamView: View {
                     print("Start button")
                     
                 }, label: {
-                    Text("Start")
+                    Text(self.countdown > 5 || self.countdown < 1 ? "Start" : String(self.countdown))
                 })
-                .buttonStyle(RoundButtonStyle(foregroundColor: Color(red: 45/255, green: 185/255, blue: 185/255)))
+                .buttonStyle(RoundButtonStyle(foregroundColor: Color(.systemGreen)))
                 
                 Spacer()
             }

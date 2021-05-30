@@ -20,14 +20,21 @@ extension Color {
         }
 }
 
-//TODO: add keyboard dismiss on drag
+
 extension UIApplication {
     func addTapGestureRecognizer() {
         guard let window = windows.first else { return }
         let tapGesture = UITapGestureRecognizer(target: window, action: #selector(UIView.endEditing))
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
-        tapGesture.name = "MyTapGesture"
+        tapGesture.name = "TapGesture"
+        let dragGesture = UISwipeGestureRecognizer(target: window, action: #selector(UIView.endEditing))
+        dragGesture.cancelsTouchesInView = false
+        dragGesture.direction = .down
+        dragGesture.numberOfTouchesRequired = 1
+        dragGesture.delegate = self
+        dragGesture.name = "DragGesture"
+        window.addGestureRecognizer(dragGesture)
         window.addGestureRecognizer(tapGesture)
     }
  }
@@ -37,6 +44,7 @@ extension UIApplication: UIGestureRecognizerDelegate {
         return false // set to `false` if you don't want to detect tap during other gestures
     }
 }
+
 
 
 //extension View {

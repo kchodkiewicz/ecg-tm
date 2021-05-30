@@ -19,7 +19,7 @@ struct MeanGraph : UIViewRepresentable {
         chart.backgroundColor = UIColor.systemBackground
         // visual
         chart.backgroundColor = UIColor(Color.clear) // .systemBackground
-        chart.borderColor = .red
+        
         chart.legend.enabled = false
         chart.rightAxis.enabled = true
         chart.leftAxis.enabled = false
@@ -30,7 +30,7 @@ struct MeanGraph : UIViewRepresentable {
         chart.xAxis.labelFont = .boldSystemFont(ofSize: 10)
         chart.xAxis.labelTextColor = UIColor(.secondary)
         chart.xAxis.axisLineColor = UIColor(.secondary)
-        chart.animate(xAxisDuration: 0.5)
+        chart.animate(yAxisDuration: 0.5)
         chart.drawGridBackgroundEnabled = false
         
         chart.xAxis.drawGridLinesEnabled = false
@@ -38,7 +38,7 @@ struct MeanGraph : UIViewRepresentable {
         
         chart.noDataText = ""
         
-        chart.marker = MarkerView()
+        //chart.marker = MarkerView()
         
         //touch
         chart.doubleTapToZoomEnabled = false
@@ -64,23 +64,23 @@ struct MeanGraph : UIViewRepresentable {
         let dataSet = BarChartDataSet(entries: entries)
         
         dataSet.label = nil
-        dataSet.setColor(.systemTeal)
+        dataSet.setColor(.systemGreen)
         dataSet.drawValuesEnabled = false
-        dataSet.highlightColor = UIColor(.primary)
+        dataSet.highlightColor = .systemGreen
         
         data.setDrawValues(false)
         data.addDataSet(dataSet)
         return data
     }
     
-    init(points: [Peaks]) {
+    init(points: [Double]) {
         var data: [BarChartDataEntry] = []
         for index in 0..<points.count {
-            let entry = BarChartDataEntry(x: Double(index), y: Double(points[index].xValue))
+            let entry = BarChartDataEntry(x: Double(index), y: Double(points[index]))
             data.append(entry)
         }
         self.entries = data
-        print(entries)
+        
     }
     
     

@@ -19,87 +19,90 @@ struct HistoryRow: View {
         return showingDetail
     }
     
-    var exams_previews: [Sample] {
-        var preview: [Sample] = []
-        var i = 0
-        for sample in exam.sampleArray {
-            if i % 25 == 0 {
-            preview.append(sample)
+    func getColor() -> Color {
+        
+        let heartRate = Double(self.exam.heartRate)
+        
+        var r: Double {
+            if heartRate > 65 && heartRate < 95 {
+                return 255.0
+            } else if heartRate > 95 {
+                return 255.0 + (95 - heartRate)
+            } else {
+                return 255.0 - heartRate
             }
-            i += 1
         }
-        return preview
+        
+        let g = 35.0
+        let b = 75.0
+        
+        return Color(red: Double(r/255), green: Double(g/255), blue: Double(b/255))
     }
     
     var body: some View {
-
+        
         NavigationLink(
             destination: GraphSummaryView(exam: exam, notes: exam.wrappedNotes, examType: ExamType(rawValue: exam.wrappedType) ?? ExamType.resting),
             label: {
                 VStack {
                     
-                    ChartPreview(points: exams_previews)
-                        .frame(height: 50)
-//                        .transition(Transitions.viewTransition)
-                    
-                    VStack(alignment: .leading, spacing: 8) {
-                        
-                        HStack {
-                            
-                            ExamTag(text: String(exam.heartRate), color: profile.wrappedColor)
-                            
-                            ExamTag(text: exam.resultName.rawValue, color: profile.wrappedColor)
-                            
-                            ExamTag(text: exam.wrappedType, color: profile.wrappedColor)
-                            
-                            Spacer()
+                    HStack(alignment: .top, spacing: 8) {
+                        HStack(alignment: .lastTextBaseline, spacing: 0) {
+                            Image(systemName: "heart.fill")
+                                .foregroundColor(.white)
+                                .font(.system(.headline, design: .rounded))
+                                .padding(.trailing)
+                            Text(String(exam.heartRate))
+                                .foregroundColor(.white)
+                                .font(.system(.headline, design: .rounded))
+                            Text("BPM")
+                                .foregroundColor(.white)
+                                .font(.system(.callout, design: .rounded))
                         }
+                        .padding(8)
+                        .frame(width: 120, height: 60)
+                        .background(getColor())
+                        .cornerRadius(10.0)
                         
-                        Text(exam.wrappedDate, formatter: Formatters.dateFormat)
-                            .font(.headline)
-                            .bold()
-                        Text(exam.wrappedNotes)
-                            .font(.caption)
-                            .lineLimit(1)
-                            .frame(maxWidth: 150.0, alignment: .leading)
+                        
+                        VStack {
+                            
+                            Text(exam.wrappedDate, formatter: Formatters.dateFormat) // exam.wrappedDate
+                                .font(.title3)
+                                .bold()
+                                .frame(maxWidth: 180.0, alignment: .leading)
+                            Text(exam.wrappedNotes)
+                                .font(.caption)
+                                .lineLimit(3)
+                                .frame(maxWidth: 180.0, alignment: .leading)
+                            
+                        }
+                        .frame(maxHeight: 60)
                     }
                 }
                 
             })
             .isDetailLink(true)
-            
+        
     }
 }
 
-struct ExamTag: View {
-    
-    var text: String
-    var color: String
-    
-    var body: some View {
-        Text("\(text)")
-            .foregroundColor(Color(color))
-            .font(.caption)
-            .padding(4)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color(color), lineWidth: 1)
-            )
+
+struct HistoryItemView_Previews: PreviewProvider {
+    static var previews: some View {
+        
+        let context = PersistenceController.shared.container.viewContext
+        
+        let testProfile = TestProfile(context: context)
+        
+        let profiles = try! testProfile.getRows(count: 1)
+        
+        let profile = profiles[0]
+        
+        //Group {
+        HistoryRow(exam: profile.examArray[0], profile: profile)
+        //HistoryRow(exam: profile.examArray[1], profile: profile)
+        //}
+        //.previewLayout(.fixed(width: 300, height: 70))
     }
-    
 }
-
-
-//struct HistoryItemView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let exam = Exam()
-//
-//        let exam2 = Exam()
-//
-//        Group {
-//            HistoryRow(exam: exam)
-//            HistoryRow(exam: exam2)
-//        }
-//        .previewLayout(.fixed(width: 300, height: 70))
-//    }
-//}

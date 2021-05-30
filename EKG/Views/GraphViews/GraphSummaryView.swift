@@ -16,7 +16,31 @@ struct GraphSummaryView: View {
     @State var notes: String = ""
     @State var examType: ExamType = .resting
     
-    
+    //TODO: remove cause its only for testing
+    private func calcHeartRate() -> (Int64, [Double]) {
+        // peak if value greater than both neighbours and value
+        // greater than 0.6
+        let samples = self.exam.sampleArray
+        var peaks: [Double] = []
+        
+        guard samples.count - 1 > 1 else {
+            return (-1, [])
+        }
+        for index in 1 ..< samples.count - 1 {
+            if (samples[index] > samples[index + 1] && samples[index] > samples[index - 1]) && samples[index].yValue >= 0.6 {
+                peaks.append(samples[index].xValue)
+            }
+        }
+        
+        let duration = samples.count / 250
+        guard duration != 0 else {
+            return (-1, [])
+        }
+        let rate = Int64(Double(peaks.count) / Double(duration) * 60.0) // for bpm
+        
+        // return peaks
+        return (rate, peaks)
+    }
     
     var resultImage: some View {
         
@@ -40,7 +64,7 @@ struct GraphSummaryView: View {
             
             GroupBox(
                 label: Label("Electrocardiogram", systemImage: "waveform.path.ecg")
-                        .foregroundColor(Color(UIColor.systemGreen))
+                        .foregroundColor(Color(UIColor.systemPurple))
             ) {
                 GraphDetail(points: exam.sampleArray)
                     .frame(minHeight: 300.0)
@@ -54,7 +78,7 @@ struct GraphSummaryView: View {
                 
                 GroupBox(
                     label: Label("Heart Rate", systemImage: "heart.fill")
-                        .foregroundColor(Color(UIColor.systemRed))
+                        .foregroundColor(Color(UIColor.systemPink))
                 ) {
                     HStack(alignment: .lastTextBaseline, spacing: 0) {
                         Text("\(exam.heartRate)")
@@ -90,6 +114,7 @@ struct GraphSummaryView: View {
             LazyVGrid(columns: [GridItem(.flexible())]) {
                 
                 PeaksGroupBox(exam: self.exam)
+                    
                 
                 GroupBox(
                     label: Label("Exam type", systemImage: "lungs.fill")
@@ -105,6 +130,7 @@ struct GraphSummaryView: View {
                     
                 }
                 
+                
                 GroupBox(
                     label: Label("Notes", systemImage: "note.text")
                         .foregroundColor(Color(UIColor.systemOrange))
@@ -116,10 +142,10 @@ struct GraphSummaryView: View {
                         .multilineTextAlignment(.leading)
                         .onAppear(perform: {
                             UITextView.appearance().backgroundColor = .clear
-                            UITextView.appearance().keyboardDismissMode = .interactive
+                            //UITextView.appearance().keyboardDismissMode = .interactive
                         })
-                    
                 }
+                
             }
             .padding(.horizontal)
             .padding(.bottom)
@@ -138,9 +164,27 @@ struct GraphSummaryView: View {
         withAnimation {
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             
+            //TODO: remove cause it only for testing
+            // --------- tests
+            let stats = calcHeartRate()
+            var peaks: [Peaks] = []
+            for index in 0..<stats.1.count {
+                let peak = Peaks(context: viewContext)
+                peak.id = UUID()
+                peak.peakNo = Double(index)
+                peak.xValue = stats.1[index]
+                peaks.append(peak)
+            }
+            // ---------
+            
             let exam = self.exam
             exam.type = self.examType.rawValue
             exam.notes = self.notes
+            
+            // --------- tests
+            exam.heartRate = stats.0
+            exam.addToPeaks(NSSet(array: peaks))
+            // ---------
             
             try? self.viewContext.save()
         }

@@ -13,7 +13,7 @@ struct ProfileEditView: View {
     //@Environment(\.managedObjectContext) private var viewContext
     var viewContext: NSManagedObjectContext
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    //TODO: test if let profile helps
+    
     let profile: Profile
     
     @ObservedObject var bleConnection: BLEConnection
@@ -217,7 +217,7 @@ struct ProfileEditView: View {
     
     private func updateProfile() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        //FIXME: something is fuckd up, probably with saving
+        
         let profile = self.profile
         profile.username = self.username
         profile.firstName = self.firstName
