@@ -33,17 +33,30 @@ struct ECGGraph : UIViewRepresentable {
         chart.xAxis.axisLineColor = UIColor(.secondary)
         chart.animate(xAxisDuration: 0.5)
         chart.noDataText = "Start new examination"
+        //chart.zoom(scaleX: 10, scaleY: 1, x: 0, y: 0)
         
         
         //it is convenient to form chart data in a separate func
         chart.data = addData()
+        if chart.data?.entryCount ?? 0 > 0 {
+            chart.setVisibleXRangeMaximum(2)
+            chart.moveViewToAnimated(xValue: (chart.data?.xMax ?? 0 - 2 < 0 ? 0 : chart.data?.xMax ?? 0 - 2), yValue: 0.0, axis: .left, duration: 0.5, easingOption: .easeInOutBounce)
+            
+            
+        }
+        //chart.moveViewToAnimated(xValue: 2, yValue: 0, axis: .left, duration: 0.5)
         return chart
     }
     
     // this func is required to conform to UIViewRepresentable protocol
     func updateUIView(_ uiView: LineChartView, context: Context) {
-        //when data changes chartd.data update is required
+        //when data changes chart.data update is required
         uiView.data = addData()
+        
+        if uiView.data?.entryCount ?? 0 > 0 {
+            uiView.setVisibleXRangeMaximum(2)
+            uiView.moveViewToAnimated(xValue: (uiView.data?.xMax ?? 0 - 2), yValue: 0.0, axis: .left, duration: 0.5, easingOption: .easeInOutBounce)
+        }
     }
     
     func addData() -> LineChartData{
@@ -52,12 +65,13 @@ struct ECGGraph : UIViewRepresentable {
         dataSet.drawCirclesEnabled = false
         dataSet.label = nil
         dataSet.setColor(.systemRed)
-        dataSet.lineWidth = 4
+        dataSet.lineWidth = 2
         dataSet.drawHorizontalHighlightIndicatorEnabled = false
         dataSet.drawVerticalHighlightIndicatorEnabled = false
         dataSet.highlightColor = UIColor(.primary)
         dataSet.drawValuesEnabled = false
         data.setDrawValues(false)
+        
         data.addDataSet(dataSet)
         return data
     }

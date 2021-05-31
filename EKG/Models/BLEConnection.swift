@@ -23,8 +23,8 @@ struct Device: Identifiable, Equatable {
 open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate, ObservableObject {    
     
     @Published public var recievedString: [UInt8] = []
-    let passThroughSubjectPublisher = PassthroughSubject<[UInt8], Never>()
-    @Published public var btMessage: String?
+    //let passThroughSubjectPublisher = PassthroughSubject<[UInt8], Never>()
+    //@Published public var btMessage: String?
     //@Published public var finishedExamination: Bool = false
     // Properties
     private var centralManager: CBCentralManager! = nil
@@ -231,10 +231,10 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
         print(dataToSend)
         if self.peripheral != nil {
             self.peripheral.writeValue(dataToSend, for: mainCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
-            btMessage = nil
+            //btMessage = nil
         } else {
             print("Haven't discovered device yet.")
-            btMessage = "Haven't discovered device yet."
+            //btMessage = "Haven't discovered device yet."
             return
         }
 

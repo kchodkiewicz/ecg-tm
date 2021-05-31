@@ -74,13 +74,13 @@ struct RoundButtonStyle: ButtonStyle {
     
     func makeBody(configuration: Self.Configuration) -> some View {
         ZStack {
-            Circle()
+            RoundedRectangle(cornerSize: CGSize(width: 8.0, height: 8.0))
                 .fill(configuration.isPressed ? Color.clear : foregroundColor)
-                .frame(width: 55, height: 55)
+                .frame(width: 220, height: 55)
                 .padding(10)
-            Circle()
+            RoundedRectangle(cornerSize: CGSize(width: 8.0, height: 8.0))
                 .stroke(foregroundColor, lineWidth: 3.0)
-                .frame(width: 63, height: 63)
+                .frame(width: 228, height: 63)
             
             configuration.label
                 .frame(width: 63, height: 63)

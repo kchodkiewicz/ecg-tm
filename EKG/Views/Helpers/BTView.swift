@@ -11,7 +11,7 @@ import CoreBluetooth
 struct BTView: View {
     @Environment(\.managedObjectContext) var viewContext
     
-    var profile: Profile
+    @ObservedObject var profile: Profile
     
     @ObservedObject var bleConnection: BLEConnection
     
@@ -25,11 +25,17 @@ struct BTView: View {
                     
                     print("Trying to connect to: \(device.name!)")
                     bleConnection.connect(peripheral: device)
-//                    
-//                    let profile = self.profile
-//                    profile.deviceUUID = device.identifier
-//
-//                    try? self.viewContext.save()
+                    
+//                    DispatchQueue.global(qos: .utility).async {
+//                        
+//                        let profile = self.profile
+//                        profile.deviceUUID = device.identifier
+//                        
+//                        DispatchQueue.main.async {
+//                            try? self.viewContext.save()
+//                        }
+//                        
+//                    }
                     
                 },
                 label: {

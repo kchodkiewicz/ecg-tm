@@ -15,7 +15,7 @@ struct TabHost: View {
     @Environment(\.managedObjectContext) private var viewContext
     //@EnvironmentObject var activeSession: ActiveSession
     
-    @ObservedObject var bleConnection: BLEConnection = BLEConnection()
+    @ObservedObject var bleConnection: BLEConnection
     
     @ObservedObject var profile: Profile
     
@@ -26,23 +26,23 @@ struct TabHost: View {
     
     @State var isShowingLogin: Bool = true
     
-    private func connectBLEDevice() {
-        if bleConnection.peripheral == nil {
-            // Start Scanning for BLE Devices
-            bleConnection.startCentralManager()
-            
-            if let devUUID = profile.deviceUUID {
-                // try filtering list of devices with RSSI
-                let peripheral = bleConnection.scannedBLEDevices.first { CBPeripheral in
-                    CBPeripheral.identifier == devUUID
-                }
-                guard peripheral != nil else {
-                    return
-                }
-                bleConnection.connect(peripheral: peripheral!)
-            }
-        }
-    }
+//    private func connectBLEDevice() {
+//        if bleConnection.peripheral == nil {
+//            // Start Scanning for BLE Devices
+//            bleConnection.startCentralManager()
+//
+//            if let devUUID = profile.deviceUUID {
+//                // try filtering list of devices with RSSI
+//                let peripheral = bleConnection.scannedBLEDevices.first { CBPeripheral in
+//                    CBPeripheral.identifier == devUUID
+//                }
+//                guard peripheral != nil else {
+//                    return
+//                }
+//                bleConnection.connect(peripheral: peripheral!)
+//            }
+//        }
+//    }
     
     var body: some View {
         //if !self.isShowingLogin {
@@ -107,9 +107,18 @@ struct TabHost: View {
         }
         //.accentColor(Color("\(profile.wrappedColor)"))
         
-        .onAppear(perform: connectBLEDevice)
+        
+        //.onAppear(perform: connectBLEDevice)
         
     }
+    
+//    init(profile: Profile, dismiss: Binding<Bool>) {
+//        self.profile = profile
+//        self._dismiss = dismiss
+//        
+//        self.connectBLEDevice()
+//    }
+    
 }
 
 //struct OverView_Previews: PreviewProvider {
