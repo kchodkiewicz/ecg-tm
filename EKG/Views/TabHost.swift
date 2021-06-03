@@ -21,7 +21,7 @@ struct TabHost: View {
     
     @Binding var dismiss: Bool
     
-    @State var selectedTab: Tab = .history
+    @State var selectedTab: Tab = .overview
     @State var goToBluetooth: Bool? = false
     
     @State var isShowingLogin: Bool = true
@@ -49,8 +49,9 @@ struct TabHost: View {
         TabView(selection: $selectedTab) {
             // History
             NavigationView {
-                HistoryOverview(profile: profile, switchTab: $selectedTab)
+                HistoryOverview(profile: profile, switchTab: $selectedTab, selectedPeriod: .month)
                 //Text("Hello")
+                    
             }
             .tabItem {
                 Image(systemName: "house.fill")
@@ -60,7 +61,7 @@ struct TabHost: View {
             }.tag(Tab.overview)
             
             NavigationView {
-                HistoryView(filter: profile.wrappedId)
+                HistoryView(filter: profile.wrappedId, switchTab: $selectedTab)
             }
             .tabItem {
                 Image(systemName: "list.bullet.rectangle") // tray.full.fill

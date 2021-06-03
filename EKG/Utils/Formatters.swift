@@ -23,6 +23,16 @@ struct Formatters {
         return formatter
     }()
     
+    static func withoutYear(date: Date) -> String {
+       
+        let current = Calendar.current
+        let shortDate = current.dateComponents([.day, .month], from: date)
+        
+        let stringDay = shortDate.day! < 10 ? "0" + String(shortDate.day!) : String(shortDate.day!)
+        let stringMonth = shortDate.month! < 10 ? "0" + String(shortDate.month!) : String(shortDate.month!)
+        return stringDay + "." + stringMonth
+    }
+    
     static let titleDateFormat: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium

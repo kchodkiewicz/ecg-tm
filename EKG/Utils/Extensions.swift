@@ -113,3 +113,44 @@ struct ColoredGroupBoxStyle: GroupBoxStyle {
         )
     }
 }
+
+struct SharpGroupBoxStyle: GroupBoxStyle {
+    var backgroundColor: UIColor = UIColor.systemGroupedBackground
+    
+    var labelColor: UIColor = UIColor.label
+    var opacity: Double = 1
+    func makeBody(configuration: Configuration) -> some View {
+        VStack {
+            HStack {
+                configuration.label
+                    .font(Font.bold(.body)())
+                    .foregroundColor(Color(labelColor))
+                Spacer()
+            }
+            configuration.content
+        }
+        
+        .padding()
+        .background(Rectangle()
+                        .fill(Color(backgroundColor))
+                        .opacity(opacity)
+        )
+    }
+}
+
+struct CompressedLabelStyle: LabelStyle {
+
+    var labelColor: UIColor = UIColor.label
+    
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(alignment: .lastTextBaseline, spacing: 1) {
+            configuration.icon
+                .font(Font.system(.title3, design: .rounded).bold())
+                .foregroundColor(Color(labelColor))
+            configuration.title
+                .font(Font.system(.title3, design: .rounded).bold())
+                .foregroundColor(Color(labelColor))
+        }
+        
+    }
+}

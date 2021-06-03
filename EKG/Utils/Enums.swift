@@ -78,7 +78,7 @@ enum Tab: Int, CaseIterable {
 enum ExamType: String, CaseIterable {
     case resting = "resting"
     case stress = "stress"
-    case ambulatory = "ambulatory"
+    //case ambulatory = "ambulatory"
 }
 
 //MARK: - Exam Result

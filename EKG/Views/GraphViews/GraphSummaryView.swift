@@ -68,12 +68,19 @@ struct GraphSummaryView: View {
             ) {
                 GraphDetail(points: exam.sampleArray)
                     .frame(minHeight: 300.0)
-            }
+            }.groupBoxStyle(SharpGroupBoxStyle(backgroundColor: .secondarySystemGroupedBackground))
             
             
             Spacer()
             
             VStack {
+            
+                //TODO: rework as
+                // Form (without ScrollView and GroupBox [ VStack{Label Content}]) - as in Summary
+                // GraphDetail
+                // LazyVGrid (Section Section)
+                // Section
+                // Section
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 
                 GroupBox(
@@ -89,19 +96,19 @@ struct GraphSummaryView: View {
                             .bold()
                             .foregroundColor(.secondary)
                     }
-                }
+                }.padding(.trailing)
                 
                 GroupBox(
                     label: Label("Result", systemImage: "heart.text.square.fill")
                         .foregroundColor(Color(UIColor.systemTeal))
                 ) {
                     HStack(alignment: .lastTextBaseline, spacing: 0) {
-                        resultImage
-                            .font(.system(.largeTitle, design: .rounded))
+//                        resultImage
+//                            .font(.system(.largeTitle, design: .rounded))
                         Text("\(exam.resultName.rawValue)")
-                            .font(.title2)
+                            .font(.system(.largeTitle, design: .rounded))
                             .bold()
-                            .foregroundColor(.secondary)
+                            //.foregroundColor(.secondary)
                             .lineLimit(1)
                     }
                 }

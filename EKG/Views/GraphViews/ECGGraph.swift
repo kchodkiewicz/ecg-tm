@@ -70,8 +70,8 @@ struct ECGGraph : UIViewRepresentable {
         dataSet.drawVerticalHighlightIndicatorEnabled = false
         dataSet.highlightColor = UIColor(.primary)
         dataSet.drawValuesEnabled = false
-        data.setDrawValues(false)
         
+        data.setDrawValues(false)
         data.addDataSet(dataSet)
         return data
     }

@@ -8,7 +8,7 @@
 import Charts
 import SwiftUI
 
-struct ChartPreview : UIViewRepresentable {
+struct ECGGraphPreview : UIViewRepresentable {
     //Bar chart accepts data as array of BarChartDataEntry objects
     var entries : [ChartDataEntry]
     // this func is required to conform to UIViewRepresentable protocol
@@ -50,7 +50,7 @@ struct ChartPreview : UIViewRepresentable {
         dataSet.drawCirclesEnabled = false
         dataSet.label = nil
         dataSet.setColor(.systemRed)
-        dataSet.lineWidth = 4
+        dataSet.lineWidth = 2
         dataSet.drawValuesEnabled = false
         dataSet.drawHorizontalHighlightIndicatorEnabled = false
         dataSet.drawVerticalHighlightIndicatorEnabled = false

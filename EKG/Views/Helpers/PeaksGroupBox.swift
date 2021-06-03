@@ -6,10 +6,67 @@
 //
 import SwiftUI
 
-struct CardioStats {
+class CardioStats {
     var meanTime: Double = 0.0
     var variation: Double = 0.0
+    var median: Double = 0.0
     var times: [Double] = []
+    
+    var exam: Exam
+    
+    init(exam: Exam) {
+        self.exam = exam
+    }
+    
+    func getStats() -> CardioStats {
+        var times: [Double] = []
+        
+        var peaksConverted: [Double] = []
+        
+        var arr: [Double] = []
+        for peaks in exam.peaksArray {
+            arr.append(peaks.xValue)
+        }
+        // remove duplicates
+        let tmpSet = Set<Double>(arr)
+        
+        peaksConverted = Array<Double>(tmpSet).sorted()
+        
+        guard peaksConverted.count > 1 else {
+            return self
+        }
+        
+        for index in 1..<peaksConverted.count {
+            let lhs = peaksConverted[index]
+            let rhs = peaksConverted[index - 1]
+            times.append(abs(lhs - rhs))
+        }
+        
+        let sum: Double = times.reduce(0, { a, b in
+            return a + b
+        })
+        
+        let meanTime = sum / Double(times.count)
+        
+        var median: Double {
+            let sorted: [Double] = times.sorted()
+            let length = times.count
+            if (length % 2 == 0) {
+                    return (Double(sorted[length / 2 - 1]) + Double(sorted[length / 2])) / 2.0
+            } else {
+                return Double(sorted[length / 2])
+            }
+        }
+        
+        let variation = times.sorted()[Int(Double(times.count) * 0.75)] - times.sorted()[Int(Double(times.count) * 0.25)]
+        
+        self.meanTime = meanTime
+        self.median = median
+        self.variation = variation
+        self.times = times
+        
+        return self
+    }
     
 }
 
@@ -19,31 +76,6 @@ struct PeaksGroupBox: View {
     @State var isShowingGraph: Bool = false
     
     var stats: CardioStats
-    
-    func getStats() -> CardioStats {
-        var stats = CardioStats()
-        var times: [Double] = []
-        guard exam.peaksArray.count > 1 else {
-            return stats
-        }
-        for index in 1..<exam.peaksArray.count {
-            times.append(exam.peaksArray[index] - exam.peaksArray[index - 1])
-        }
-        
-        var sum: Double {
-            var sum: Double = 0
-            for t in times {
-                sum += t
-            }
-            return sum
-        }
-        
-        stats.meanTime = sum / Double(times.count)
-        stats.variation = times.sorted().last! - times.sorted().first!
-        stats.times = times
-        return stats
-    }
-    
     
     var body: some View {
         
@@ -84,10 +116,28 @@ struct PeaksGroupBox: View {
                         Divider()
                         
                         VStack(alignment: .center) {
-                            Text("Variability")
+                            Text("Median")
                                 .font(.system(.headline, design: .rounded))
                                 .bold()
                                 .foregroundColor(Color(.systemBlue))
+                            HStack(alignment: .lastTextBaseline, spacing: 0) {
+                                Text("\(Int(1000 * self.stats.median))")
+                                    .font(.system(.largeTitle, design: .rounded))
+                                    .bold()
+                                Text("ms")
+                                    .font(.title2)
+                                    .bold()
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        
+                        Divider()
+                        
+                        VStack(alignment: .center) {
+                            Text("IQR")
+                                .font(.system(.headline, design: .rounded))
+                                .bold()
+                                .foregroundColor(Color(.systemGreen))
                             HStack(alignment: .lastTextBaseline, spacing: 0) {
                                 Text("\(Int(1000 * self.stats.variation))")
                                     .font(.system(.largeTitle, design: .rounded))
@@ -112,11 +162,8 @@ struct PeaksGroupBox: View {
     
     init(exam: Exam) {
         self.exam = exam
-        self.stats = CardioStats()
-        let stats = getStats()
-        self.stats.meanTime = stats.meanTime
-        self.stats.times = stats.times
-        self.stats.variation = stats.variation
+        self.stats = CardioStats(exam: self.exam).getStats()
+        
         
     }
 }

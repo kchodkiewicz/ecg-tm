@@ -42,14 +42,19 @@ struct GraphExamView: View {
         self.goToExam = true
     }
     
-    private func calcHeartRate(samples: [Sample]) -> (Int64, [Double]) {
+    private struct ComplexHeartRate {
+        var rate: Int64 = -1
+        var peaks: [Double] = []
+    }
+    
+    private func calcHeartRate(samples: [Sample]) -> ComplexHeartRate {
         // peak if value greater than both neighbours and value
         // greater than 0.6
         
         var peaks: [Double] = []
         
         guard samples.count - 1 > 1 else {
-            return (-1, [])
+            return ComplexHeartRate()
         }
         for index in 1 ..< samples.count - 1 {
             if (samples[index] > samples[index + 1] && samples[index] > samples[index - 1]) && samples[index].yValue >= 0.6 {
@@ -59,12 +64,15 @@ struct GraphExamView: View {
         
         let duration = samples.count / 250
         guard duration != 0 else {
-            return (-1, [])
+            return ComplexHeartRate()
         }
         let rate = Int64(Double(peaks.count) / Double(duration) * 60.0) // for bpm
         
-        // return peaks
-        return (rate, peaks)
+        var complex = ComplexHeartRate()
+        complex.rate = rate
+        complex.peaks = peaks
+        
+        return complex
     }
     
     public func saveData() {
@@ -84,18 +92,21 @@ struct GraphExamView: View {
         
         var peaks: [Peaks] = []
         
-        for index in 0..<stats.1.count {
+        let statsPeaks = stats.peaks // dunno if helpful
+        print(statsPeaks) // dunno if helpful
+        
+        for index in 0..<statsPeaks.count {
             let peak = Peaks(context: viewContext)
             peak.id = UUID()
             peak.peakNo = Double(index)
-            peak.xValue = stats.1[index]
+            peak.xValue = statsPeaks[index] // dunno if helpful
             peaks.append(peak)
         }
         
         let exam = Exam(context: viewContext)
         exam.id = UUID()
         exam.date = Date()
-        exam.heartRate = stats.0
+        exam.heartRate = stats.rate
         exam.addToPeaks(NSSet(array: peaks))
         exam.addToSample(NSSet(array: samples))
         
@@ -200,7 +211,6 @@ struct GraphExamView: View {
                         withAnimation(.easeInOut(duration: 3.0)) {
                             sendStart()
                             self.placeholderTrigger.toggle()
-                            
                         }
                     }
                     
@@ -227,6 +237,7 @@ struct GraphExamView: View {
                 .alert(isPresented: self.$isShowingAlert) {
                     Alert(title: Text("Not connected to a device"), message: Text("Connect with device in profile settings"), primaryButton: .cancel(), secondaryButton: .default(Text("Go to settings"), action: {
                         withAnimation {
+                            
                             self.isShowingAlert = false
                             self.switchTab = .profile
                             self.goToBT = true
