@@ -18,12 +18,13 @@ struct ECGGraphPreview : UIViewRepresentable {
         chart.backgroundColor = UIColor.clear
         // visual
         //chart.borderColor = .red
+        
         chart.rightAxis.enabled = false
         chart.leftAxis.enabled = false
         chart.legend.enabled = false
         chart.drawGridBackgroundEnabled = false
         chart.xAxis.enabled = false
-        
+        //chart.clipsToBounds = true
         
         //touch
         chart.doubleTapToZoomEnabled = false

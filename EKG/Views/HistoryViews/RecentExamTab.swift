@@ -20,44 +20,34 @@ struct RecentExamTab: View {
     
     var body: some View {
         NavigationLink(destination: GraphSummaryView(exam: exam, notes: exam.wrappedNotes, examType: ExamType(rawValue: exam.wrappedType) ?? ExamType.resting)) {
-            
-                ZStack {
+            GeometryReader {geometry in
+                VStack {
                     
-                    ECGGraphPreview(points: exam.sampleArray)
-//                        .frame(height: 200)
-//                        .fixedSize()
-                        
-                        //.blur(radius: 1.0, opaque: true)
-                        //.opacity(0.7)
-                        //.overlay(RecentExamOverlay())
-                    
-                    VStack {
+                    //VStack(alignment: .leading) {
                         Text(exam.wrappedDate, formatter: Formatters.dateFormat)
-                            .font(.system(.title, design: .rounded))
+                            .font(.system(.title2, design: .rounded))
                             .bold()
+                            .foregroundColor(.primary)
                             .lineLimit(1)
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: 450.0, alignment: .leading)
                         Text(ignoreNewLines(exam.wrappedNotes))
                             .font(.system(.headline, design: .rounded))
+                            .foregroundColor(.secondary)
                             .multilineTextAlignment(.leading)
-                            .lineLimit(2)
+                            .lineLimit(1)
                             .frame(maxWidth: 450.0, alignment: .leading)
-                    }
-                    .foregroundColor(.primary)
-                    //.shadow(radius: 5.0)
-                    //.background(BlurView(style: .extraLight))
-                    .offset(x: 0.0, y: 50.0)
+                    //}
+                    //.foregroundColor(.primary)
+                    //.offset(x: 0.0, y: 50.0)
                     
+                    ECGGraphPreview(points: exam.sampleArray)
+                        .padding(0)
+
                 }
-            
-            //.frame(height: 300)
-            
-            
-            
+            }
+                
         }
-        
-        
         
     }
 }

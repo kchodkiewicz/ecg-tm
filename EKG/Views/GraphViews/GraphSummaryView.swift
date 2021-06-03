@@ -81,7 +81,8 @@ struct GraphSummaryView: View {
                 // LazyVGrid (Section Section)
                 // Section
                 // Section
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 
                 GroupBox(
                     label: Label("Heart Rate", systemImage: "heart.fill")
@@ -96,7 +97,7 @@ struct GraphSummaryView: View {
                             .bold()
                             .foregroundColor(.secondary)
                     }
-                }.padding(.trailing)
+                }
                 
                 GroupBox(
                     label: Label("Result", systemImage: "heart.text.square.fill")

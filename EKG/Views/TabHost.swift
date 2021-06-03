@@ -49,7 +49,7 @@ struct TabHost: View {
         TabView(selection: $selectedTab) {
             // History
             NavigationView {
-                HistoryOverview(profile: profile, switchTab: $selectedTab, selectedPeriod: .month)
+                HistoryOverview(profile: profile, switchTab: $selectedTab)
                 //Text("Hello")
                     
             }
@@ -61,7 +61,7 @@ struct TabHost: View {
             }.tag(Tab.overview)
             
             NavigationView {
-                HistoryView(filter: profile.wrappedId, switchTab: $selectedTab)
+                HistoryView(profile: profile, switchTab: $selectedTab)
             }
             .tabItem {
                 Image(systemName: "list.bullet.rectangle") // tray.full.fill

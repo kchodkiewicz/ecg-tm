@@ -12,12 +12,12 @@ struct HistoryRow: View {
     @ObservedObject var exam: Exam
     @ObservedObject var profile: Profile
     
-    @State private var showingDetail = false
+    //@State private var showingDetail = false
     //@Binding var selection: Bool
     
-    func isShowingDetail() -> Bool {
-        return showingDetail
-    }
+//    func isShowingDetail() -> Bool {
+//        return showingDetail
+//    }
     
     func getColor() -> Color {
         

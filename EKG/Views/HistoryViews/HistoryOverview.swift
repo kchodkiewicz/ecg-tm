@@ -24,52 +24,52 @@ struct SummarySection: View {
     var units: [String]
     
     var body: some View {
-        Section {
-            VStack {
-                HStack {
-                    Label(labelName, systemImage: labelIcon)
-                        .labelStyle(CompressedLabelStyle(labelColor: color))
+        
+        VStack {
+            HStack {
+                Label(labelName, systemImage: labelIcon)
+                    .labelStyle(CompressedLabelStyle(labelColor: color))
+                Spacer()
+                
+                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
+                    .font(.body)
+                    .foregroundColor(Color(.secondaryLabel))
+            }
+            Spacer()
+            if values.count == 1 {
+                HStack(alignment: .lastTextBaseline, spacing: 0) {
+                    Text("\(values[0])")
+                        .font(.system(.largeTitle, design: .rounded))
+                        .bold()
+                    Text(units[0])
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(.secondary)
                     Spacer()
                     
-                    Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
-                        .font(.body)
-                        .foregroundColor(Color(.secondaryLabel))
-                }
-                Spacer()
-                if values.count == 1 {
-                    HStack(alignment: .lastTextBaseline, spacing: 0) {
-                        Text("\(values[0])")
-                            .font(.system(.largeTitle, design: .rounded))
-                            .bold()
-                        Text(units[0])
-                            .font(.title2)
-                            .bold()
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        
-                    }.padding(.leading)
-                } else {
-                    HStack {
-                        ForEach(0..<self.values.count) { index in
-                            HStack(alignment: .lastTextBaseline, spacing: 0) {
-                                Text("\(values[index])")
-                                    .font(.system(.largeTitle, design: .rounded))
-                                    .bold()
-                                Text(units[index])
-                                    .font(.title2)
-                                    .bold()
-                                    .foregroundColor(.secondary)
-                                Spacer()
-
-                            }.padding(.leading)
-                        }
+                }.padding(.leading)
+            } else {
+                HStack {
+                    ForEach(0..<self.values.count) { index in
+                        HStack(alignment: .lastTextBaseline, spacing: 0) {
+                            Text("\(values[index])")
+                                .font(.system(.largeTitle, design: .rounded))
+                                .bold()
+                            Text(units[index])
+                                .font(.title2)
+                                .bold()
+                                .foregroundColor(.secondary)
+                            Spacer()
+                            
+                        }.padding(.leading)
                     }
                 }
-                
             }
-            .padding()
             
         }
+        .padding()
+        
+        
     }
 }
 
@@ -77,7 +77,7 @@ struct HistoryOverview: View {
     
     @ObservedObject var profile: Profile
     @Binding var switchTab: Tab
-    var selectPeriod: TimePeriod
+    @State var selectPeriod: TimePeriod = .week
     
     @State var lastPeriodExams: [Exam] = []
     @State var filteredExams: [Exam] = []
@@ -149,14 +149,16 @@ struct HistoryOverview: View {
     var body: some View {
         Group {
             if !self.filteredExams.isEmpty {
-
+                
                 Form {
-                    Section {
+                    Section(header:
+                                Text("Recent exams")
+                    ) {
                         VStack {
                             HStack {
-                        Label("Electrocardiogram", systemImage: "waveform.path.ecg")
-                            .labelStyle(CompressedLabelStyle(labelColor: .systemPurple))
-                        
+                                Label("Electrocardiogram", systemImage: "waveform.path.ecg")
+                                    .labelStyle(CompressedLabelStyle(labelColor: .systemPurple))
+                                
                                 Spacer()
                                 
                                 Text("\(Formatters.withoutYear(date: self.filteredExams.first!.wrappedDate)) - \(Formatters.withoutYear(date: self.filteredExams.last!.wrappedDate))")
@@ -165,45 +167,46 @@ struct HistoryOverview: View {
                             }
                             .padding()
                             
-                        TabView {
-
-                            ForEach(self.filteredExams) { exam in
-                                RecentExamTab(exam: exam)
-                                    //.fixedSize()
-    //                                .frame(minHeight: 200)
-                                    .tabItem {
-                                        Text(exam.wrappedDate, formatter: Formatters.dateFormat)
-                                    }
-                                    .tag(exam.wrappedId)
+                            TabView {
+                                
+                                ForEach(self.filteredExams) { exam in
+                                    
+                                    RecentExamTab(exam: exam)
+                                        .tabItem {
+                                            Text(exam.wrappedDate, formatter: Formatters.dateFormat)
+                                        }
+                                        .tag(exam.wrappedId)
+                                }
+                                
                             }
-
-                        }
-                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                        //.fixedSize()
-                        .frame(height: 250)
+                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                            //.fixedSize()
+                            .frame(height: 250)
+                            
                         }
                         
                     }
                     
-                    
-                    
                     if !self.lastPeriodExams.isEmpty {
-                    
-                        SummarySection(labelName: "Heart Rate", labelIcon: "heart.fill", color: UIColor.systemRed, selectedRange: self.selectedRange, values: [Int(self.means.heartrate)], units: ["BPM"])
                         
+                        Section(header: Text("Average results")) {
+                        SummarySection(labelName: "Heart Rate", labelIcon: "heart.fill", color: UIColor.systemPink, selectedRange: self.selectedRange, values: [Int(self.means.heartrate)], units: ["BPM"])
+                        }
+                        
+                        Section {
                         SummarySection(labelName: "Exam type", labelIcon: "lungs.fill", color: .systemIndigo, selectedRange: self.selectedRange, values: [Int(means.examType.0), Int(means.examType.1)], units: ["resting", "stress"])
-
-                        SummarySection(labelName: "Interval", labelIcon: "metronome.fill", color: .systemPink, selectedRange: self.selectedRange, values: [Int(1000 * self.means.interval)], units: ["ms"])
-
-                        SummarySection(labelName: "IQR", labelIcon: "metronome.fill", color: .systemGreen, selectedRange: self.selectedRange, values: [Int(1000 * self.means.iqr)], units: ["ms"])
-
-//                        SummarySection(labelName: "Exam type", labelIcon: "lungs.fill", color: .systemIndigo, selectedRange: self.selectedRange, values: [Int(means.examType.0), Int(means.examType.1)], units: [makeString(floor(100 * (Double(means.examType.0) / Double(lastPeriodExams.count))), "%"), makeString(ceil(100 * (Double(means.examType.1) / Double(lastPeriodExams.count))), "%")])
-//
+                        }
                         
+                        Section {
+                        SummarySection(labelName: "Interval", labelIcon: "metronome.fill", color: .systemRed, selectedRange: self.selectedRange, values: [Int(1000 * self.means.interval)], units: ["ms"])
+                        }
                         
+                        Section {
+                            SummarySection(labelName: "IQR", labelIcon: "metronome.fill", color: .systemGreen, selectedRange: self.selectedRange, values: [Int(1000 * self.means.iqr)], units: ["ms"])
+                        }
                         
-                        
-                        
+                        //                        SummarySection(labelName: "Exam type", labelIcon: "lungs.fill", color: .systemIndigo, selectedRange: self.selectedRange, values: [Int(means.examType.0), Int(means.examType.1)], units: [makeString(floor(100 * (Double(means.examType.0) / Double(lastPeriodExams.count))), "%"), makeString(ceil(100 * (Double(means.examType.1) / Double(lastPeriodExams.count))), "%")])
+                        //
                     }
                 }
             } else {
@@ -212,11 +215,28 @@ struct HistoryOverview: View {
                 } label: {
                     Text("Make first examination")
                 }
-
+                
             }
             
         }
-        .navigationTitle("Summary")
+        .toolbar(content: {
+            ToolbarItemGroup(placement: .navigation) {
+                Picker("Time period", selection: self.$selectPeriod) {
+                    ForEach(TimePeriod.allCases, id: \.self) { type in
+                        Text(type.displayName)
+                        
+                    }
+                }.pickerStyle(SegmentedPickerStyle())
+                .onChange(of: self.selectPeriod) { _ in
+                    withAnimation {
+                        updateValues()
+                    }
+                }
+            }
+        })
+        //.navigationTitle("Summary")
+        
+        
         .onAppear(perform: updateValues)
     }
     
@@ -225,32 +245,27 @@ struct HistoryOverview: View {
         if profile.examArray.count > 0 {
             self.filteredExams = Array(profile.examArray[0...min(profile.examArray.count - 1, 2)])
         }
-        print("filtered ", self.filteredExams)
+        //print("filtered ", self.filteredExams)
         
         let range = ClosedRange<Date>(uncheckedBounds: (lower: Calendar.current.date(byAdding: .day, value: -self.selectPeriod.rawValue, to: Date())!, upper: Date()))
-//        self.selectedRange.loweBound = Calendar.current.date(byAdding: .day, value: -self.selectPeriod.rawValue, to: Date())!
-//        self.selectedRange.upperBound = Date()
-//
+        
         self.lastPeriodExams = Array(profile.examArray.filter({ Exam in
             
             return range.contains(Exam.wrappedDate)
             
         }))
         
-        print("lastPeriod", self.lastPeriodExams)
+        //print("lastPeriod", self.lastPeriodExams)
         
         self.means = calculateMeans()
         self.selectedRange = SelectedRange(lowerBound: Calendar.current.date(byAdding: .day, value: -self.selectPeriod.rawValue, to: Date())!, upperBound: Date())
     }
     
-    init(profile: Profile, switchTab: Binding<Tab>, selectedPeriod: TimePeriod = .week) {
+    init(profile: Profile, switchTab: Binding<Tab>) {
         
         self.profile = profile
         self._switchTab = switchTab
-        self.selectPeriod = selectedPeriod
         
-//        self.selectedRange.lowerBound = Calendar.current.date(byAdding: .day, value: -self.selectPeriod.rawValue, to: Date())!
-//        self.selectedRange.upperBound = Date()
     }
 }
 

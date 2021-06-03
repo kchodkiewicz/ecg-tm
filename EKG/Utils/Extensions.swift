@@ -154,3 +154,29 @@ struct CompressedLabelStyle: LabelStyle {
         
     }
 }
+
+struct NavigationBarModifier : ViewModifier {
+    var title : String
+    var displayMode: NavigationBarItem.TitleDisplayMode
+       
+    @ViewBuilder
+    func body(content: Content) -> some View {
+
+        if #available(iOS 14, *) {
+             content
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode( displayMode)
+        }
+        else {
+            content.navigationBarTitle(title,displayMode: displayMode)
+        }
+    }
+}
+
+extension View {
+    func navigationTitle(title: String, subtitle: @escaping () -> View, displayMode : NavigationBarItem.TitleDisplayMode = .automatic) -> some View {
+        
+        self.modifier(NavigationBarModifier(title: title, displayMode: displayMode))
+        
+    }
+}

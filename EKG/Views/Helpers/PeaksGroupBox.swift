@@ -150,7 +150,7 @@ struct PeaksGroupBox: View {
                         }
                         
                         Spacer()
-                    }
+                    }.allowsTightening(true)
                     
                     
                 }

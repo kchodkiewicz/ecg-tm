@@ -9,16 +9,19 @@ import Foundation
 
 //MARK: - ProfileColors
 enum ProfileColor: String, CaseIterable {
-    case crimson = "crimson"
-    case violet = "violet"
-    case coolGray = "coolGray"
-    case iris = "iris"
+    
     case blackGrape = "blackGrape"
-    case trypanBlue = "trypanBlue"
-    case persianBlue = "presianBlue"
-    case ultramarine = "ultramarine"
+    case coolGray = "coolGray"
+    case vividYellow = "vividYellow"
     case dodgerBlue = "dodgerBlue"
+    case iris = "iris"
+    case persianBlue = "presianBlue"
+    case trypanBlue = "trypanBlue"
+    case ultramarine = "ultramarine"
+    case violet = "violet"
     case vividSkyBlue = "vividSkyBlue"
+    case crimson = "crimson"
+    case aquamarine = "aquamarine"
     
     var ColorValue: Int64 {
         
@@ -35,6 +38,8 @@ enum ProfileColor: String, CaseIterable {
             case .ultramarine: return 7
             case .dodgerBlue: return 8
             case .vividSkyBlue: return 9
+            case .vividYellow: return 10
+            case .aquamarine: return 11
                 
             }
         }
@@ -53,6 +58,8 @@ enum ProfileColor: String, CaseIterable {
         case "ultramarine": return .ultramarine
         case "dodgerBlue": return .dodgerBlue
         case "vividSkyBlue": return .vividSkyBlue
+        case "vividYellow": return .vividYellow
+        case "aquamarine": return .aquamarine
         default:
             return .crimson
         }
@@ -89,8 +96,22 @@ public enum ExamResult: String {
     case critical = "critical"
 }
 
-public enum TimePeriod: Int {
+public enum TimePeriod: Int, CaseIterable {
     case week = 7
     case month = 30
     case year = 365
+    
+    var displayName: String {
+        
+        get {
+            
+            switch self {
+            case .week: return "week"
+            case .month: return "month"
+            case .year: return "year"
+                
+            }
+        }
+    }
+    
 }
