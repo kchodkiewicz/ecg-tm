@@ -159,7 +159,7 @@ struct ProfileView: View {
                         
                         Spacer()
                         
-                        Text(bleConnection.peripheral?.name ?? "None")
+                        Text(Formatters.removeNewLine(string: bleConnection.peripheral?.name ?? "None"))
                     }
                 }
                 Section {

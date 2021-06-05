@@ -73,6 +73,10 @@ struct ECGGraph : UIViewRepresentable {
         
         data.setDrawValues(false)
         data.addDataSet(dataSet)
+        
+        //print("graph", entries)
+        print("ECGGraph addData entries.count", entries.count)
+        
         return data
     }
     

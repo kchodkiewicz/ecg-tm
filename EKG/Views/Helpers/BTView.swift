@@ -15,6 +15,7 @@ struct BTView: View {
     
     @ObservedObject var bleConnection: BLEConnection
     
+    
     var body: some View {
 
             
@@ -40,12 +41,12 @@ struct BTView: View {
                 },
                 label: {
                     
-                    Text("\(device.name!)")
+                    Text(Formatters.removeNewLine(string: device.name ?? "N/A"))
                     
                 })
                 
                 Spacer()
-                if device.name! == self.bleConnection.peripheral?.name {
+                if device.name ?? "N/A" == self.bleConnection.peripheral?.name {
                     Image(systemName: "checkmark")
                         .foregroundColor(Color("\(profile.wrappedColor)"))
                 } else {

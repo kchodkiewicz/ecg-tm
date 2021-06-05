@@ -18,7 +18,7 @@ class GraphCal: ObservableObject, Equatable
     
     let passThroughSubjectPublisher = PassthroughSubject<[ChartDataEntry], Never>()
     @Published public var entries : [ChartDataEntry] = []
-    var charts: LineChartView = LineChartView()
+    //var charts: LineChartView = LineChartView()
     var numOfSample: Int = 0
 
 
@@ -56,9 +56,8 @@ class GraphCal: ObservableObject, Equatable
              tmp.append(entry)
              numOfSample += 1
         }
-        
-        
-        
+        print("numOfSample", numOfSample)
+        //print("graphdata entires", self.entries)
         self.entries += tmp
         passThroughSubjectPublisher.send(tmp)
         return self.entries

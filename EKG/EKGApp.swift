@@ -18,6 +18,8 @@ struct EKGApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(ActiveSession())
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
+                .environmentObject(ExamArray())
+                .environmentObject(GraphCal())
         }
     }
 }

@@ -61,5 +61,9 @@ struct Formatters {
         return lower...upper
     }
     
+    static func removeNewLine(string: String) -> String {
+        return string.replacingOccurrences(of: "\r\n", with: "")
+    }
+    
     
 }

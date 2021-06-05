@@ -23,13 +23,17 @@ struct Device: Identifiable, Equatable {
 open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate, ObservableObject {    
     
     @Published public var recievedString: [UInt8] = []
-    //let passThroughSubjectPublisher = PassthroughSubject<[UInt8], Never>()
+    
+    let passThroughSubjectPublisher = PassthroughSubject<[UInt8], Never>()
+    
     //@Published public var btMessage: String?
     //@Published public var finishedExamination: Bool = false
     // Properties
     private var centralManager: CBCentralManager! = nil
-    @Published public var peripheral: CBPeripheral!
-    var mainCharacteristic:CBCharacteristic? = nil
+    @Published public var peripheral: CBPeripheral! = nil
+    var mainCharacteristic: CBCharacteristic? = nil
+    
+    static var frameCounter: Int = 0
 
     public static let bleServiceUUID = CBUUID.init(string: "FFE0")
     public static let bleCharacteristicUUID = CBUUID.init(string: "FFE1")
@@ -41,14 +45,20 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
     
     func startCentralManager() {
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
-        print("Central Manager State: \(self.centralManager.state)")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.centralManagerDidUpdateState(self.centralManager)
+        print("Central Manager State: \(self.centralManager!.state)")
+     
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            
+            guard self.centralManager != nil else {
+                print("Central Manager is nil [startCentralManager], aborting")
+                return
+            }
+            self.centralManagerDidUpdateState(self.centralManager!)
         }
     }
     
     public func connect(peripheral: CBPeripheral) {
-        self.centralManager.connect(peripheral, options: nil)
+        self.centralManager?.connect(peripheral, options: nil)
         self.peripheral = peripheral
         
     }
@@ -73,10 +83,13 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
             break
            case .poweredOn:
             print("Central scanning for", BLEConnection.bleServiceUUID);
-            
-            self.centralManager.scanForPeripherals(withServices: [BLEConnection.bleServiceUUID],options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
+            guard self.centralManager != nil else {
+                print("Central Manager is nil [centralManagerDidUpdateState], aborting")
+                return
+            }
+            self.centralManager!.scanForPeripherals(withServices: nil, options: nil)
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                self.centralManager.stopScan()
+                self.centralManager!.stopScan()
             }
             break
         @unknown default:
@@ -86,6 +99,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
        if(central.state != CBManagerState.poweredOn)
        {
            // In a real app, you'd deal with all the states correctly
+        print("poweredOn")
            return
        }
     }
@@ -207,16 +221,25 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
             print(systemID ?? "No System ID")
         } else if (characteristic.uuid == BLEConnection.bleCharacteristicUUID) {
             //data recieved
+            //print("przed ifem w didUpdateValueFor")
             if(characteristic.value != nil) {
-                
+                print("")
                 COMMFrameParser.ExecuteFrameData(frame: Array(characteristic.value!))
+                //print("------------------------------ cos se odebralem")
                 if COMMFrameParser.ecgFinished {
+                    
+                    BLEConnection.frameCounter += 1
+                    print("FRAME COUNTER", BLEConnection.frameCounter)
+                    print("frameEntries.count", COMMFrameParser.frameEntries.count)
+                    //print("received string", COMMFrameParser.frameEntries)
+                    
                     self.recievedString = COMMFrameParser.frameEntries
-                    //COMMFrameParser.ecgFinished = false
-                    COMMFrameParser.frameEntries.removeAll()
+                    passThroughSubjectPublisher.send(COMMFrameParser.frameEntries)
+                    COMMFrameParser.ecgFinished = false
+                    //COMMFrameParser.frameEntries.removeAll()
                     //self.finishedExamination = true
                     
-                    //passThroughSubjectPublisher.send(COMMFrameParser.frameEntries)
+                    
                     
                 }
                 
@@ -230,7 +253,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
         dataToSend.append(contentsOf: data)
         print(dataToSend)
         if self.peripheral != nil {
-            self.peripheral.writeValue(dataToSend, for: mainCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
+            self.peripheral!.writeValue(dataToSend, for: mainCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
             //btMessage = nil
         } else {
             print("Haven't discovered device yet.")

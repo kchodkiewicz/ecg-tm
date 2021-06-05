@@ -234,7 +234,7 @@ struct HistoryOverview: View {
                 }
             }
         })
-        //.navigationTitle("Summary")
+        .navigationTitle("Summary")
         
         
         .onAppear(perform: updateValues)
