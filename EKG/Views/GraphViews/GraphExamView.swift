@@ -193,7 +193,7 @@ struct GraphExamView: View {
                 if self.examinationInProgress {
                     ECGGraph(entries: getEntries())
                 } else {
-                    EmptyChartSplashView(triggerCountdown: $placeholderTrigger)
+                    //EmptyChartSplashView(triggerCountdown: $placeholderTrigger)
                 }
             
             
