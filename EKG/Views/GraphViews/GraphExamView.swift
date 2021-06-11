@@ -128,6 +128,7 @@ struct GraphExamView: View {
     
     func getEntries() -> [ChartDataEntry] {
         
+        //self.bleConnection.peripheral!.readValue(for: bleConnection.mainCharacteristic!)
         let entries = graphData.addDataFromBT(data: bleConnection.recievedString)
         return entries
         
@@ -136,7 +137,7 @@ struct GraphExamView: View {
     func sendStart() {
         //setCountdown()
         
-        DispatchQueue.global(qos: .utility).async {
+        //DispatchQueue.global(qos: .utility).async {
             // Send examDuration to BT
             let commFrame = COMMFrame()
             commFrame.SetFrameID(frameID: 0x001)
@@ -146,22 +147,22 @@ struct GraphExamView: View {
             COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.SetDuringTimeECGTest)
             bleConnection.sendData(data: frame)
             print("[#] --- Has set Exam Duration")
-        }
+        //}
         
         
         //TODO: change if broken
-        DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 2.0) {
-            let commFrame = COMMFrame()
-            commFrame.SetFrameID(frameID: 0x001)
-            commFrame.SetAdditionalData(data: [COMMCommandType.StartECGTest.rawValue], size: 1)
+        //DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 2.0) {
+            let commFrame2 = COMMFrame()
+            commFrame2.SetFrameID(frameID: 0x001)
+            commFrame2.SetAdditionalData(data: [COMMCommandType.StartECGTest.rawValue], size: 1)
             
-            let frame = commFrame.GetFrameData()
+            let frame2 = commFrame2.GetFrameData()
             COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.StartECGTest)
             
-            bleConnection.sendData(data: frame)
+            bleConnection.sendData(data: frame2)
             print("[*] --- Has started examination")
             self.examinationInProgress = true
-        }
+        //}
         //                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
         //                            // Send Start signal to BT
         //

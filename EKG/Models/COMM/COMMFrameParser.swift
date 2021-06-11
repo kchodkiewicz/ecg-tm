@@ -45,7 +45,9 @@ class COMMFrameParser: ObservableObject {
 
     static func CheckCRC(frame: [UInt8]) -> Bool
     {
+        print("Checking CRC")
         if COMMFrameParser.m_isTestingECG {
+            print("Ommiting because m_isTestingECG == true")
             return true
         }
         //wylicza CRC
@@ -142,7 +144,7 @@ class COMMFrameParser: ObservableObject {
             let commandType: COMMCommandType = COMMCommandType(rawValue: frame[Int(commandIndex)]) ?? COMMCommandType.Invalid
         
             if m_isTestingECG == true {
-                if frameExecution.count < 238 {
+                if frameExecution.count < 180 {
                     frameExecution += frame
                     print("Dostałem część próbek")
                     return
@@ -245,7 +247,7 @@ class COMMFrameParser: ObservableObject {
         let commandIndex: UInt8 = 7
         let commandType: COMMCommandType = COMMCommandType(rawValue: frame[Int(commandIndex)]) ?? COMMCommandType.Invalid
         
-        switch commandType{
+        switch commandType {
         case COMMCommandType.ECGSamplePackage:
             //odpakuj te dane
             

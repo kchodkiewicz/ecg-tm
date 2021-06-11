@@ -23,7 +23,7 @@ struct Device: Identifiable, Equatable {
 open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelegate, ObservableObject {    
     
     @Published public var recievedString: [UInt8] = []
-    //let passThroughSubjectPublisher = PassthroughSubject<[UInt8], Never>()
+    let passThroughSubjectPublisher = PassthroughSubject<[UInt8], Never>()
     //@Published public var btMessage: String?
     //@Published public var finishedExamination: Bool = false
     
@@ -32,8 +32,8 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
     @Published public var peripheral: CBPeripheral?
     var mainCharacteristic: CBCharacteristic? = nil
 
-    public static let bleServiceUUID = CBUUID.init(string: "FFE0")
-    public static let bleCharacteristicUUID = CBUUID.init(string: "FFE1")
+    public static let bleServiceUUID = CBUUID.init(string: "4fafc201-1fb5-459e-8fcc-c5c9c331914b")
+    public static let bleCharacteristicUUID = CBUUID.init(string: "beb5483e-36e1-4688-b7f5-ea07361b26a8")
 
     // Array to contain names of BLE devices to connect to.
     // Accessable by ContentView for Rendering the SwiftUI Body on change in this array.
@@ -51,6 +51,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
     public func connect(peripheral: CBPeripheral) {
         self.centralManager.connect(peripheral, options: nil)
         self.peripheral = peripheral
+        print("MTU ", self.peripheral?.maximumWriteValueLength(for: .withResponse) as Any)
         
     }
     
@@ -63,7 +64,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
     
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         self.peripheral = nil
-        print("Disconnected" + peripheral.name!)
+        print("Disconnected from " + peripheral.name!)
     }
 
     // Handles BT Turning On/Off
@@ -169,6 +170,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
                     mainCharacteristic = characteristic
                     
                     //Set Notify is useful to read incoming data async
+                    
                     peripheral.setNotifyValue(true, for: characteristic)
                     print("3/3 Found Bluno Data Characteristic")
                     print("Connection complete")
@@ -197,7 +199,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
         peripheral.delegate = self
         
         if peripheral == self.peripheral {
-            print("2/3 Connected to your BLE Board")
+            print("2/3 Connected to " + String(peripheral.name ?? "Unknown BLE module"))
             peripheral.discoverServices([BLEConnection.bleServiceUUID])
         }
     }
@@ -221,12 +223,14 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
         } else if (characteristic.uuid == BLEConnection.bleCharacteristicUUID) {
             //data recieved
             if(characteristic.value != nil) {
-                
+                print("characteristic.count ", Int(characteristic.value?.count ?? 0))
                 COMMFrameParser.ExecuteFrameData(frame: Array(characteristic.value!))
+                print("Pojedyncza ramka characteristic.value ", Array(characteristic.value!))
                 
                 if COMMFrameParser.ecgFinished {
-                    print("frameEntries.count", COMMFrameParser.frameEntries.count)
+                    print("frameEntries.count ", COMMFrameParser.frameEntries.count)
                     self.recievedString = COMMFrameParser.frameEntries
+                    passThroughSubjectPublisher.send(COMMFrameParser.frameEntries)
                     print("receivedString", self.recievedString)
                     COMMFrameParser.ecgFinished = false
                     COMMFrameParser.frameEntries.removeAll()
@@ -242,11 +246,13 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
 
     
     public func sendData(data: [UInt8]) {
+        print("sendData called")
         var dataToSend = Data()
         dataToSend.append(contentsOf: data)
-        print(dataToSend)
+        print("dataToSent ", dataToSend)
         if self.peripheral != nil {
-            self.peripheral!.writeValue(dataToSend, for: mainCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
+            print("Peripheral is not nil, so i am sending frame")
+            self.peripheral!.writeValue(dataToSend, for: mainCharacteristic!, type: CBCharacteristicWriteType.withResponse)
             //btMessage = nil
         } else {
             print("Haven't discovered device yet.")
