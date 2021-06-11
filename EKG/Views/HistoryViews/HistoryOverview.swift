@@ -189,6 +189,22 @@ struct HistoryOverview: View {
                     
                     if !self.lastPeriodExams.isEmpty {
                         
+                        //TODO: test if works
+                        
+                        Picker("Time period", selection: self.$selectPeriod) {
+                            ForEach(TimePeriod.allCases, id: \.self) { type in
+                                Text(type.displayName)
+                                
+                            }
+                        }.pickerStyle(SegmentedPickerStyle())
+                        .onChange(of: self.selectPeriod) { _ in
+                            withAnimation {
+                                updateValues()
+                            }
+                        }
+                        
+                        // --------------------
+                        
                         Section(header: Text("Average results")) {
                         SummarySection(labelName: "Heart Rate", labelIcon: "heart.fill", color: UIColor.systemPink, selectedRange: self.selectedRange, values: [Int(self.means.heartrate)], units: ["BPM"])
                         }
@@ -219,21 +235,11 @@ struct HistoryOverview: View {
             }
             
         }
-        .toolbar(content: {
-            ToolbarItemGroup(placement: .navigation) {
-                Picker("Time period", selection: self.$selectPeriod) {
-                    ForEach(TimePeriod.allCases, id: \.self) { type in
-                        Text(type.displayName)
-                        
-                    }
-                }.pickerStyle(SegmentedPickerStyle())
-                .onChange(of: self.selectPeriod) { _ in
-                    withAnimation {
-                        updateValues()
-                    }
-                }
-            }
-        })
+//        .toolbar(content: {
+//            ToolbarItemGroup(placement: ) {
+//
+//            }
+//        })
         .navigationTitle("Summary")
         
         
