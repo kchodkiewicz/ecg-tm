@@ -164,7 +164,6 @@ struct GraphExamView: View {
         //}
         
         
-        //TODO: change if broken
         DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 0.5) {
             let commFrame = COMMFrame()
             commFrame.SetFrameID(frameID: 0x001)
@@ -278,7 +277,7 @@ struct GraphExamView: View {
             .buttonStyle(RoundButtonStyle(foregroundColor: self.examinationInProgress ? Color(.systemPink) : Color(.systemGreen), isProcessing: self.$isProcessing, trimFrom: self.$trimFrom))
             .onReceive(timer) { _ in
                 if isProcessing {
-                    self.trimFrom = CGFloat((Int(self.trimFrom * 100) + 5) % 100) / 100
+                    self.trimFrom += 20 //CGFloat((Int(self.trimFrom * 100) + 10) % 100) / 100
                 }
             }
             

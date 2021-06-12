@@ -92,9 +92,10 @@ struct RoundButtonStyle: ButtonStyle {
                     .padding(10)
                     .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.2))
                 RoundedRectangle(cornerRadius: isProcessing ? 63.0 / 2.0 : 10.0, style: .continuous)
-                    .trim(from: isProcessing ? trimFrom : 0.0, to: isProcessing ? trimTo : 1.0)
+                    .trim(from: isProcessing ? 0.0 : 0.0, to: isProcessing ? 0.25 : 1.0)
                     .stroke(foregroundColor, lineWidth: 3.0)
                     .frame(width: isProcessing ? 63 : 228, height: 63)
+                    .rotationEffect(.degrees(isProcessing ? Double(self.trimFrom) : 0.0 ))
                     .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.2))
                 
                 configuration.label
