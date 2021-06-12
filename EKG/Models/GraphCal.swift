@@ -18,7 +18,7 @@ class GraphCal: ObservableObject, Equatable
     
     //let passThroughSubjectPublisher = PassthroughSubject<[ChartDataEntry], Never>()
     @Published public var entries : [ChartDataEntry] = []
-    public var y: [Double] = []
+    
     //var charts: LineChartView = LineChartView()
     var numOfSample: Int = 0
 
@@ -56,7 +56,7 @@ class GraphCal: ObservableObject, Equatable
             let entry = ChartDataEntry(x: Double(x), y: Double(ecgDisp))
             tmp.append(entry)
             numOfSample += 1
-            y.append(ecgDisp)
+            
         }
         print("numOfSample", numOfSample)
         //print("graphdata entires", self.entries)
@@ -68,7 +68,7 @@ class GraphCal: ObservableObject, Equatable
     }
     
     func saveDataToDB() {
-        print(y)
+        
         numOfSample = 0
         //let tmpDataArray = entries
         

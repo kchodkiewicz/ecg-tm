@@ -269,7 +269,7 @@ class COMMFrameParser: ObservableObject {
             
             
             print("Dostalem paczke danych EKG o dlugosci ", COMMFrameParser.frameEntries.count)
-            print(COMMFrameParser.frameEntries)
+            //print(COMMFrameParser.frameEntries)
             
         case COMMCommandType.EndECGTest:
             //informacja o koncu ECG

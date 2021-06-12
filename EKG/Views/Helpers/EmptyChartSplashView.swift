@@ -17,6 +17,7 @@ struct EmptyChartSplashView: View {
     
     var body: some View {
         Text(self.countdown > 5 || self.countdown < 1 ? "" : String(self.countdown))
+            .font(.largeTitle)
             .onReceive(timer, perform: { _ in
                 
                 if self.countdown > 0 && self.triggerCountdown {

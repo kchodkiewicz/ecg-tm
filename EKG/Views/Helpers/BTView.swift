@@ -64,7 +64,9 @@ struct BTView: View {
                     
                 }
             }
-        }.listStyle(PlainListStyle())
+        }
+        .listStyle(PlainListStyle())
+        
         
         
         .onAppear(perform: {

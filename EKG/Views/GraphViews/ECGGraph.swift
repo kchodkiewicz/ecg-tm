@@ -75,7 +75,7 @@ struct ECGGraph : UIViewRepresentable {
         data.addDataSet(dataSet)
         
         //print("graph", entries)
-        print("ECGGraph addData entries.count", entries.count)
+        //print("ECGGraph addData entries.count", entries.count)
         
         return data
     }

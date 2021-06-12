@@ -38,7 +38,7 @@
 		2C6BC4C0265ABB0500A3DAC7 /* LogoOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4BF265ABB0500A3DAC7 /* LogoOverlay.swift */; };
 		2C6BC4C2265ABCE000A3DAC7 /* HistoryOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C1265ABCE000A3DAC7 /* HistoryOverview.swift */; };
 		2C6BC4C4265ABD6300A3DAC7 /* RecentExamTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C3265ABD6300A3DAC7 /* RecentExamTab.swift */; };
-		2C6BC4C6265ABF9600A3DAC7 /* MeanBmpGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C5265ABF9600A3DAC7 /* MeanBmpGraph.swift */; };
+		2C6BC4C6265ABF9600A3DAC7 /* StartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C5265ABF9600A3DAC7 /* StartButton.swift */; };
 		2C6BC4C8265AC36A00A3DAC7 /* RecentExamOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C7265AC36A00A3DAC7 /* RecentExamOverlay.swift */; };
 		2C6BC4CA265C4CA300A3DAC7 /* EmptyChartSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C9265C4CA300A3DAC7 /* EmptyChartSplashView.swift */; };
 		2C6BC4CC265E9BC400A3DAC7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4CB265E9BC400A3DAC7 /* ProfileView.swift */; };
@@ -94,7 +94,7 @@
 		2C6BC4BF265ABB0500A3DAC7 /* LogoOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoOverlay.swift; sourceTree = "<group>"; };
 		2C6BC4C1265ABCE000A3DAC7 /* HistoryOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryOverview.swift; sourceTree = "<group>"; };
 		2C6BC4C3265ABD6300A3DAC7 /* RecentExamTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentExamTab.swift; sourceTree = "<group>"; };
-		2C6BC4C5265ABF9600A3DAC7 /* MeanBmpGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanBmpGraph.swift; sourceTree = "<group>"; };
+		2C6BC4C5265ABF9600A3DAC7 /* StartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButton.swift; sourceTree = "<group>"; };
 		2C6BC4C7265AC36A00A3DAC7 /* RecentExamOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentExamOverlay.swift; sourceTree = "<group>"; };
 		2C6BC4C9265C4CA300A3DAC7 /* EmptyChartSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyChartSplashView.swift; sourceTree = "<group>"; };
 		2C6BC4CB265E9BC400A3DAC7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -281,7 +281,7 @@
 				2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */,
 				2C6BC4C1265ABCE000A3DAC7 /* HistoryOverview.swift */,
 				2C6BC4C3265ABD6300A3DAC7 /* RecentExamTab.swift */,
-				2C6BC4C5265ABF9600A3DAC7 /* MeanBmpGraph.swift */,
+				2C6BC4C5265ABF9600A3DAC7 /* StartButton.swift */,
 			);
 			path = HistoryViews;
 			sourceTree = "<group>";
@@ -459,7 +459,7 @@
 				2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */,
 				2C2226F626618D49002473E2 /* Exam+CoreDataProperties.swift in Sources */,
 				2C2226F526618D49002473E2 /* Exam+CoreDataClass.swift in Sources */,
-				2C6BC4C6265ABF9600A3DAC7 /* MeanBmpGraph.swift in Sources */,
+				2C6BC4C6265ABF9600A3DAC7 /* StartButton.swift in Sources */,
 				2C6BC4C0265ABB0500A3DAC7 /* LogoOverlay.swift in Sources */,
 				2C6BC4C8265AC36A00A3DAC7 /* RecentExamOverlay.swift in Sources */,
 				2CC6168F25F6603D0082FC63 /* HistoryView.swift in Sources */,

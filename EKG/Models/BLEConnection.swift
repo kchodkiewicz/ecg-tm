@@ -227,7 +227,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
             //data recieved
             //print("przed ifem w didUpdateValueFor")
             if(characteristic.value != nil) {
-                print(characteristic.value!)
+                //print(characteristic.value!)
                 COMMFrameParser.ExecuteFrameData(frame: Array(characteristic.value!))
                 //print("------------------------------ cos se odebralem")
                 if COMMFrameParser.gotFullFrame {

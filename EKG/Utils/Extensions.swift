@@ -72,21 +72,38 @@ struct RoundButtonStyle: ButtonStyle {
     
     let foregroundColor: Color
     
+    @Binding var isProcessing: Bool
+    @Binding var trimFrom: CGFloat
+    
+    var animation: Animation {
+        Animation.linear
+            .repeatForever(autoreverses: false)
+    }
+    
     func makeBody(configuration: Self.Configuration) -> some View {
-        ZStack {
-            RoundedRectangle(cornerSize: CGSize(width: 8.0, height: 8.0))
-                .fill(configuration.isPressed ? Color.clear : foregroundColor)
-                .frame(width: 220, height: 55)
-                .padding(10)
-            RoundedRectangle(cornerSize: CGSize(width: 8.0, height: 8.0))
-                .stroke(foregroundColor, lineWidth: 3.0)
-                .frame(width: 228, height: 63)
-            
-            configuration.label
-                .frame(width: 63, height: 63)
-                .foregroundColor(configuration.isPressed ? Color.secondary : Color.white)
-                .clipShape(configuration.isPressed ? Circle() : Circle())
-        }
+        
+        let trimTo: CGFloat = self.trimFrom + 0.25
+        print("trim(from: \(trimFrom), to: \(trimTo))")
+        return
+            ZStack {
+                RoundedRectangle(cornerRadius: isProcessing ? 55.0 / 2.0 : 10.0, style: .continuous)
+                    .fill(configuration.isPressed ? Color.clear : foregroundColor)
+                    .frame(width: isProcessing ? 55 : 220, height: 55)
+                    .padding(10)
+                    .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.2))
+                RoundedRectangle(cornerRadius: isProcessing ? 63.0 / 2.0 : 10.0, style: .continuous)
+                    .trim(from: isProcessing ? trimFrom : 0.0, to: isProcessing ? trimTo : 1.0)
+                    .stroke(foregroundColor, lineWidth: 3.0)
+                    .frame(width: isProcessing ? 63 : 228, height: 63)
+                    .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.2))
+                
+                configuration.label
+                    .frame(width: 63, height: 63)
+                    .foregroundColor(configuration.isPressed ? Color.secondary : Color.white)
+                    .clipShape(configuration.isPressed ? Circle() : Circle())
+                
+            }
+       
     }
 }
 
@@ -153,6 +170,39 @@ struct CompressedLabelStyle: LabelStyle {
         }
         
     }
+}
+
+struct GaugeProgressStyle: ProgressViewStyle {
+    var strokeColor = Color.green
+    var strokeWidth = 3.0
+    var frameWidth = 228
+    
+    func makeBody(configuration: Configuration) -> some View {
+        let fractionCompleted = configuration.fractionCompleted ?? 0.0
+
+        let trimStart = CGFloat(fractionCompleted)
+        let trimEnd = CGFloat(fractionCompleted + 0.5)
+        
+        return ZStack {
+            RoundedRectangle(cornerRadius: frameWidth == 63 ? CGFloat(frameWidth) / 2.0 : 10.0, style: .continuous)
+                .trim(from: trimStart, to: trimEnd)
+                .stroke(strokeColor, style: StrokeStyle(lineWidth: CGFloat(strokeWidth), lineCap: .round))
+                .frame(width: CGFloat(frameWidth), height: 63)
+                
+            
+//            RoundedRectangle(cornerRadius: fractionCompleted > 1.0 ? CGFloat(228.0 / 2.0) : CGFloat(10.0), style: .continuous)
+//                .trim(from: fractionCompleted > 1.0 ? trimStart : 0.0, to: fractionCompleted > 1.0 ? trimEnd : 1.0)
+//
+//                .frame(width: CGFloat(fractionCompleted > 1.0 ? 63 : 228), height: 63)
+//
+//                //.rotationEffect(Angle.degrees(isProcessing ? 1180 : 0))
+//                //.animation(isProcessing ? animation : nil)
+//                .animation(.spring(dampingFraction: 0.7))
+            
+        }
+    }
+    
+    
 }
 
 

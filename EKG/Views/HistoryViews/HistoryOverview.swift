@@ -80,7 +80,7 @@ struct HistoryOverview: View {
     @State var selectPeriod: TimePeriod = .week
     
     @State var lastPeriodExams: [Exam] = []
-    @State var filteredExams: [Exam] = []
+    //@State var filteredExams: [Exam] = []
     @State var selectedRange: SelectedRange = SelectedRange()
     @State var means: MeanStats = MeanStats()
     
@@ -148,44 +148,44 @@ struct HistoryOverview: View {
     
     var body: some View {
         Group {
-            if !self.filteredExams.isEmpty {
+            if !self.lastPeriodExams.isEmpty {
                 
                 Form {
-                    Section(header:
-                                Text("Recent exams")
-                    ) {
-                        VStack {
-                            HStack {
-                                Label("Electrocardiogram", systemImage: "waveform.path.ecg")
-                                    .labelStyle(CompressedLabelStyle(labelColor: .systemPurple))
-                                
-                                Spacer()
-                                
-                                Text("\(Formatters.withoutYear(date: self.filteredExams.first!.wrappedDate)) - \(Formatters.withoutYear(date: self.filteredExams.last!.wrappedDate))")
-                                    .font(.body)
-                                    .foregroundColor(Color(.secondaryLabel))
-                            }
-                            .padding()
-                            
-                            TabView {
-                                
-                                ForEach(self.filteredExams) { exam in
-                                    
-                                    RecentExamTab(exam: exam)
-                                        .tabItem {
-                                            Text(exam.wrappedDate, formatter: Formatters.dateFormat)
-                                        }
-                                        .tag(exam.wrappedId)
-                                }
-                                
-                            }
-                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                            //.fixedSize()
-                            .frame(height: 250)
-                            
-                        }
-                        
-                    }
+//                    Section(header:
+//                                Text("Recent exams")
+//                    ) {
+//                        VStack {
+//                            HStack {
+//                                Label("Electrocardiogram", systemImage: "waveform.path.ecg")
+//                                    .labelStyle(CompressedLabelStyle(labelColor: .systemPurple))
+//
+//                                Spacer()
+//
+//                                Text("\(Formatters.withoutYear(date: self.filteredExams.first!.wrappedDate)) - \(Formatters.withoutYear(date: self.filteredExams.last!.wrappedDate))")
+//                                    .font(.body)
+//                                    .foregroundColor(Color(.secondaryLabel))
+//                            }
+//                            .padding()
+//
+//                            TabView {
+//
+//                                ForEach(self.filteredExams) { exam in
+//
+//                                    RecentExamTab(exam: exam)
+//                                        .tabItem {
+//                                            Text(exam.wrappedDate, formatter: Formatters.dateFormat)
+//                                        }
+//                                        .tag(exam.wrappedId)
+//                                }
+//
+//                            }
+//                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+//                            //.fixedSize()
+//                            .frame(height: 250)
+//
+//                        }
+//
+//                    }
                     
                     if !self.lastPeriodExams.isEmpty {
                         
@@ -225,6 +225,7 @@ struct HistoryOverview: View {
                         //
                     }
                 }
+                
             } else {
                 Button {
                     switchTab = .exam
@@ -235,6 +236,7 @@ struct HistoryOverview: View {
             }
             
         }
+        
 //        .toolbar(content: {
 //            ToolbarItemGroup(placement: ) {
 //
@@ -244,16 +246,23 @@ struct HistoryOverview: View {
         
         
         .onAppear(perform: updateValues)
+        .onChange(of: switchTab) { _ in
+            if switchTab == .overview {
+                updateValues()
+            }
+        }
     }
     
     
     func updateValues() {
-        if profile.examArray.count > 0 {
-            self.filteredExams = Array(profile.examArray[0...min(profile.examArray.count - 1, 2)])
-        }
+        
+//        if profile.examArray.count > 0 {
+//            self.filteredExams = Array(profile.examArray[0...min(profile.examArray.count - 1, 2)])
+//        }
         //print("filtered ", self.filteredExams)
         
         let range = ClosedRange<Date>(uncheckedBounds: (lower: Calendar.current.date(byAdding: .day, value: -self.selectPeriod.rawValue, to: Date())!, upper: Date()))
+        
         
         self.lastPeriodExams = Array(profile.examArray.filter({ Exam in
             
@@ -265,13 +274,14 @@ struct HistoryOverview: View {
         
         self.means = calculateMeans()
         self.selectedRange = SelectedRange(lowerBound: Calendar.current.date(byAdding: .day, value: -self.selectPeriod.rawValue, to: Date())!, upperBound: Date())
+        
     }
     
     init(profile: Profile, switchTab: Binding<Tab>) {
         
         self.profile = profile
         self._switchTab = switchTab
-        
+        updateValues()
     }
 }
 
