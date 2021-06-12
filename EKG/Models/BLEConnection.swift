@@ -60,7 +60,11 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
     public func connect(peripheral: CBPeripheral) {
         self.centralManager?.connect(peripheral, options: nil)
         self.peripheral = peripheral
-        
+    }
+    
+    public func disconnect() {
+        guard self.peripheral != nil else { return }
+        self.centralManager.cancelPeripheralConnection(self.peripheral!)
     }
 
     // Handles BT Turning On/Off

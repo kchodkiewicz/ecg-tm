@@ -25,15 +25,17 @@ struct GraphDetail: View {
         
         guard !points.isEmpty else {
             print("Recieved empty array. Creating default [Sample]")
-            self.entries = [
-                ChartDataEntry(x: 1.0, y: 1.0),
-                ChartDataEntry(x: 2.0, y: 1.1),
-                ChartDataEntry(x: 3.0, y: 2.1),
-                ChartDataEntry(x: 4.0, y: 0.8),
-                ChartDataEntry(x: 5.0, y: 1.0),
-                ChartDataEntry(x: 6.0, y: 1.4),
-                ChartDataEntry(x: 7.0, y: 1.8)
-            ]
+            
+            for i in 0...1000 {
+                
+                if i % 20 == 0 {
+                    self.entries.append( ChartDataEntry(x: Double(i), y: Double.random(in: -1.0...1.0)))
+                } else {
+                    self.entries.append( ChartDataEntry(x: Double(i), y: Double.random(in: -0.5...0.5)))
+                }
+                
+            }
+            
             return
         }
         

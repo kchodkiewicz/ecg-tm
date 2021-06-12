@@ -136,13 +136,13 @@ struct GraphExamView: View {
         //}
     }
 
-    func getEntries() -> [ChartDataEntry] {
-        
-        //print("tu se mam w Graph View received string: ", bleConnection.recievedString)
-        let entries = graphData.addDataFromBT(data: bleConnection.recievedString)
-        return entries
-
-    }
+//    func getEntries() -> [ChartDataEntry] {
+//        
+//        //print("tu se mam w Graph View received string: ", bleConnection.recievedString)
+//        let entries = graphData.addDataFromBT(data: bleConnection.recievedString)
+//        return entries
+//
+//    }
 
     func sendStart() {
         //setCountdown()
@@ -161,7 +161,7 @@ struct GraphExamView: View {
         
 
         //TODO: change if broken
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 1.0) {
             let commFrame = COMMFrame()
             commFrame.SetFrameID(frameID: 0x001)
             commFrame.SetAdditionalData(data: [COMMCommandType.StartECGTest.rawValue], size: 1)
@@ -181,6 +181,18 @@ struct GraphExamView: View {
         print("Start button")
     }
 
+    func processFinishedExamination() {
+        //print("Got full array")
+        self.examinationStopped = false
+        self.examinationInProgress = false
+        //countdown = 6
+
+        saveData()
+        self.examArray.array.removeAll()
+
+        queueToSummary()
+    }
+    
     func sendStop() {
         self.examinationStopped = true
 
@@ -194,6 +206,8 @@ struct GraphExamView: View {
         COMMFrameParser.SetCommandType(frameId: 0x001, type: COMMCommandType.StopECGTest)
 
         bleConnection.sendData(data: frame)
+        
+        processFinishedExamination()
     }
 
     var body: some View {
@@ -205,7 +219,7 @@ struct GraphExamView: View {
                 if self.examinationInProgress {
                     ECGGraph(entries: graphData.entries)
                 } else {
-                    //EmptyChartSplashView(triggerCountdown: $placeholderTrigger)
+                    EmptyChartSplashView(triggerCountdown: $placeholderTrigger)
                 }
 
 
@@ -220,9 +234,9 @@ struct GraphExamView: View {
                         }
 
                     } else {
-                        withAnimation(.easeInOut(duration: 3.0)) {
+                        withAnimation(.easeInOut(duration: 1.0)) {
                             sendStart()
-                            //self.placeholderTrigger.toggle()
+                            self.placeholderTrigger.toggle()
                         }
                     }
 
@@ -269,25 +283,15 @@ struct GraphExamView: View {
         //return vStack
             .onReceive(self.bleConnection.passThroughSubjectPublisher) { result in
 
-            print("Got some data")
-            
-
-            print("Count ", self.graphData.entries.count, "Limit ", Int(self.profile.examDuration * 250 - 8))
+            //print("Count ", self.graphData.entries.count, "Limit ", Int(self.profile.examDuration * 250 - 8))
                 
                 let limit = Int(self.profile.examDuration * 250 - 8 - Float((result.count / 2)))
-                if self.graphData.entries.count >= limit || self.examinationStopped {
+                if self.graphData.entries.count >= limit {
 
-                print("Got full array")
-                self.examinationStopped = false
-                self.examinationInProgress = false
-                countdown = 6
-
-                saveData()
-                self.examArray.array.removeAll()
-
-                queueToSummary()
+                    processFinishedExamination()
+                
             } else {
-                print("result.count ", result.count)
+                //print("result.count ", result.count)
                 self.examArray.array = self.graphData.addDataFromBT(data: result)
             }
 

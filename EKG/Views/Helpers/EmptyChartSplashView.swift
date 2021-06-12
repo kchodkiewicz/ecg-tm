@@ -13,7 +13,7 @@ struct EmptyChartSplashView: View {
     @State var countdown: Int = 6
     @Binding var triggerCountdown: Bool
 
-    let timer = Timer.publish(every: 0.8, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 0.2, on: .main, in: .common).autoconnect()
     
     var body: some View {
         Text(self.countdown > 5 || self.countdown < 1 ? "" : String(self.countdown))
