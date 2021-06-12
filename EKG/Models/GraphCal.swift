@@ -16,8 +16,9 @@ class GraphCal: ObservableObject, Equatable
         lhs.entries == rhs.entries
     }
     
-    let passThroughSubjectPublisher = PassthroughSubject<[ChartDataEntry], Never>()
+    //let passThroughSubjectPublisher = PassthroughSubject<[ChartDataEntry], Never>()
     @Published public var entries : [ChartDataEntry] = []
+    public var y: [Double] = []
     //var charts: LineChartView = LineChartView()
     var numOfSample: Int = 0
 
@@ -27,17 +28,17 @@ class GraphCal: ObservableObject, Equatable
         
         
         var dataU16T : [UInt16] = []
-        let freq = 250
-        let gain = 1100
-        let offsetError = 1
-        let offsetLeads = 330
-        let maxValueADC = 1024
-        let resolutionAdc = 1023
+        let freq: Double = 250
+        let gain: Double = 1100
+        let offsetError: Double = 1
+        let offsetLeads: Double = 330
+        let maxValueADC: Double = 1024
+        let resolutionAdc: Double = 1023
         
         
         for i in stride(from: 0, to: data.count - 1, by: 2)
         {
-            let u16 = UInt16(UInt16(data[i+1]) << COMMShiftByte.OneByte.rawValue + UInt16(data[i ]))
+            let u16 = UInt16(UInt16(data[i+1]) << COMMShiftByte.OneByte.rawValue + UInt16(data[i]))
             dataU16T.append(u16)
         }
         //print("--U16 \(dataU16T)")
@@ -47,25 +48,27 @@ class GraphCal: ObservableObject, Equatable
         for sample in dataU16T
         {
             x = Double(Double(numOfSample) / Double(freq))
-            var ecgDisp = Double(sample) * Double(maxValueADC)
+            var ecgDisp: Double = Double(sample) * Double(maxValueADC)
             ecgDisp = ecgDisp * (320 / 100)
             ecgDisp = Double(ecgDisp / Double(resolutionAdc))
             ecgDisp = Double((ecgDisp - Double(offsetLeads)) / Double(gain)) - Double(offsetError)
 
             let entry = ChartDataEntry(x: Double(x), y: Double(ecgDisp))
-             tmp.append(entry)
-             numOfSample += 1
+            tmp.append(entry)
+            numOfSample += 1
+            y.append(ecgDisp)
         }
         print("numOfSample", numOfSample)
         //print("graphdata entires", self.entries)
         self.entries += tmp
-        passThroughSubjectPublisher.send(tmp)
+        //passThroughSubjectPublisher.send(tmp)
+        //print("entries ", self.entries)
         return self.entries
 
     }
     
     func saveDataToDB() {
-    
+        print(y)
         numOfSample = 0
         //let tmpDataArray = entries
         

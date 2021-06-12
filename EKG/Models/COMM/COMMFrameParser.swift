@@ -17,7 +17,7 @@ class COMMFrameParser: ObservableObject {
         var frameType: COMMCommandType
     }
     
-    static var ecgFinished: Bool = false
+    static var gotFullFrame: Bool = false
     static var frameEntries: [UInt8] = []
     
     private static var m_listFrame: [SendFrame] = []
@@ -141,19 +141,19 @@ class COMMFrameParser: ObservableObject {
     static func ExecuteFrameData(frame: [UInt8]) {
         let frameType: FrameType = GetFrameType(frame: frame)
         var tmpFrame: [UInt8] = []
-        print("-#-#- wykouje komende")
+        //print("-#-#- wykouje komende")
         
         if frameType == FrameType.SendingFrame || m_isSamplePackage == true {
             
             var getFrame = false
             let commandIndex: UInt8 = 7
             let commandType: COMMCommandType = COMMCommandType(rawValue: frame[Int(commandIndex)]) ?? COMMCommandType.Invalid
-            print("Musze sprawdzic dane ekg")
+            //print("Musze sprawdzic dane ekg")
             if m_isSamplePackage == true {
                 
-                if frameExecution.count < 238 {
+                if frameExecution.count < 180 {
                     frameExecution += frame
-                    print("Dostałem część próbek")
+                    //print("Dostałem część próbek")
                     return
                 }
                 
@@ -161,13 +161,13 @@ class COMMFrameParser: ObservableObject {
                 m_isSamplePackage = false
                 tmpFrame = frameExecution
                 frameExecution.removeAll()
-                print("Dostałem całą ramkę")
+                //print("Dostałem całą ramkę")
                 getFrame = true
             }
             if commandType == COMMCommandType.ECGSamplePackage && !getFrame {
                 m_isSamplePackage = true
                 frameExecution += frame
-                print("Dostałem początek ramki próbkami")
+                //print("Dostałem początek ramki próbkami")
                 return
             }
             else if commandType == COMMCommandType.EndECGTest {
@@ -175,14 +175,14 @@ class COMMFrameParser: ObservableObject {
             }
         } else {
             tmpFrame = frame
-            print("typ ramki", frameType)
-            print(tmpFrame)
+//            print("typ ramki", frameType)
+//            print(tmpFrame)
         }
         if CheckCRC(frame: tmpFrame) {
             let frameType: FrameType = GetFrameType(frame: tmpFrame)
-            print("jestem przez ifem tym o takim")
+            //print("jestem przez ifem tym o takim")
             if frameType == FrameType.SendingFrame {
-                print("dostałem ramke bo tym to sending frame")
+                //print("dostałem ramke bo tym to sending frame")
                 ExecuteCommand(frame: tmpFrame)
             }
             else if frameType == FrameType.ResponseFrame {
@@ -264,7 +264,7 @@ class COMMFrameParser: ObservableObject {
             //odpakuj te dane
             
             COMMFrameParser.frameEntries = Array(frame[8...frame.count - 1])
-            COMMFrameParser.ecgFinished = true
+            COMMFrameParser.gotFullFrame = true
             
             print("Dostalem paczke danych EKG")
             

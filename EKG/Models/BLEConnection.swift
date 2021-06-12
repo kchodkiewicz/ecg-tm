@@ -35,8 +35,8 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
     
     static var frameCounter: Int = 0
 
-    public static let bleServiceUUID = CBUUID.init(string: "FFE0")
-    public static let bleCharacteristicUUID = CBUUID.init(string: "FFE1")
+    public static let bleServiceUUID = CBUUID.init(string: "4fafc201-1fb5-459e-8fcc-c5c9c331914b")
+    public static let bleCharacteristicUUID = CBUUID.init(string: "beb5483e-36e1-4688-b7f5-ea07361b26a8")
 
     // Array to contain names of BLE devices to connect to.
     // Accessable by ContentView for Rendering the SwiftUI Body on change in this array.
@@ -223,20 +223,21 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
             //data recieved
             //print("przed ifem w didUpdateValueFor")
             if(characteristic.value != nil) {
-                print("")
+                print(characteristic.value!)
                 COMMFrameParser.ExecuteFrameData(frame: Array(characteristic.value!))
                 //print("------------------------------ cos se odebralem")
-                if COMMFrameParser.ecgFinished {
+                if COMMFrameParser.gotFullFrame {
                     
                     BLEConnection.frameCounter += 1
-                    print("FRAME COUNTER", BLEConnection.frameCounter)
-                    print("frameEntries.count", COMMFrameParser.frameEntries.count)
+//                    print("FRAME COUNTER", BLEConnection.frameCounter)
+//                    print("frameEntries.count", COMMFrameParser.frameEntries.count)
                     //print("received string", COMMFrameParser.frameEntries)
                     
                     self.recievedString = COMMFrameParser.frameEntries
                     passThroughSubjectPublisher.send(COMMFrameParser.frameEntries)
-                    COMMFrameParser.ecgFinished = false
-                    //COMMFrameParser.frameEntries.removeAll()
+                    print("frame length", COMMFrameParser.frameEntries.count)
+                    COMMFrameParser.gotFullFrame = false
+                    COMMFrameParser.frameEntries.removeAll()
                     //self.finishedExamination = true
                     
                     
@@ -253,7 +254,7 @@ open class BLEConnection: NSObject, CBPeripheralDelegate, CBCentralManagerDelega
         dataToSend.append(contentsOf: data)
         print(dataToSend)
         if self.peripheral != nil {
-            self.peripheral!.writeValue(dataToSend, for: mainCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
+            self.peripheral!.writeValue(dataToSend, for: mainCharacteristic!, type: CBCharacteristicWriteType.withResponse)
             //btMessage = nil
         } else {
             print("Haven't discovered device yet.")

@@ -12,9 +12,9 @@ import Combine
 import Foundation
 
 class ExamArray: ObservableObject {
-    @Published var array: [UInt8] = []
+    @Published var array: [ChartDataEntry] = []
     
-    func addToArray(data: [UInt8]) {
+    func addToArray(data: [ChartDataEntry]) {
         self.array += data
     }
     
@@ -90,13 +90,13 @@ struct GraphExamView: View {
         print("Saving exam to CoreData")
         var samples: [Sample] = []
 
-//        for chartData in examArray.array {
-//            let sample = Sample(context: viewContext)
-//            sample.id = UUID()
-//            sample.xValue = Double(chartData.x)
-//            sample.yValue = Double(chartData.y)
-//            samples.append(sample)
-//        }
+        for chartData in graphData.entries {
+            let sample = Sample(context: viewContext)
+            sample.id = UUID()
+            sample.xValue = Double(chartData.x)
+            sample.yValue = Double(chartData.y)
+            samples.append(sample)
+        }
 
         let stats = calcHeartRate(samples: samples)
 
@@ -197,7 +197,8 @@ struct GraphExamView: View {
     }
 
     var body: some View {
-        let vStack = VStack {
+        //let vStack =
+            VStack {
 
             Spacer()
 
@@ -219,10 +220,10 @@ struct GraphExamView: View {
                         }
 
                     } else {
-                        //withAnimation(.easeInOut(duration: 3.0)) {
+                        withAnimation(.easeInOut(duration: 3.0)) {
                             sendStart()
                             //self.placeholderTrigger.toggle()
-                        //}
+                        }
                     }
 
                 } else {
@@ -265,14 +266,16 @@ struct GraphExamView: View {
                 }
 
         }
-        return vStack
+        //return vStack
             .onReceive(self.bleConnection.passThroughSubjectPublisher) { result in
 
             print("Got some data")
+            
 
-
-            print("Count ", self.examArray.array.count, "Samples per second ", (Float(self.examArray.array.count) / self.profile.examDuration))
-            if self.graphData.entries.count >= Int((self.profile.examDuration) * 200) || self.examinationStopped {
+            print("Count ", self.graphData.entries.count, "Limit ", Int(self.profile.examDuration * 250 - 8))
+                
+                let limit = Int(self.profile.examDuration * 250 - 8 - Float((result.count / 2)))
+                if self.graphData.entries.count >= limit || self.examinationStopped {
 
                 print("Got full array")
                 self.examinationStopped = false
@@ -284,8 +287,8 @@ struct GraphExamView: View {
 
                 queueToSummary()
             } else {
-                self.examArray.array += result
-                _ = self.graphData.addDataFromBT(data: result)
+                print("result.count ", result.count)
+                self.examArray.array = self.graphData.addDataFromBT(data: result)
             }
 
         }
