@@ -147,84 +147,75 @@ struct HistoryOverview: View {
     }
     
     var body: some View {
-        Group {
+        GeometryReader { proxy in
+            
+            
             if !self.lastPeriodExams.isEmpty {
                 
-                Form {
-//                    Section(header:
-//                                Text("Recent exams")
-//                    ) {
-//                        VStack {
-//                            HStack {
-//                                Label("Electrocardiogram", systemImage: "waveform.path.ecg")
-//                                    .labelStyle(CompressedLabelStyle(labelColor: .systemPurple))
-//
-//                                Spacer()
-//
-//                                Text("\(Formatters.withoutYear(date: self.filteredExams.first!.wrappedDate)) - \(Formatters.withoutYear(date: self.filteredExams.last!.wrappedDate))")
-//                                    .font(.body)
-//                                    .foregroundColor(Color(.secondaryLabel))
-//                            }
-//                            .padding()
-//
-//                            TabView {
-//
-//                                ForEach(self.filteredExams) { exam in
-//
-//                                    RecentExamTab(exam: exam)
-//                                        .tabItem {
-//                                            Text(exam.wrappedDate, formatter: Formatters.dateFormat)
-//                                        }
-//                                        .tag(exam.wrappedId)
-//                                }
-//
-//                            }
-//                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-//                            //.fixedSize()
-//                            .frame(height: 250)
-//
-//                        }
-//
-//                    }
+                
+                List {
                     
-                    if !self.lastPeriodExams.isEmpty {
-                        
-                        //TODO: test if works
-                        
+                    Section(header:
+                                Text("Average results")
+//                                Picker("Time period", selection: self.$selectPeriod) {
+//                                    ForEach(TimePeriod.allCases, id: \.self) { type in
+//                                        Text(type.displayName)
+//
+//                                    }
+//                                }
+//                                .background(Color(.systemGroupedBackground))
+//                                .padding(.horizontal)
+//                                //.frame(height: proxy.safeAreaInsets.top)
+//                                .pickerStyle(SegmentedPickerStyle())
+//                                .onChange(of: self.selectPeriod) { _ in
+//                                    withAnimation {
+//                                        updateValues()
+//                                    }
+//                                }
+                    ) {
+                        SummarySection(labelName: "Heart Rate", labelIcon: "heart.fill", color: UIColor.systemPink, selectedRange: self.selectedRange, values: [Int(self.means.heartrate)], units: ["BPM"])
+                    }
+                    
+                    Section {
+                        SummarySection(labelName: "Exam type", labelIcon: "lungs.fill", color: .systemIndigo, selectedRange: self.selectedRange, values: [Int(means.examType.0), Int(means.examType.1)], units: ["resting", "stress"])
+                    }
+                    
+                    Section {
+                        SummarySection(labelName: "Interval", labelIcon: "metronome.fill", color: .systemRed, selectedRange: self.selectedRange, values: [Int(1000 * self.means.interval)], units: ["ms"])
+                    }
+                    
+                    Section {
+                        SummarySection(labelName: "IQR", labelIcon: "metronome.fill", color: .systemGreen, selectedRange: self.selectedRange, values: [Int(1000 * self.means.iqr)], units: ["ms"])
+                    }
+                    
+                }
+                .listStyle(InsetGroupedListStyle())
+                //.padding(.top)
+                .toolbar(content: {
+                    
+                    
+                    
+                    ToolbarItemGroup(placement: .principal) {
                         Picker("Time period", selection: self.$selectPeriod) {
                             ForEach(TimePeriod.allCases, id: \.self) { type in
                                 Text(type.displayName)
                                 
                             }
-                        }.pickerStyle(SegmentedPickerStyle())
+                        }
+                        //.background(Color(.systemGroupedBackground))
+                        //.padding(.horizontal)
+                        //.frame(height: proxy.safeAreaInsets.top)
+                        .pickerStyle(SegmentedPickerStyle())
                         .onChange(of: self.selectPeriod) { _ in
                             withAnimation {
                                 updateValues()
                             }
                         }
-                        
-                        // --------------------
-                        
-                        Section(header: Text("Average results")) {
-                        SummarySection(labelName: "Heart Rate", labelIcon: "heart.fill", color: UIColor.systemPink, selectedRange: self.selectedRange, values: [Int(self.means.heartrate)], units: ["BPM"])
-                        }
-                        
-                        Section {
-                        SummarySection(labelName: "Exam type", labelIcon: "lungs.fill", color: .systemIndigo, selectedRange: self.selectedRange, values: [Int(means.examType.0), Int(means.examType.1)], units: ["resting", "stress"])
-                        }
-                        
-                        Section {
-                        SummarySection(labelName: "Interval", labelIcon: "metronome.fill", color: .systemRed, selectedRange: self.selectedRange, values: [Int(1000 * self.means.interval)], units: ["ms"])
-                        }
-                        
-                        Section {
-                            SummarySection(labelName: "IQR", labelIcon: "metronome.fill", color: .systemGreen, selectedRange: self.selectedRange, values: [Int(1000 * self.means.iqr)], units: ["ms"])
-                        }
-                        
-                        //                        SummarySection(labelName: "Exam type", labelIcon: "lungs.fill", color: .systemIndigo, selectedRange: self.selectedRange, values: [Int(means.examType.0), Int(means.examType.1)], units: [makeString(floor(100 * (Double(means.examType.0) / Double(lastPeriodExams.count))), "%"), makeString(ceil(100 * (Double(means.examType.1) / Double(lastPeriodExams.count))), "%")])
-                        //
                     }
-                }
+                })
+                
+                
+                
                 
             } else {
                 Button {
@@ -235,14 +226,12 @@ struct HistoryOverview: View {
                 
             }
             
+            
+            
         }
-        
-//        .toolbar(content: {
-//            ToolbarItemGroup(placement: ) {
-//
-//            }
-//        })
         .navigationTitle("Summary")
+        
+        
         
         
         .onAppear(perform: updateValues)
@@ -251,14 +240,15 @@ struct HistoryOverview: View {
                 updateValues()
             }
         }
+        
     }
     
     
     func updateValues() {
         
-//        if profile.examArray.count > 0 {
-//            self.filteredExams = Array(profile.examArray[0...min(profile.examArray.count - 1, 2)])
-//        }
+        //        if profile.examArray.count > 0 {
+        //            self.filteredExams = Array(profile.examArray[0...min(profile.examArray.count - 1, 2)])
+        //        }
         //print("filtered ", self.filteredExams)
         
         let range = ClosedRange<Date>(uncheckedBounds: (lower: Calendar.current.date(byAdding: .day, value: -self.selectPeriod.rawValue, to: Date())!, upper: Date()))
@@ -282,6 +272,24 @@ struct HistoryOverview: View {
         self.profile = profile
         self._switchTab = switchTab
         updateValues()
+        
+        //UINavigationBar.appearance().backgroundColor = .yellow
+//
+//
+//        UINavigationBar.appearance().largeTitleTextAttributes = [
+//            .foregroundColor: UIColor.darkGray,
+//            .font : UIFont(name:"Papyrus", size: 40)!]
+//
+//        // 3.
+//        UINavigationBar.appearance().titleTextAttributes = [
+//            .font : UIFont(name: "HelveticaNeue-Thin", size: 20)!]
+//
+//        UINavigationBar.appearance().setItems([UINavigationItem(coder: NSCoder())!], animated: true)
+//
+//        UINavigationBar.addSubview(UIView(frame: {
+//            Rectangle()
+//                .foregroundColor(.blue)
+//        }))
     }
 }
 

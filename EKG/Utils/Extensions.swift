@@ -82,8 +82,6 @@ struct RoundButtonStyle: ButtonStyle {
     
     func makeBody(configuration: Self.Configuration) -> some View {
         
-        let trimTo: CGFloat = self.trimFrom + 0.25
-        print("trim(from: \(trimFrom), to: \(trimTo))")
         return
             ZStack {
                 RoundedRectangle(cornerRadius: isProcessing ? 55.0 / 2.0 : 10.0, style: .continuous)
@@ -189,21 +187,11 @@ struct GaugeProgressStyle: ProgressViewStyle {
                 .trim(from: trimStart, to: trimEnd)
                 .stroke(strokeColor, style: StrokeStyle(lineWidth: CGFloat(strokeWidth), lineCap: .round))
                 .frame(width: CGFloat(frameWidth), height: 63)
-                
-            
-//            RoundedRectangle(cornerRadius: fractionCompleted > 1.0 ? CGFloat(228.0 / 2.0) : CGFloat(10.0), style: .continuous)
-//                .trim(from: fractionCompleted > 1.0 ? trimStart : 0.0, to: fractionCompleted > 1.0 ? trimEnd : 1.0)
-//
-//                .frame(width: CGFloat(fractionCompleted > 1.0 ? 63 : 228), height: 63)
-//
-//                //.rotationEffect(Angle.degrees(isProcessing ? 1180 : 0))
-//                //.animation(isProcessing ? animation : nil)
-//                .animation(.spring(dampingFraction: 0.7))
-            
         }
     }
-    
-    
 }
+
+
+
 
 

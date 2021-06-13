@@ -16,32 +16,6 @@ struct GraphSummaryView: View {
     @State var notes: String = ""
     @State var examType: ExamType = .resting
     
-//    //TODO: remove cause its only for testing
-//    private func calcHeartRate() -> (Int64, [Double]) {
-//        // peak if value greater than both neighbours and value
-//        // greater than 0.6
-//        let samples = self.exam.sampleArray
-//        var peaks: [Double] = []
-//        
-//        guard samples.count - 1 > 1 else {
-//            return (-1, [])
-//        }
-//        for index in 1 ..< samples.count - 1 {
-//            if (samples[index] > samples[index + 1] && samples[index] > samples[index - 1]) && samples[index].yValue >= 0.6 {
-//                peaks.append(samples[index].xValue)
-//            }
-//        }
-//        
-//        let duration = samples.count / 250
-//        guard duration != 0 else {
-//            return (-1, [])
-//        }
-//        let rate = Int64(Double(peaks.count) / Double(duration) * 60.0) // for bpm
-//        
-//        // return peaks
-//        return (rate, peaks)
-//    }
-    
     var resultImage: some View {
         
         switch exam.resultName {
@@ -97,7 +71,7 @@ struct GraphSummaryView: View {
                             .bold()
                             .foregroundColor(.secondary)
                     }
-                }
+                }.padding(.init(top: 10, leading: 10, bottom: 5, trailing: 5))
                 
                 GroupBox(
                     label: Label("Result", systemImage: "heart.text.square.fill")
@@ -112,10 +86,10 @@ struct GraphSummaryView: View {
                             //.foregroundColor(.secondary)
                             .lineLimit(1)
                     }
-                }
+                }.padding(.init(top: 10, leading: 5, bottom: 5, trailing: 10))
                 
-            }.padding(.horizontal)
-            .padding(.top)
+                }
+            
             
             
             
@@ -136,7 +110,7 @@ struct GraphSummaryView: View {
                         }
                     }.pickerStyle(SegmentedPickerStyle())
                     
-                }
+                }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
                 
                 
                 GroupBox(
@@ -152,11 +126,11 @@ struct GraphSummaryView: View {
                             UITextView.appearance().backgroundColor = .clear
                             //UITextView.appearance().keyboardDismissMode = .interactive
                         })
-                }
+                }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
                 
             }
-            .padding(.horizontal)
-            .padding(.bottom)
+//            .padding(.horizontal)
+//            .padding(.bottom)
             }//.background(Color(UIColor.systemGroupedBackground))
             
         

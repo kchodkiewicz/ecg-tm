@@ -157,7 +157,7 @@ struct PeaksGroupBox: View {
             }
             .buttonStyle(PlainButtonStyle())
             
-        }
+        }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
     }
     
     init(exam: Exam) {

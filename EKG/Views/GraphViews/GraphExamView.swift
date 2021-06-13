@@ -230,7 +230,8 @@ struct GraphExamView: View {
             } else {
 //                EmptyChartSplashView(triggerCountdown: $placeholderTrigger)
                 Text("New exam")
-                    .foregroundColor(.clear)
+                    .font(.title)
+                    .foregroundColor(.primary)
                     .frame(height: 375)
             }
             
