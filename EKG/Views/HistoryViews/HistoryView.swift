@@ -49,10 +49,7 @@ struct HistoryView: View {
     }
     
     func removeExam(at offsets: IndexSet) {
-        
-        //FIXME: there is a slight issue also called a problem when deleting first row
-        
-        //DispatchQueue.global(qos: .background).async {
+
             viewContext.perform {
                 for index in offsets {
                     let exam = profile.examArray[index]
@@ -67,11 +64,9 @@ struct HistoryView: View {
 
                 }
             }
-        //}
     }
     
     init(profile: Profile, switchTab: Binding<Tab>) {
-//        fetchRequest = FetchRequest<Profile>(entity: Profile.entity(), sortDescriptors: [], predicate: NSPredicate(format: "id == %@", filter as CVarArg), animation: .default)
         
         self.profile = profile
         
@@ -80,9 +75,3 @@ struct HistoryView: View {
     }
 }
 
-//struct HistoryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//
-//        HistoryView(filter: "thebob")
-//    }
-//}

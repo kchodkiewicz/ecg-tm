@@ -31,7 +31,7 @@ struct GraphExamView: View {
     @State var isShowingAlert: Bool = false
     @State var examinationInProgress: Bool = false
     @State var isProcessing: Bool = false
-    @State var trimFrom: CGFloat = 0.0
+    @State var buttonRotationAngle: CGFloat = 0.0
     let timer = Timer.publish(every: 0.05, on: .main, in: .common).autoconnect()
     
     @State var goToExam: Bool = false
@@ -121,6 +121,7 @@ struct GraphExamView: View {
         exam.id = UUID()
         exam.date = Date()
         exam.heartRate = stats.rate
+        exam.type = "resting"
         exam.addToPeaks(NSSet(array: peaks))
         exam.addToSample(NSSet(array: samples))
         
@@ -229,9 +230,9 @@ struct GraphExamView: View {
                     .transition(.asymmetric(insertion: .scale(scale: 2.0), removal: .move(edge: .top)))
             } else {
 //                EmptyChartSplashView(triggerCountdown: $placeholderTrigger)
-                Text("New exam")
-                    .font(.title)
-                    .foregroundColor(.primary)
+                Image(systemName: "waveform.path.ecg")
+                    .font(.largeTitle)
+                    .foregroundColor(Color(.systemPurple))
                     .frame(height: 375)
             }
             
@@ -275,10 +276,10 @@ struct GraphExamView: View {
                 Text(self.isProcessing ? "Wait" : (self.examinationInProgress ? "Stop" : "Start"))
 
             })
-            .buttonStyle(RoundButtonStyle(foregroundColor: self.examinationInProgress ? Color(.systemPink) : Color(.systemGreen), isProcessing: self.$isProcessing, trimFrom: self.$trimFrom))
+            .buttonStyle(RoundButtonStyle(foregroundColor: self.examinationInProgress ? Color(.systemPink) : Color(.systemGreen), isProcessing: self.$isProcessing, rotationAngle: self.$buttonRotationAngle))
             .onReceive(timer) { _ in
                 if isProcessing {
-                    self.trimFrom += 20 //CGFloat((Int(self.trimFrom * 100) + 10) % 100) / 100
+                    self.buttonRotationAngle += 20 //CGFloat((Int(self.trimFrom * 100) + 10) % 100) / 100
                 }
             }
             

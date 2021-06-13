@@ -72,7 +72,6 @@ struct ContentView: View {
         }
     }
     
-    //TODO: change hardcoded padding
     let userIconPadding: CGFloat = 10
     
     var gemetricalPadding: CGFloat {

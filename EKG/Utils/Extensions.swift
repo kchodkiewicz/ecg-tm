@@ -73,7 +73,7 @@ struct RoundButtonStyle: ButtonStyle {
     let foregroundColor: Color
     
     @Binding var isProcessing: Bool
-    @Binding var trimFrom: CGFloat
+    @Binding var rotationAngle: CGFloat
     
     var animation: Animation {
         Animation.linear
@@ -93,7 +93,7 @@ struct RoundButtonStyle: ButtonStyle {
                     .trim(from: isProcessing ? 0.0 : 0.0, to: isProcessing ? 0.25 : 1.0)
                     .stroke(foregroundColor, lineWidth: 3.0)
                     .frame(width: isProcessing ? 63 : 228, height: 63)
-                    .rotationEffect(.degrees(isProcessing ? Double(self.trimFrom) : 0.0 ))
+                    .rotationEffect(.degrees(isProcessing ? Double(self.rotationAngle) : 0.0 ))
                     .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.2))
                 
                 configuration.label

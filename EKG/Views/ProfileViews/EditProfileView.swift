@@ -12,7 +12,7 @@ import CoreBluetooth
 struct ProfileEditView: View {
     //@Environment(\.managedObjectContext) private var viewContext
     var viewContext: NSManagedObjectContext
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    //@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     let profile: Profile
     
@@ -151,7 +151,7 @@ struct ProfileEditView: View {
                         
                         Spacer()
                         
-                        Text(bleConnection.peripheral?.name ?? "None")
+                        Text(self.trimBTName(string: bleConnection.peripheral?.name ?? "None"))
                     }
                 }
                 Section {
@@ -172,36 +172,71 @@ struct ProfileEditView: View {
         }
         
         //.listStyle(GroupedListStyle())
-        .navigationBarItems(
-            leading: Button(action: {
-                withAnimation {
-                    self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
-                }
-            }) {
-                Text(.inactive == self.editMode?.wrappedValue ? "" : "Cancel")
-            }
-            .padding(.vertical)
-            .padding(.trailing),
-            
-            trailing: Button(action: {
-                withAnimation {
-                    if self.editMode?.wrappedValue == .active {
-                        if self.isShowingPallette {
-                            self.isShowingPallette.toggle()
-                        }
-                        updateProfile()
+        
+        .toolbar(content: {
+           
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
+                    withAnimation {
+                        self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
                     }
-                    self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
+                }) {
+                    Text(.inactive == self.editMode?.wrappedValue ? "" : "Cancel")
                 }
-            }) {
-                Text(.inactive == self.editMode?.wrappedValue ? "Edit" : "Done")
             }
-            .padding(.vertical)
-            .padding(.leading)
-        )
+            
+            ToolbarItem(placement: .confirmationAction) {
+                Button(action: {
+                    withAnimation {
+                        if self.editMode?.wrappedValue == .active {
+                            if self.isShowingPallette {
+                                self.isShowingPallette.toggle()
+                            }
+                            updateProfile()
+                        }
+                        self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
+                    }
+                }) {
+                    Text(.inactive == self.editMode?.wrappedValue ? "Edit" : "Done")
+                }
+            }
+            
+        })
+        
+//        .navigationBarItems(
+//            leading: Button(action: {
+//                withAnimation {
+//                    self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
+//                }
+//            }) {
+//                Text(.inactive == self.editMode?.wrappedValue ? "" : "Cancel")
+//            }
+//            .padding(.vertical)
+//            .padding(.trailing),
+//
+//            trailing: Button(action: {
+//                withAnimation {
+//                    if self.editMode?.wrappedValue == .active {
+//                        if self.isShowingPallette {
+//                            self.isShowingPallette.toggle()
+//                        }
+//                        updateProfile()
+//                    }
+//                    self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
+//                }
+//            }) {
+//                Text(.inactive == self.editMode?.wrappedValue ? "Edit" : "Done")
+//            }
+//            .padding(.vertical)
+//            .padding(.leading)
+//        )
         
         .navigationTitle(.inactive == self.editMode?.wrappedValue ? "\(self.firstName) \(self.lastName)" : "Edit your profile")
         
+    }
+    
+    private func trimBTName(string: String) -> String {
+        return string.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     private func getAge(birthdate: Date) -> String {
@@ -225,8 +260,9 @@ struct ProfileEditView: View {
         profile.age = self.age
         profile.examDuration = Float(self.examDuration)
         profile.profileColor = self.profileColor.rawValue
+        
         do {
-        try self.viewContext.save()
+            try self.viewContext.save()
         } catch {
             print("Oupsie dudle")
             self.viewContext.rollback()

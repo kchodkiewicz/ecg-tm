@@ -84,8 +84,10 @@ struct HistoryOverview: View {
     @State var selectedRange: SelectedRange = SelectedRange()
     @State var means: MeanStats = MeanStats()
     
+    @State var showPicker: Bool = false
+    
     struct MeanStats {
-        
+        //TODO: create graphs
         var heartrate: Int64 = 0
         var interval: Double = 0.0
         var iqr: Double = 0.0
@@ -152,70 +154,219 @@ struct HistoryOverview: View {
             
             if !self.lastPeriodExams.isEmpty {
                 
+                //                List {
+                //
+                //                    Section(header:
+                //                                Text("Average results")
+                //                    ) {
+                //                        SummarySection(labelName: "Heart Rate", labelIcon: "heart.fill", color: .systemPink, selectedRange: self.selectedRange, values: [Int(self.means.heartrate)], units: ["BPM"])
+                //                    }
+                //
+                //                    Section {
+                //                        SummarySection(labelName: "Exam type", labelIcon: "lungs.fill", color: .systemIndigo, selectedRange: self.selectedRange, values: [Int(means.examType.0), Int(means.examType.1)], units: ["resting", "stress"])
+                //                    }
+                //
+                //                    Section {
+                //                        SummarySection(labelName: "Interval", labelIcon: "metronome.fill", color: .systemRed, selectedRange: self.selectedRange, values: [Int(1000 * self.means.interval)], units: ["ms"])
+                //                    }
+                //
+                //                    Section {
+                //                        SummarySection(labelName: "IQR", labelIcon: "metronome.fill", color: .systemGreen, selectedRange: self.selectedRange, values: [Int(1000 * self.means.iqr)], units: ["ms"])
+                //                    }
+                //
+                //                }
+                //                .listStyle(InsetGroupedListStyle())
                 
-                List {
+                
+                VStack {
                     
-                    Section(header:
-                                Text("Average results")
-//                                Picker("Time period", selection: self.$selectPeriod) {
-//                                    ForEach(TimePeriod.allCases, id: \.self) { type in
-//                                        Text(type.displayName)
+                    List {
+                        EmptyView()
+                    }.listStyle(InsetGroupedListStyle())
+                    .frame(height: 0)
+                    
+                    ScrollViewReader { scrollProxy in
+                        ScrollView(.vertical, showsIndicators: false) {
+                            
+                            //if showPicker {
+                                Picker("Time period", selection: self.$selectPeriod) {
+                                    ForEach(TimePeriod.allCases, id: \.self) { type in
+                                        Text(type.displayName)
+                                        
+                                    }
+                                }
+                                
+                                .padding(.horizontal)
+                                .pickerStyle(SegmentedPickerStyle())
+                                
+                                .onChange(of: self.selectPeriod) { _ in
+                                    withAnimation {
+                                        updateValues()
+                                    }
+                                }
+                                .transition (
+                                    .asymmetric (
+                                        insertion: .move(edge: .bottom),
+                                        removal:
+                                            .move(edge: .top)
+                                    )
+                                )
+                            //}
+                            
+                            GroupBox(label: HStack {
+                                Label("Heart Rate", systemImage: "heart.fill")
+                                    .foregroundColor(Color(.systemPink))
+                                Spacer()
+                                
+                                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
+                                    .font(.body)
+                                    .foregroundColor(Color(.secondaryLabel))
+                            }) {
+                                HStack {
+                                    Text("\(Int(self.means.heartrate))")
+                                        .font(.system(.largeTitle, design: .rounded))
+                                        .bold()
+                                    Text("BPM")
+                                        .font(.title2)
+                                        .bold()
+                                        .foregroundColor(.secondary)
+                                    Spacer()
+                                }
+                                
+                            }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
+                            .id(1)
+                            
+                            GroupBox(label: HStack {
+                                Label("Exam type", systemImage: "lungs.fill")
+                                    .foregroundColor(Color(.systemIndigo))
+                                Spacer()
+                                
+                                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
+                                    .font(.body)
+                                    .foregroundColor(Color(.secondaryLabel))
+                            }) {
+                                
+                                HStack {
+                                    
+                                    HStack(alignment: .lastTextBaseline, spacing: 0) {
+                                        Text("\(Int(means.examType.0))")
+                                            .font(.system(.largeTitle, design: .rounded))
+                                            .bold()
+                                        Text("resting")
+                                            .font(.title2)
+                                            .bold()
+                                            .foregroundColor(.secondary)
+                                        Spacer()
+                                        
+                                    }
+                                    
+                                    HStack(alignment: .lastTextBaseline, spacing: 0) {
+                                        Text("\(Int(means.examType.1))")
+                                            .font(.system(.largeTitle, design: .rounded))
+                                            .bold()
+                                        Text("stress")
+                                            .font(.title2)
+                                            .bold()
+                                            .foregroundColor(.secondary)
+                                        Spacer()
+                                        
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                }
+                                
+                            }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
+                            
+                            GroupBox(label: HStack {
+                                Label("Interval", systemImage: "metronome.fill")
+                                    .foregroundColor(Color(.systemRed))
+                                Spacer()
+                                
+                                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
+                                    .font(.body)
+                                    .foregroundColor(Color(.secondaryLabel))
+                            }) {
+                                HStack {
+                                    Text("\(Int(1000 * self.means.interval))")
+                                        .font(.system(.largeTitle, design: .rounded))
+                                        .bold()
+                                    Text("ms")
+                                        .font(.title2)
+                                        .bold()
+                                        .foregroundColor(.secondary)
+                                    Spacer()
+                                }
+                                
+                            }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
+                            
+                            GroupBox(label: HStack {
+                                Label("IQR", systemImage: "metronome.fill")
+                                    .foregroundColor(Color(.systemGreen))
+                                Spacer()
+                                
+                                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
+                                    .font(.body)
+                                    .foregroundColor(Color(.secondaryLabel))
+                            }) {
+                                HStack {
+                                    Text("\(Int(1000 * self.means.iqr))")
+                                        .font(.system(.largeTitle, design: .rounded))
+                                        .bold()
+                                    Text("ms")
+                                        .font(.title2)
+                                        .bold()
+                                        .foregroundColor(.secondary)
+                                    Spacer()
+                                }
+                                
+                            }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
+                            
+                            
+                        }.groupBoxStyle(ColoredGroupBoxStyle(backgroundColor: UIColor.secondarySystemGroupedBackground))
+//                        .gesture(
+//                            DragGesture()
+//                                .onChanged({ offset in
+//                                    if offset.translation.height > 0 {
+//                                        withAnimation {
+//                                            print("Scroll down")
+//                                            self.showPicker = true
+//                                        }
+//                                    } else {
+//                                        withAnimation {
+//                                            print("Scroll up")
+//                                            self.showPicker = false
+//                                        }
 //
 //                                    }
-//                                }
-//                                .background(Color(.systemGroupedBackground))
-//                                .padding(.horizontal)
-//                                //.frame(height: proxy.safeAreaInsets.top)
-//                                .pickerStyle(SegmentedPickerStyle())
-//                                .onChange(of: self.selectPeriod) { _ in
-//                                    withAnimation {
-//                                        updateValues()
-//                                    }
-//                                }
-                    ) {
-                        SummarySection(labelName: "Heart Rate", labelIcon: "heart.fill", color: UIColor.systemPink, selectedRange: self.selectedRange, values: [Int(self.means.heartrate)], units: ["BPM"])
-                    }
-                    
-                    Section {
-                        SummarySection(labelName: "Exam type", labelIcon: "lungs.fill", color: .systemIndigo, selectedRange: self.selectedRange, values: [Int(means.examType.0), Int(means.examType.1)], units: ["resting", "stress"])
-                    }
-                    
-                    Section {
-                        SummarySection(labelName: "Interval", labelIcon: "metronome.fill", color: .systemRed, selectedRange: self.selectedRange, values: [Int(1000 * self.means.interval)], units: ["ms"])
-                    }
-                    
-                    Section {
-                        SummarySection(labelName: "IQR", labelIcon: "metronome.fill", color: .systemGreen, selectedRange: self.selectedRange, values: [Int(1000 * self.means.iqr)], units: ["ms"])
+//                                })
+//                        )
+                        
                     }
                     
                 }
-                .listStyle(InsetGroupedListStyle())
                 //.padding(.top)
-                .toolbar(content: {
-                    
-                    
-                    
-                    ToolbarItemGroup(placement: .principal) {
-                        Picker("Time period", selection: self.$selectPeriod) {
-                            ForEach(TimePeriod.allCases, id: \.self) { type in
-                                Text(type.displayName)
-                                
-                            }
-                        }
-                        //.background(Color(.systemGroupedBackground))
-                        //.padding(.horizontal)
-                        //.frame(height: proxy.safeAreaInsets.top)
-                        .pickerStyle(SegmentedPickerStyle())
-                        .onChange(of: self.selectPeriod) { _ in
-                            withAnimation {
-                                updateValues()
-                            }
-                        }
-                    }
-                })
                 
-                
-                
+                //                .toolbar(content: {
+                //
+                //                    ToolbarItemGroup(placement: .principal) {
+                //                        Picker("Time period", selection: self.$selectPeriod) {
+                //                            ForEach(TimePeriod.allCases, id: \.self) { type in
+                //                                Text(type.displayName)
+                //
+                //                            }
+                //                        }
+                //                        //.background(Color(.systemGroupedBackground))
+                //                        //.padding(.horizontal)
+                //                        //.frame(height: proxy.safeAreaInsets.top)
+                //                        .pickerStyle(SegmentedPickerStyle())
+                //                        .onChange(of: self.selectPeriod) { _ in
+                //                            withAnimation {
+                //                                updateValues()
+                //                            }
+                //                        }
+                //                    }
+                //                })
                 
             } else {
                 Button {
@@ -225,16 +376,21 @@ struct HistoryOverview: View {
                 }
                 
             }
-            
-            
-            
         }
         .navigationTitle("Summary")
         
+        //.navigationViewStyle(StackNavigationViewStyle())
+        .background(Color(.systemGroupedBackground))
         
+        .onAppear(perform: {
+            updateValues()
+            UINavigationBar.appearance().backgroundColor = .clear
+            
+        })
         
-        
-        .onAppear(perform: updateValues)
+        //        .onDisappear(perform: {
+        //            UINavigationBar.appearance().backgroundColor = .systemBackground
+        //        })
         .onChange(of: switchTab) { _ in
             if switchTab == .overview {
                 updateValues()
@@ -273,23 +429,6 @@ struct HistoryOverview: View {
         self._switchTab = switchTab
         updateValues()
         
-        //UINavigationBar.appearance().backgroundColor = .yellow
-//
-//
-//        UINavigationBar.appearance().largeTitleTextAttributes = [
-//            .foregroundColor: UIColor.darkGray,
-//            .font : UIFont(name:"Papyrus", size: 40)!]
-//
-//        // 3.
-//        UINavigationBar.appearance().titleTextAttributes = [
-//            .font : UIFont(name: "HelveticaNeue-Thin", size: 20)!]
-//
-//        UINavigationBar.appearance().setItems([UINavigationItem(coder: NSCoder())!], animated: true)
-//
-//        UINavigationBar.addSubview(UIView(frame: {
-//            Rectangle()
-//                .foregroundColor(.blue)
-//        }))
     }
 }
 

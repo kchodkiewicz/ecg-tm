@@ -21,13 +21,57 @@ struct GraphSummaryView: View {
         switch exam.resultName {
         case .good:
             return Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
-        case .nominal:
+        case .alerting:
             return Image(systemName: "minus.circle.fill").foregroundColor(.yellow)
         case .bad:
             return Image(systemName: "multiply.circle.fill").foregroundColor(.orange)
         case .critical:
             return Image(systemName: "cross.circle.fill").foregroundColor(.red)
         }
+        
+    }
+    
+    private func getResult(preResult: ExamResult) -> ExamResult {
+        var times: [Double] = []
+        
+        var peaksConverted: [Double] = []
+        
+        var arr: [Double] = []
+        for peaks in exam.peaksArray {
+            arr.append(peaks.xValue)
+        }
+        // remove duplicates
+        let tmpSet = Set<Double>(arr)
+        
+        peaksConverted = Array<Double>(tmpSet).sorted()
+        
+        guard peaksConverted.count > 1 else {
+            return preResult
+        }
+        
+        for index in 1..<peaksConverted.count {
+            let lhs = peaksConverted[index]
+            let rhs = peaksConverted[index - 1]
+            times.append(abs(lhs - rhs))
+        }
+        
+        let iqr = times.sorted()[Int(Double(times.count) * 0.75)] - times.sorted()[Int(Double(times.count) * 0.25)]
+        
+        let distanceIQR = abs(iqr - 0.06)
+        
+        var result = preResult
+        
+        if distanceIQR > 0.03 {
+            result = preResult.next()
+        }
+        if distanceIQR > 0.05 {
+            result = preResult.next()
+        }
+        if distanceIQR > 0.08 {
+            result = preResult.next()
+        }
+        
+        return result
         
     }
     
@@ -48,13 +92,6 @@ struct GraphSummaryView: View {
             Spacer()
             
             VStack {
-            
-                //TODO: rework as
-                // Form (without ScrollView and GroupBox [ VStack{Label Content}]) - as in Summary
-                // GraphDetail
-                // LazyVGrid (Section Section)
-                // Section
-                // Section
                 
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 
@@ -80,7 +117,7 @@ struct GraphSummaryView: View {
                     HStack(alignment: .lastTextBaseline, spacing: 0) {
 //                        resultImage
 //                            .font(.system(.largeTitle, design: .rounded))
-                        Text("\(exam.resultName.rawValue)")
+                        Text("\(getResult(preResult: exam.resultName).rawValue)")
                             .font(.system(.largeTitle, design: .rounded))
                             .bold()
                             //.foregroundColor(.secondary)
@@ -146,27 +183,9 @@ struct GraphSummaryView: View {
         withAnimation {
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             
-//            //TODO: remove cause it only for testing
-//            // --------- tests
-//            let stats = calcHeartRate()
-//            var peaks: [Peaks] = []
-//            for index in 0..<stats.1.count {
-//                let peak = Peaks(context: viewContext)
-//                peak.id = UUID()
-//                peak.peakNo = Double(index)
-//                peak.xValue = stats.1[index]
-//                peaks.append(peak)
-//            }
-//            // ---------
-            
             let exam = self.exam
             exam.type = self.examType.rawValue
             exam.notes = self.notes
-            
-//            // --------- tests
-//            exam.heartRate = stats.0
-//            exam.addToPeaks(NSSet(array: peaks))
-//            // ---------
             
             try? self.viewContext.save()
         }

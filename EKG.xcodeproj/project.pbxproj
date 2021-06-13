@@ -21,7 +21,7 @@
 		2C2226F826619B34002473E2 /* PeaksGroupBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2226F726619B34002473E2 /* PeaksGroupBox.swift */; };
 		2C2226FB2662858A002473E2 /* PreviewHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2226FA2662858A002473E2 /* PreviewHost.swift */; };
 		2C2226FD266290A7002473E2 /* TestProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2226FC266290A7002473E2 /* TestProfile.swift */; };
-		2C40294C25FAD7B600268220 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C40294B25FAD7B600268220 /* ProfileEditView.swift */; };
+		2C40294C25FAD7B600268220 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C40294B25FAD7B600268220 /* EditProfileView.swift */; };
 		2C48468626370C9700656C5E /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48468526370C9700656C5E /* Formatters.swift */; };
 		2C484689263740FD00656C5E /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C484688263740FD00656C5E /* Enums.swift */; };
 		2C48468C263744C000656C5E /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48468B263744C000656C5E /* ColorPickerView.swift */; };
@@ -42,7 +42,6 @@
 		2C6BC4C8265AC36A00A3DAC7 /* RecentExamOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C7265AC36A00A3DAC7 /* RecentExamOverlay.swift */; };
 		2C6BC4CA265C4CA300A3DAC7 /* EmptyChartSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4C9265C4CA300A3DAC7 /* EmptyChartSplashView.swift */; };
 		2C6BC4CC265E9BC400A3DAC7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4CB265E9BC400A3DAC7 /* ProfileView.swift */; };
-		2C6BC4CE265EE30700A3DAC7 /* CardioStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4CD265EE30700A3DAC7 /* CardioStatistics.swift */; };
 		2C6BC4D826603F6D00A3DAC7 /* MeanGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BC4D726603F6D00A3DAC7 /* MeanGraph.swift */; };
 		2C729E3E2640CB9B00D36A1B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C729E3D2640CB9B00D36A1B /* Extensions.swift */; };
 		2C9540962621CD9200D115FE /* BTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9540952621CD9200D115FE /* BTView.swift */; };
@@ -57,6 +56,7 @@
 		2CC6168B25F660270082FC63 /* GraphDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6168A25F660270082FC63 /* GraphDetail.swift */; };
 		2CC6168F25F6603D0082FC63 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6168E25F6603D0082FC63 /* HistoryView.swift */; };
 		2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */; };
+		2CD1A42C2676B984004F680A /* SummaryProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD1A42B2676B984004F680A /* SummaryProfileView.swift */; };
 		2CE421DC264D3596001CD813 /* GraphCal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE421DB264D3596001CD813 /* GraphCal.swift */; };
 		2CE421E126502431001CD813 /* ECGGraphPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE421E026502430001CD813 /* ECGGraphPreview.swift */; };
 		8087124F376F23F61EABD8C9 /* Pods_EKG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00BC46188FA5071CDBDC71A /* Pods_EKG.framework */; };
@@ -77,7 +77,7 @@
 		2C2226F726619B34002473E2 /* PeaksGroupBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeaksGroupBox.swift; sourceTree = "<group>"; };
 		2C2226FA2662858A002473E2 /* PreviewHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHost.swift; sourceTree = "<group>"; };
 		2C2226FC266290A7002473E2 /* TestProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProfile.swift; sourceTree = "<group>"; };
-		2C40294B25FAD7B600268220 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		2C40294B25FAD7B600268220 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		2C48468526370C9700656C5E /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		2C484688263740FD00656C5E /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		2C48468B263744C000656C5E /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
@@ -98,7 +98,6 @@
 		2C6BC4C7265AC36A00A3DAC7 /* RecentExamOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentExamOverlay.swift; sourceTree = "<group>"; };
 		2C6BC4C9265C4CA300A3DAC7 /* EmptyChartSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyChartSplashView.swift; sourceTree = "<group>"; };
 		2C6BC4CB265E9BC400A3DAC7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		2C6BC4CD265EE30700A3DAC7 /* CardioStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardioStatistics.swift; sourceTree = "<group>"; };
 		2C6BC4D726603F6D00A3DAC7 /* MeanGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanGraph.swift; sourceTree = "<group>"; };
 		2C729E3D2640CB9B00D36A1B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2C9540952621CD9200D115FE /* BTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTView.swift; sourceTree = "<group>"; };
@@ -115,6 +114,7 @@
 		2CC6168A25F660270082FC63 /* GraphDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDetail.swift; sourceTree = "<group>"; };
 		2CC6168E25F6603D0082FC63 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		2CC6169A25F6D4F80082FC63 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
+		2CD1A42B2676B984004F680A /* SummaryProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryProfileView.swift; sourceTree = "<group>"; };
 		2CE421DB264D3596001CD813 /* GraphCal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphCal.swift; sourceTree = "<group>"; };
 		2CE421E026502430001CD813 /* ECGGraphPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECGGraphPreview.swift; sourceTree = "<group>"; };
 		5BDFF963D48E3A75DD4E5DE7 /* Pods-EKG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EKG.release.xcconfig"; path = "Target Support Files/Pods-EKG/Pods-EKG.release.xcconfig"; sourceTree = "<group>"; };
@@ -269,7 +269,6 @@
 				2C03152225FD6CDF008FD459 /* ActiveSession.swift */,
 				2C9540982621D34F00D115FE /* BLEConnection.swift */,
 				2CE421DB264D3596001CD813 /* GraphCal.swift */,
-				2C6BC4CD265EE30700A3DAC7 /* CardioStatistics.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -302,8 +301,9 @@
 		2CC6169F25F6D5290082FC63 /* ProfileViews */ = {
 			isa = PBXGroup;
 			children = (
-				2C40294B25FAD7B600268220 /* ProfileEditView.swift */,
+				2C40294B25FAD7B600268220 /* EditProfileView.swift */,
 				2C6BC4CB265E9BC400A3DAC7 /* ProfileView.swift */,
+				2CD1A42B2676B984004F680A /* SummaryProfileView.swift */,
 			);
 			path = ProfileViews;
 			sourceTree = "<group>";
@@ -453,7 +453,7 @@
 				2C2226F226618D49002473E2 /* Sample+CoreDataProperties.swift in Sources */,
 				2C48468F26375A4400656C5E /* UserIcon.swift in Sources */,
 				2C2226FB2662858A002473E2 /* PreviewHost.swift in Sources */,
-				2C40294C25FAD7B600268220 /* ProfileEditView.swift in Sources */,
+				2C40294C25FAD7B600268220 /* EditProfileView.swift in Sources */,
 				2C6BC4CA265C4CA300A3DAC7 /* EmptyChartSplashView.swift in Sources */,
 				2C48468626370C9700656C5E /* Formatters.swift in Sources */,
 				2C5E226E25F7B83D002E8306 /* GraphExamView.swift in Sources */,
@@ -475,7 +475,6 @@
 				2C729E3E2640CB9B00D36A1B /* Extensions.swift in Sources */,
 				2C2226F826619B34002473E2 /* PeaksGroupBox.swift in Sources */,
 				2C6367B02645990C007B34E2 /* COMMShiftByte.swift in Sources */,
-				2C6BC4CE265EE30700A3DAC7 /* CardioStatistics.swift in Sources */,
 				2CC6167C25F657BC0082FC63 /* Persistence.swift in Sources */,
 				2C2226F026618D49002473E2 /* Profile+CoreDataProperties.swift in Sources */,
 				2C4846A526383A9A00656C5E /* UserRemovalOverlay.swift in Sources */,
@@ -493,6 +492,7 @@
 				2CC6169B25F6D4F80082FC63 /* HistoryRow.swift in Sources */,
 				2CC6167325F657BA0082FC63 /* EKGApp.swift in Sources */,
 				2C484689263740FD00656C5E /* Enums.swift in Sources */,
+				2CD1A42C2676B984004F680A /* SummaryProfileView.swift in Sources */,
 				2CC6167F25F657BC0082FC63 /* EKG.xcdatamodeld in Sources */,
 				2C03152325FD6CDF008FD459 /* ActiveSession.swift in Sources */,
 				2CE421DC264D3596001CD813 /* GraphCal.swift in Sources */,

@@ -89,11 +89,20 @@ enum ExamType: String, CaseIterable {
 }
 
 //MARK: - Exam Result
-public enum ExamResult: String {
+public enum ExamResult: String, CaseIterable {
     case good = "good"
-    case nominal = "regular"
+    case alerting = "alerting"
     case bad = "bad"
     case critical = "critical"
+    
+    func next() -> ExamResult {
+        switch (self) {
+            case .good: return .alerting
+            case .alerting: return .bad
+            case .bad: return .critical
+            case .critical: return .critical
+        }
+    }
 }
 
 public enum TimePeriod: Int, CaseIterable {

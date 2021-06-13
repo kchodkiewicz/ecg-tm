@@ -11,7 +11,6 @@ import CoreBluetooth
 
 struct ProfileView: View {
     
-    //@Environment(\.managedObjectContext) private var viewContext
     var viewContext: NSManagedObjectContext
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -20,10 +19,7 @@ struct ProfileView: View {
     @ObservedObject var bleConnection: BLEConnection
     
     @Environment(\.editMode) var editMode
-    //@EnvironmentObject var activeSession: ActiveSession
     
-    
-    //TODO: Animate and make less clumsy
     @Binding var goToBluetooth: Bool?
     @Binding var dismiss: Bool
     
@@ -67,7 +63,7 @@ struct ProfileView: View {
     }
     
     var body: some View {
-        
+        //FIXME: fix desynchronization on button and contents
         Form {
             if self.editMode?.wrappedValue == .inactive {
                 

@@ -91,7 +91,9 @@ struct PeaksGroupBox: View {
                 }
             } label: {
                 if self.isShowingGraph {
-                    MeanGraph(points: self.stats.times)
+                    MeanGraph(points: self.stats.times.map({ time in
+                        return time * 1000
+                    }))
                         .frame(height: 400)
                 } else {
                     

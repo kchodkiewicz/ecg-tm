@@ -76,7 +76,7 @@ struct MeanGraph : UIViewRepresentable {
     init(points: [Double]) {
         var data: [BarChartDataEntry] = []
         for index in 0..<points.count {
-            let entry = BarChartDataEntry(x: Double(index), y: Double(points[index]))
+            let entry = BarChartDataEntry(x: Double(index), y: Double(Int(points[index])))
             data.append(entry)
         }
         self.entries = data
