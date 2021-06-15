@@ -23,6 +23,7 @@ struct TabHost: View {
     
     @State var selectedTab: Tab = .overview
     @State var goToBluetooth: Bool? = false
+    @State var editMode: EditMode = .inactive
     
     @State var isShowingLogin: Bool = true
     
@@ -96,6 +97,7 @@ struct TabHost: View {
                     examDuration: Int(self.profile.examDuration),
                     profileColor: ProfileColor.ColorName(value: self.profile.wrappedColor)
                 )
+                .environment(\.editMode, $editMode)
             }
             .tabItem {
                 Image(systemName: "person.crop.square.fill")

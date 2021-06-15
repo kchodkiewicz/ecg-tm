@@ -8,14 +8,41 @@ import SwiftUI
 
 class CardioStats {
     var meanTime: Double = 0.0
-    var variation: Double = 0.0
+    var iqr: Double = 0.0
     var median: Double = 0.0
     var times: [Double] = []
+    var units: [String] = ["s","s","s"]
     
     var exam: Exam
     
     init(exam: Exam) {
         self.exam = exam
+    }
+    
+    func formatStats() -> Self {
+        
+        let meanTimeCount = String(Int(1000 * self.meanTime)).count
+        let medianCount = String(Int(1000 * self.median)).count
+        let iqrCount = String(Int(1000 * self.iqr)).count
+        
+        if meanTimeCount + medianCount + iqrCount > 8 {
+            return self
+        }
+        
+        if meanTimeCount < 4 {
+            self.meanTime = Double(Int(1000 * self.meanTime))
+            self.units[0] = "ms"
+        }
+        if medianCount < 4 {
+            self.median = Double(Int(1000 * self.median))
+            self.units[1] = "ms"
+        }
+        if iqrCount < 4 {
+            self.iqr = Double(Int(1000 * self.iqr))
+            self.units[2] = "ms"
+        }
+        
+        return self
     }
     
     func getStats() -> CardioStats {
@@ -62,7 +89,7 @@ class CardioStats {
         
         self.meanTime = meanTime
         self.median = median
-        self.variation = variation
+        self.iqr = variation
         self.times = times
         
         return self
@@ -105,10 +132,10 @@ struct PeaksGroupBox: View {
                                 .bold()
                                 .foregroundColor(Color(.systemRed))
                             HStack(alignment: .lastTextBaseline, spacing: 0) {
-                                Text("\(Int(1000 * self.stats.meanTime))")
+                                Text(self.stats.units[0] == "s" ? String(format: "%.2f", self.stats.meanTime) : String(Int(self.stats.meanTime)))
                                     .font(.system(.largeTitle, design: .rounded))
                                     .bold()
-                                Text("ms")
+                                Text(self.stats.units[0])
                                     .font(.title2)
                                     .bold()
                                     .foregroundColor(.secondary)
@@ -123,10 +150,10 @@ struct PeaksGroupBox: View {
                                 .bold()
                                 .foregroundColor(Color(.systemBlue))
                             HStack(alignment: .lastTextBaseline, spacing: 0) {
-                                Text("\(Int(1000 * self.stats.median))")
+                                Text(self.stats.units[1] == "s" ? String(format: "%.2f", self.stats.median) : String(Int(self.stats.median)))
                                     .font(.system(.largeTitle, design: .rounded))
                                     .bold()
-                                Text("ms")
+                                Text(self.stats.units[1])
                                     .font(.title2)
                                     .bold()
                                     .foregroundColor(.secondary)
@@ -141,10 +168,10 @@ struct PeaksGroupBox: View {
                                 .bold()
                                 .foregroundColor(Color(.systemGreen))
                             HStack(alignment: .lastTextBaseline, spacing: 0) {
-                                Text("\(Int(1000 * self.stats.variation))")
+                                Text(self.stats.units[2] == "s" ? String(format: "%.2f", self.stats.iqr) : String(Int(self.stats.iqr)))
                                     .font(.system(.largeTitle, design: .rounded))
                                     .bold()
-                                Text("ms")
+                                Text(self.stats.units[2])
                                     .font(.title2)
                                     .bold()
                                     .foregroundColor(.secondary)
@@ -164,7 +191,7 @@ struct PeaksGroupBox: View {
     
     init(exam: Exam) {
         self.exam = exam
-        self.stats = CardioStats(exam: self.exam).getStats()
+        self.stats = CardioStats(exam: self.exam).getStats().formatStats()
         
         
     }

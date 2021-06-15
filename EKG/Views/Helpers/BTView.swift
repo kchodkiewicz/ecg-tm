@@ -34,18 +34,6 @@ struct BTView: View {
                             print("Disconnecting")
                             bleConnection.disconnect()
                         }
-                        
-                        //                    DispatchQueue.global(qos: .utility).async {
-                        //
-                        //                        let profile = self.profile
-                        //                        profile.deviceUUID = device.identifier
-                        //
-                        //                        DispatchQueue.main.async {
-                        //                            try? self.viewContext.save()
-                        //                        }
-                        //
-                        //                    }
-                        
                     },
                     label: {
                         
@@ -57,16 +45,13 @@ struct BTView: View {
                     if name == self.bleConnection.peripheral?.name {
                         Image(systemName: "checkmark")
                             .foregroundColor(.accentColor)
-                        //.foregroundColor(Color("\(profile.wrappedColor)"))
                     } else {
                         EmptyView()
                     }
-                    
                 }
             }
         }
         .listStyle(PlainListStyle())
-        
         
         
         .onAppear(perform: {
@@ -78,19 +63,6 @@ struct BTView: View {
         .navigationTitle("Bluetooth Devices")
         
     }
-    
-    //    init(profile: Profile, bleConnection: BLEConnection) {
-    //        self.profile = profile
-    //        self.bleConnection = bleConnection
-    //        self.deviceList = []
-    //
-    //        self.bleConnection.scannedBLEDevices = []
-    //        self.bleConnection.startCentralManager()
-    //
-    //        self.deviceList = bleConnection.scannedBLEDevices.filter({
-    //            $0.name != nil
-    //        })
-    //    }
 }
 
 struct BTView_Previews: PreviewProvider {

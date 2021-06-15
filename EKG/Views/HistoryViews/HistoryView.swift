@@ -40,7 +40,10 @@ struct HistoryView: View {
                 Button {
                     switchTab = .exam
                 } label: {
-                    Text("Make first examination")
+                    List {
+                        Text("Make first examination")
+                    }.listStyle(InsetGroupedListStyle())
+                    
                 }
             }
         }

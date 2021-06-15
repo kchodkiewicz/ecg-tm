@@ -31,7 +31,7 @@ struct ECGGraph : UIViewRepresentable {
         chart.xAxis.labelFont = .boldSystemFont(ofSize: 10)
         chart.xAxis.labelTextColor = UIColor(.secondary)
         chart.xAxis.axisLineColor = UIColor(.secondary)
-        //chart.animate(xAxisDuration: 0.5)
+        chart.animate(xAxisDuration: 0.5)
         chart.noDataText = "Start new examination"
         //chart.zoom(scaleX: 10, scaleY: 1, x: 0, y: 0)
         

@@ -14,64 +14,64 @@ struct SelectedRange {
     var upperBound: Date = Date()
 }
 
-struct SummarySection: View {
-    
-    var labelName: String
-    var labelIcon: String
-    var color: UIColor
-    var selectedRange: SelectedRange
-    var values: [Int]
-    var units: [String]
-    
-    var body: some View {
-        
-        VStack {
-            HStack {
-                Label(labelName, systemImage: labelIcon)
-                    .labelStyle(CompressedLabelStyle(labelColor: color))
-                Spacer()
-                
-                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
-                    .font(.body)
-                    .foregroundColor(Color(.secondaryLabel))
-            }
-            Spacer()
-            if values.count == 1 {
-                HStack(alignment: .lastTextBaseline, spacing: 0) {
-                    Text("\(values[0])")
-                        .font(.system(.largeTitle, design: .rounded))
-                        .bold()
-                    Text(units[0])
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    
-                }.padding(.leading)
-            } else {
-                HStack {
-                    ForEach(0..<self.values.count) { index in
-                        HStack(alignment: .lastTextBaseline, spacing: 0) {
-                            Text("\(values[index])")
-                                .font(.system(.largeTitle, design: .rounded))
-                                .bold()
-                            Text(units[index])
-                                .font(.title2)
-                                .bold()
-                                .foregroundColor(.secondary)
-                            Spacer()
-                            
-                        }.padding(.leading)
-                    }
-                }
-            }
-            
-        }
-        .padding()
-        
-        
-    }
-}
+//struct SummarySection: View {
+//
+//    var labelName: String
+//    var labelIcon: String
+//    var color: UIColor
+//    var selectedRange: SelectedRange
+//    var values: [Int]
+//    var units: [String]
+//
+//    var body: some View {
+//
+//        VStack {
+//            HStack {
+//                Label(labelName, systemImage: labelIcon)
+//                    .labelStyle(CompressedLabelStyle(labelColor: color))
+//                Spacer()
+//
+//                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
+//                    .font(.body)
+//                    .foregroundColor(Color(.secondaryLabel))
+//            }
+//            Spacer()
+//            if values.count == 1 {
+//                HStack(alignment: .lastTextBaseline, spacing: 0) {
+//                    Text("\(values[0])")
+//                        .font(.system(.largeTitle, design: .rounded))
+//                        .bold()
+//                    Text(units[0])
+//                        .font(.title2)
+//                        .bold()
+//                        .foregroundColor(.secondary)
+//                    Spacer()
+//
+//                }.padding(.leading)
+//            } else {
+//                HStack {
+//                    ForEach(0..<self.values.count) { index in
+//                        HStack(alignment: .lastTextBaseline, spacing: 0) {
+//                            Text("\(values[index])")
+//                                .font(.system(.largeTitle, design: .rounded))
+//                                .bold()
+//                            Text(units[index])
+//                                .font(.title2)
+//                                .bold()
+//                                .foregroundColor(.secondary)
+//                            Spacer()
+//
+//                        }.padding(.leading)
+//                    }
+//                }
+//            }
+//
+//        }
+//        .padding()
+//
+//
+//    }
+//}
 
 struct HistoryOverview: View {
     
@@ -134,7 +134,7 @@ struct HistoryOverview: View {
         for exam in lastPeriodExams {
             let stats = CardioStats(exam: exam).getStats()
             sumStats.0 += stats.meanTime
-            sumStats.1 += stats.variation
+            sumStats.1 += stats.iqr
         }
         
         means.interval = sumStats.0 / Double(lastPeriodExams.count)
@@ -180,14 +180,14 @@ struct HistoryOverview: View {
                 
                 VStack {
                     
-                    List {
-                        EmptyView()
-                    }.listStyle(InsetGroupedListStyle())
-                    .frame(height: 0)
+                    
+//                        EmptyView()
+//                    }
+//                    .frame(height: 0)
                     
                     ScrollViewReader { scrollProxy in
-                        ScrollView(.vertical, showsIndicators: false) {
-                            
+                        List {
+                            Section {
                             //if showPicker {
                                 Picker("Time period", selection: self.$selectPeriod) {
                                     ForEach(TimePeriod.allCases, id: \.self) { type in
@@ -212,7 +212,9 @@ struct HistoryOverview: View {
                                     )
                                 )
                             //}
+                            }
                             
+                            Section {
                             GroupBox(label: HStack {
                                 Label("Heart Rate", systemImage: "heart.fill")
                                     .foregroundColor(Color(.systemPink))
@@ -235,6 +237,8 @@ struct HistoryOverview: View {
                                 
                             }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
                             .id(1)
+                                
+                            }
                             
                             GroupBox(label: HStack {
                                 Label("Exam type", systemImage: "lungs.fill")
@@ -324,25 +328,8 @@ struct HistoryOverview: View {
                             
                             
                         }.groupBoxStyle(ColoredGroupBoxStyle(backgroundColor: UIColor.secondarySystemGroupedBackground))
-//                        .gesture(
-//                            DragGesture()
-//                                .onChanged({ offset in
-//                                    if offset.translation.height > 0 {
-//                                        withAnimation {
-//                                            print("Scroll down")
-//                                            self.showPicker = true
-//                                        }
-//                                    } else {
-//                                        withAnimation {
-//                                            print("Scroll up")
-//                                            self.showPicker = false
-//                                        }
-//
-//                                    }
-//                                })
-//                        )
                         
-                    }
+                    }.listStyle(InsetGroupedListStyle())
                     
                 }
                 //.padding(.top)
@@ -372,7 +359,10 @@ struct HistoryOverview: View {
                 Button {
                     switchTab = .exam
                 } label: {
-                    Text("Make first examination")
+                    List {
+                        Text("Make first examination")
+                    }.listStyle(InsetGroupedListStyle())
+                    
                 }
                 
             }

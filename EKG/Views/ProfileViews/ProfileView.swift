@@ -45,7 +45,7 @@ struct ProfileView: View {
     }
     
     private func updateProfile() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        //UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         
         let profile = self.profile
         profile.username = self.username
@@ -62,166 +62,171 @@ struct ProfileView: View {
         }
     }
     
+    private func trimBTName(string: String) -> String {
+        return string.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
     var body: some View {
-        //FIXME: fix desynchronization on button and contents
+        
         Form {
             if self.editMode?.wrappedValue == .inactive {
                 
-                Section {
-                    HStack {
-                        Spacer()
-                        
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 100, height: 100, alignment: .center)
-                            .foregroundColor(Color(self.profile.wrappedColor))
-                            .padding()
-                        
-                        Spacer()
-                    }
-                }
-                
-                Section {
-                    HStack {
-                        Text("Username")
-                        
-                        Spacer()
-                        
-                        TextField("Username", text: $username)
-                            .disabled(.inactive == self.editMode?.wrappedValue)
-                            .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
-                            .multilineTextAlignment(.trailing)
-                            .disableAutocorrection(true)
-                            .autocapitalization(.none)
-                    }
-                    
-                    HStack {
-                        Text("First Name")
-                        
-                        Spacer()
-                        
-                        TextField("First Name", text: $firstName)
-                            .disabled(.inactive == self.editMode?.wrappedValue)
-                            .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
-                            .multilineTextAlignment(.trailing)
-                    }
-                    
-                    HStack {
-                        Text("Last Name")
-                        
-                        Spacer()
-                        
-                        TextField("Last Name", text: $lastName)
-                            .disabled(.inactive == self.editMode?.wrappedValue)
-                            .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
-                            .multilineTextAlignment(.trailing)
-                    }
-                }
-                
-                Section {
-                    Button {
-                        withAnimation(.spring()) {
-                            self.isShowingAge.toggle()
-                        }
-                    } label: {
+                    Section {
                         HStack {
-                            Text(self.isShowingAge ? "Age" : "Birthdate")
+                            Spacer()
+                            
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100, alignment: .center)
+                                .foregroundColor(Color(self.profile.wrappedColor))
+                                .padding()
+                            
+                            Spacer()
+                        }
+                    }
+                    
+                    Section {
+                        HStack {
+                            Text("Username")
                             
                             Spacer()
                             
-                            if self.isShowingAge {
-                                Text(getAge(birthdate: self.profile.wrappedAge))
-                            } else {
-                                Text(self.profile.wrappedAge, formatter: Formatters.birthDateFormat)
-                            }
+                            TextField("Username", text: $username)
+                                .disabled(.inactive == self.editMode?.wrappedValue)
+                                .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
+                                .multilineTextAlignment(.trailing)
+                                .disableAutocorrection(true)
+                                .autocapitalization(.none)
                         }
-                    }.foregroundColor(Color.primary)
-                    .buttonStyle(PlainButtonStyle())
-                    
-                    HStack {
-                        Text("Exam Duration")
                         
-                        Spacer()
+                        HStack {
+                            Text("First Name")
+                            
+                            Spacer()
+                            
+                            TextField("First Name", text: $firstName)
+                                .disabled(.inactive == self.editMode?.wrappedValue)
+                                .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
+                                .multilineTextAlignment(.trailing)
+                        }
                         
-                        Text("\(Int(self.profile.examDuration))s")
+                        HStack {
+                            Text("Last Name")
+                            
+                            Spacer()
+                            
+                            TextField("Last Name", text: $lastName)
+                                .disabled(.inactive == self.editMode?.wrappedValue)
+                                .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
+                                .multilineTextAlignment(.trailing)
+                        }
                     }
-                }
-                
-                Section {
                     
-                    NavigationLink(destination: BTView(profile: profile, bleConnection: bleConnection), tag: true, selection: self.$goToBluetooth) {
-                        Text("Bluetooth Device")
+                    Section {
+                        Button {
+                            withAnimation(.spring()) {
+                                self.isShowingAge.toggle()
+                            }
+                        } label: {
+                            HStack {
+                                Text(self.isShowingAge ? "Age" : "Birthdate")
+                                
+                                Spacer()
+                                
+                                if self.isShowingAge {
+                                    Text(getAge(birthdate: self.profile.wrappedAge))
+                                } else {
+                                    Text(self.profile.wrappedAge, formatter: Formatters.birthDateFormat)
+                                }
+                            }
+                        }.foregroundColor(Color.primary)
+                        .buttonStyle(PlainButtonStyle())
                         
-                        Spacer()
-                        
-                        Text(Formatters.removeNewLine(string: bleConnection.peripheral?.name ?? "None"))
+                        HStack {
+                            Text("Exam Duration")
+                            
+                            Spacer()
+                            
+                            Text("\(Int(self.profile.examDuration))s")
+                        }
                     }
-                }
-                Section {
                     
-                    Button {
-                        self.dismiss.toggle()
-                    } label: {
-                        Text("Switch User")
+                    Section {
+                        
+                        NavigationLink(destination: BTView(profile: profile, bleConnection: bleConnection), tag: true, selection: self.$goToBluetooth) {
+                            Text("Bluetooth Device")
+                            
+                            Spacer()
+                            
+                            Text(trimBTName(string: bleConnection.peripheral?.name ?? "None"))
+                        }
                     }
-                }
-                
+                    Section {
+                        
+                        Button {
+                            self.dismiss.toggle()
+                        } label: {
+                            Text("Switch User")
+                        }
+                    }
+                    
                 
             } else {
                 
-                Section {
-                    UserIcon(isShowingPallette: self.$isShowingPallette, profileColor: self.$profileColor)
-                }
-                
-                Section {
-                    HStack {
-                        Text("Username")
-                        
-                        Spacer()
-                        
-                        TextField("Username", text: $username)
-                            .disabled(.inactive == self.editMode?.wrappedValue)
-                            .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
-                            .multilineTextAlignment(.trailing)
-                            .disableAutocorrection(true)
-                            .autocapitalization(.none)
+                    Section {
+                        UserIcon(isShowingPallette: self.$isShowingPallette, profileColor: self.$profileColor)
                     }
                     
-                    HStack {
-                        Text("First Name")
+                    Section {
+                        HStack {
+                            Text("Username")
+                            
+                            Spacer()
+                            
+                            TextField("Username", text: $username)
+                                .disabled(.inactive == self.editMode?.wrappedValue)
+                                .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
+                                .multilineTextAlignment(.trailing)
+                                .disableAutocorrection(true)
+                                .autocapitalization(.none)
+                        }
                         
-                        Spacer()
+                        HStack {
+                            Text("First Name")
+                            
+                            Spacer()
+                            
+                            TextField("First Name", text: $firstName)
+                                .disabled(.inactive == self.editMode?.wrappedValue)
+                                .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
+                                .multilineTextAlignment(.trailing)
+                        }
                         
-                        TextField("First Name", text: $firstName)
-                            .disabled(.inactive == self.editMode?.wrappedValue)
-                            .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
-                            .multilineTextAlignment(.trailing)
+                        HStack {
+                            Text("Last Name")
+                            
+                            Spacer()
+                            
+                            TextField("Last Name", text: $lastName)
+                                .disabled(.inactive == self.editMode?.wrappedValue)
+                                .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
+                                .multilineTextAlignment(.trailing)
+                        }
                     }
                     
-                    HStack {
-                        Text("Last Name")
-                        
-                        Spacer()
-                        
-                        TextField("Last Name", text: $lastName)
-                            .disabled(.inactive == self.editMode?.wrappedValue)
-                            .foregroundColor(.inactive == self.editMode?.wrappedValue ? Color.primary : Color.blue)
+                    Section {
+                        DatePicker("", selection: $age, in: Formatters.closeBirthDateRange, displayedComponents: .date)
                             .multilineTextAlignment(.trailing)
+                            .datePickerStyle(WheelDatePickerStyle())
+                        
+                        Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
+                            .foregroundColor(Color.blue)
                     }
-                }
-                
-                Section {
-                    DatePicker("", selection: $age, in: Formatters.closeBirthDateRange, displayedComponents: .date)
-                        .multilineTextAlignment(.trailing)
-                        .datePickerStyle(WheelDatePickerStyle())
                     
-                    Stepper("\(examDuration) seconds", value: $examDuration, in: 1...60)
-                        .foregroundColor(Color.blue)
-                }
-                
-                Section { }
-                Section { }
+                    Section { }
+                    Section { }
+                    
                 
             }
         }
@@ -229,7 +234,7 @@ struct ProfileView: View {
             ToolbarItem(placement: .cancellationAction) {
                 Button(action: {
                     withAnimation {
-                        self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
+                        self.editMode?.wrappedValue = .inactive // == self.editMode?.wrappedValue ? .active : .inactive
                     }
                 }) {
                     Text(.inactive == self.editMode?.wrappedValue ? "" : "Cancel")
@@ -244,44 +249,20 @@ struct ProfileView: View {
                                 self.isShowingPallette.toggle()
                             }
                             updateProfile()
+                            self.editMode?.wrappedValue = .inactive
+                        } else {
+                            self.editMode?.wrappedValue = .active
                         }
-                        self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
+                        
                     }
                 }) {
                     Text(.inactive == self.editMode?.wrappedValue ? "Edit" : "Done")
                 }
             }
         }
-        //        .navigationBarItems(
-        //            leading: Button(action: {
-        //                withAnimation {
-        //                    self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
-        //                }
-        //            }) {
-        //                Text(.inactive == self.editMode?.wrappedValue ? "" : "Cancel")
-        //            }
-        //            .padding(.vertical)
-        //            .padding(.trailing),
-        //
-        //            trailing: Button(action: {
-        //                withAnimation {
-        //                    if self.editMode?.wrappedValue == .active {
-        //                        if self.isShowingPallette {
-        //                            self.isShowingPallette.toggle()
-        //                        }
-        //                        updateProfile()
-        //                    }
-        //                    self.editMode?.wrappedValue = .inactive == self.editMode?.wrappedValue ? .active : .inactive
-        //                }
-        //            }) {
-        //                Text(.inactive == self.editMode?.wrappedValue ? "Edit" : "Done")
-        //            }
-        //            .padding(.vertical)
-        //            .padding(.leading)
-        //        )
+
         
         .navigationTitle(.inactive == self.editMode?.wrappedValue ? "\(self.firstName) \(self.lastName)" : "Edit your profile")
-        
     }
 }
 
