@@ -14,64 +14,64 @@ struct SelectedRange {
     var upperBound: Date = Date()
 }
 
-//struct SummarySection: View {
-//
-//    var labelName: String
-//    var labelIcon: String
-//    var color: UIColor
-//    var selectedRange: SelectedRange
-//    var values: [Int]
-//    var units: [String]
-//
-//    var body: some View {
-//
-//        VStack {
-//            HStack {
-//                Label(labelName, systemImage: labelIcon)
-//                    .labelStyle(CompressedLabelStyle(labelColor: color))
-//                Spacer()
-//
-//                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
-//                    .font(.body)
-//                    .foregroundColor(Color(.secondaryLabel))
-//            }
-//            Spacer()
-//            if values.count == 1 {
-//                HStack(alignment: .lastTextBaseline, spacing: 0) {
-//                    Text("\(values[0])")
-//                        .font(.system(.largeTitle, design: .rounded))
-//                        .bold()
-//                    Text(units[0])
-//                        .font(.title2)
-//                        .bold()
-//                        .foregroundColor(.secondary)
-//                    Spacer()
-//
-//                }.padding(.leading)
-//            } else {
-//                HStack {
-//                    ForEach(0..<self.values.count) { index in
-//                        HStack(alignment: .lastTextBaseline, spacing: 0) {
-//                            Text("\(values[index])")
-//                                .font(.system(.largeTitle, design: .rounded))
-//                                .bold()
-//                            Text(units[index])
-//                                .font(.title2)
-//                                .bold()
-//                                .foregroundColor(.secondary)
-//                            Spacer()
-//
-//                        }.padding(.leading)
-//                    }
-//                }
-//            }
-//
-//        }
-//        .padding()
-//
-//
-//    }
-//}
+struct SummarySection: View {
+    
+    var labelName: String
+    var labelIcon: String
+    var color: UIColor
+    var selectedRange: SelectedRange
+    var values: [Int]
+    var units: [String]
+    
+    var body: some View {
+        
+        VStack {
+            HStack {
+                Label(labelName, systemImage: labelIcon)
+                    .labelStyle(CompressedLabelStyle(labelColor: color))
+                Spacer()
+                
+                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
+                    .font(.body)
+                    .foregroundColor(Color(.secondaryLabel))
+            }
+            Spacer()
+            if values.count == 1 {
+                HStack(alignment: .lastTextBaseline, spacing: 0) {
+                    Text("\(values[0])")
+                        .font(.system(.largeTitle, design: .rounded))
+                        .bold()
+                    Text(units[0])
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    
+                }.padding(.leading)
+            } else {
+                HStack {
+                    ForEach(0..<self.values.count) { index in
+                        HStack(alignment: .lastTextBaseline, spacing: 0) {
+                            Text("\(values[index])")
+                                .font(.system(.largeTitle, design: .rounded))
+                                .bold()
+                            Text(units[index])
+                                .font(.title2)
+                                .bold()
+                                .foregroundColor(.secondary)
+                            Spacer()
+                            
+                        }.padding(.leading)
+                    }
+                }
+            }
+            
+        }
+        .padding()
+        
+        
+    }
+}
 
 struct HistoryOverview: View {
     
@@ -154,206 +154,65 @@ struct HistoryOverview: View {
             
             if !self.lastPeriodExams.isEmpty {
                 
-                //                List {
-                //
-                //                    Section(header:
-                //                                Text("Average results")
-                //                    ) {
-                //                        SummarySection(labelName: "Heart Rate", labelIcon: "heart.fill", color: .systemPink, selectedRange: self.selectedRange, values: [Int(self.means.heartrate)], units: ["BPM"])
-                //                    }
-                //
-                //                    Section {
-                //                        SummarySection(labelName: "Exam type", labelIcon: "lungs.fill", color: .systemIndigo, selectedRange: self.selectedRange, values: [Int(means.examType.0), Int(means.examType.1)], units: ["resting", "stress"])
-                //                    }
-                //
-                //                    Section {
-                //                        SummarySection(labelName: "Interval", labelIcon: "metronome.fill", color: .systemRed, selectedRange: self.selectedRange, values: [Int(1000 * self.means.interval)], units: ["ms"])
-                //                    }
-                //
-                //                    Section {
-                //                        SummarySection(labelName: "IQR", labelIcon: "metronome.fill", color: .systemGreen, selectedRange: self.selectedRange, values: [Int(1000 * self.means.iqr)], units: ["ms"])
-                //                    }
-                //
-                //                }
-                //                .listStyle(InsetGroupedListStyle())
+                List {
+                    
+                    Section {
+                        Button {
+                            print("Heart graph")
+                        } label: {
+                            SummarySection(labelName: "Heart Rate", labelIcon: "heart.fill", color: .systemPink, selectedRange: self.selectedRange, values: [Int(self.means.heartrate)], units: ["BPM"])
+                        }
+                    }
+                    
+                    Section {
+                        Button {
+                            print("Exam type graph")
+                        } label: {
+                            SummarySection(labelName: "Exam type", labelIcon: "lungs.fill", color: .systemIndigo, selectedRange: self.selectedRange, values: [Int(means.examType.0), Int(means.examType.1)], units: ["resting", "stress"])
+                        }
+                    }
+                    
+                    Section {
+                        Button {
+                            print("Interval graph")
+                        } label: {
+                            SummarySection(labelName: "Interval", labelIcon: "metronome.fill", color: .systemRed, selectedRange: self.selectedRange, values: [Int(1000 * self.means.interval)], units: ["ms"])
+                        }
+                    }
+                    
+                    Section {
+                        Button {
+                            print("IQR graph")
+                        } label: {
+                            SummarySection(labelName: "IQR", labelIcon: "metronome.fill", color: .systemGreen, selectedRange: self.selectedRange, values: [Int(1000 * self.means.iqr)], units: ["ms"])
+                        }
+                    }
+                    
+                }.listStyle(InsetGroupedListStyle())
+                .buttonStyle(PlainButtonStyle())
                 
-                
-                VStack {
-                    
-                    
-//                        EmptyView()
-//                    }
-//                    .frame(height: 0)
-                    
-                    ScrollViewReader { scrollProxy in
-                        List {
-                            Section {
-                            //if showPicker {
-                                Picker("Time period", selection: self.$selectPeriod) {
-                                    ForEach(TimePeriod.allCases, id: \.self) { type in
-                                        Text(type.displayName)
-                                        
-                                    }
-                                }
-                                
-                                .padding(.horizontal)
-                                .pickerStyle(SegmentedPickerStyle())
-                                
-                                .onChange(of: self.selectPeriod) { _ in
-                                    withAnimation {
-                                        updateValues()
-                                    }
-                                }
-                                .transition (
-                                    .asymmetric (
-                                        insertion: .move(edge: .bottom),
-                                        removal:
-                                            .move(edge: .top)
-                                    )
-                                )
-                            //}
-                            }
-                            
-                            Section {
-                            GroupBox(label: HStack {
-                                Label("Heart Rate", systemImage: "heart.fill")
-                                    .foregroundColor(Color(.systemPink))
-                                Spacer()
-                                
-                                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
-                                    .font(.body)
-                                    .foregroundColor(Color(.secondaryLabel))
-                            }) {
-                                HStack {
-                                    Text("\(Int(self.means.heartrate))")
-                                        .font(.system(.largeTitle, design: .rounded))
-                                        .bold()
-                                    Text("BPM")
-                                        .font(.title2)
-                                        .bold()
-                                        .foregroundColor(.secondary)
-                                    Spacer()
-                                }
-                                
-                            }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
-                            .id(1)
-                                
-                            }
-                            
-                            GroupBox(label: HStack {
-                                Label("Exam type", systemImage: "lungs.fill")
-                                    .foregroundColor(Color(.systemIndigo))
-                                Spacer()
-                                
-                                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
-                                    .font(.body)
-                                    .foregroundColor(Color(.secondaryLabel))
-                            }) {
-                                
-                                HStack {
-                                    
-                                    HStack(alignment: .lastTextBaseline, spacing: 0) {
-                                        Text("\(Int(means.examType.0))")
-                                            .font(.system(.largeTitle, design: .rounded))
-                                            .bold()
-                                        Text("resting")
-                                            .font(.title2)
-                                            .bold()
-                                            .foregroundColor(.secondary)
-                                        Spacer()
-                                        
-                                    }
-                                    
-                                    HStack(alignment: .lastTextBaseline, spacing: 0) {
-                                        Text("\(Int(means.examType.1))")
-                                            .font(.system(.largeTitle, design: .rounded))
-                                            .bold()
-                                        Text("stress")
-                                            .font(.title2)
-                                            .bold()
-                                            .foregroundColor(.secondary)
-                                        Spacer()
-                                        
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                }
-                                
-                            }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
-                            
-                            GroupBox(label: HStack {
-                                Label("Interval", systemImage: "metronome.fill")
-                                    .foregroundColor(Color(.systemRed))
-                                Spacer()
-                                
-                                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
-                                    .font(.body)
-                                    .foregroundColor(Color(.secondaryLabel))
-                            }) {
-                                HStack {
-                                    Text("\(Int(1000 * self.means.interval))")
-                                        .font(.system(.largeTitle, design: .rounded))
-                                        .bold()
-                                    Text("ms")
-                                        .font(.title2)
-                                        .bold()
-                                        .foregroundColor(.secondary)
-                                    Spacer()
-                                }
-                                
-                            }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
-                            
-                            GroupBox(label: HStack {
-                                Label("IQR", systemImage: "metronome.fill")
-                                    .foregroundColor(Color(.systemGreen))
-                                Spacer()
-                                
-                                Text("\(Formatters.withoutYear(date: self.selectedRange.lowerBound)) - \(Formatters.withoutYear(date: self.selectedRange.upperBound))")
-                                    .font(.body)
-                                    .foregroundColor(Color(.secondaryLabel))
-                            }) {
-                                HStack {
-                                    Text("\(Int(1000 * self.means.iqr))")
-                                        .font(.system(.largeTitle, design: .rounded))
-                                        .bold()
-                                    Text("ms")
-                                        .font(.title2)
-                                        .bold()
-                                        .foregroundColor(.secondary)
-                                    Spacer()
-                                }
-                                
-                            }.padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
-                            
-                            
-                        }.groupBoxStyle(ColoredGroupBoxStyle(backgroundColor: UIColor.secondarySystemGroupedBackground))
+                .toolbar(
+                    content: {
                         
-                    }.listStyle(InsetGroupedListStyle())
-                    
-                }
-                //.padding(.top)
-                
-                //                .toolbar(content: {
-                //
-                //                    ToolbarItemGroup(placement: .principal) {
-                //                        Picker("Time period", selection: self.$selectPeriod) {
-                //                            ForEach(TimePeriod.allCases, id: \.self) { type in
-                //                                Text(type.displayName)
-                //
-                //                            }
-                //                        }
-                //                        //.background(Color(.systemGroupedBackground))
-                //                        //.padding(.horizontal)
-                //                        //.frame(height: proxy.safeAreaInsets.top)
-                //                        .pickerStyle(SegmentedPickerStyle())
-                //                        .onChange(of: self.selectPeriod) { _ in
-                //                            withAnimation {
-                //                                updateValues()
-                //                            }
-                //                        }
-                //                    }
-                //                })
+                        ToolbarItem(placement: .principal) {
+                            Picker("Time period", selection: self.$selectPeriod) {
+                                ForEach(TimePeriod.allCases, id: \.self) { type in
+                                    Text(type.displayName)
+                                }
+                            }
+                            
+                            .padding(.horizontal)
+                            .pickerStyle(SegmentedPickerStyle())
+                            
+                            .onChange(of: self.selectPeriod) { _ in
+                                withAnimation {
+                                    updateValues()
+                                    showPicker.toggle()
+                                }
+                            }
+                        }
+                    }
+                )
                 
             } else {
                 Button {
@@ -362,9 +221,7 @@ struct HistoryOverview: View {
                     List {
                         Text("Make first examination")
                     }.listStyle(InsetGroupedListStyle())
-                    
                 }
-                
             }
         }
         .navigationTitle("Summary")
@@ -374,13 +231,9 @@ struct HistoryOverview: View {
         
         .onAppear(perform: {
             updateValues()
-            UINavigationBar.appearance().backgroundColor = .clear
             
         })
-        
-        //        .onDisappear(perform: {
-        //            UINavigationBar.appearance().backgroundColor = .systemBackground
-        //        })
+      
         .onChange(of: switchTab) { _ in
             if switchTab == .overview {
                 updateValues()

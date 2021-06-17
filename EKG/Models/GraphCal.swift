@@ -41,7 +41,7 @@ class GraphCal: ObservableObject, Equatable
             let u16 = UInt16(UInt16(data[i+1]) << COMMShiftByte.OneByte.rawValue + UInt16(data[i]))
             dataU16T.append(u16)
         }
-        //print("--U16 \(dataU16T)")
+        print("--U16 \(dataU16T)")
         
         var x: Double = 0
         var tmp: [ChartDataEntry] = []
